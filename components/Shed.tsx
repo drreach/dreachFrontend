@@ -52,7 +52,7 @@ const TimeSlotSelector: React.FC = () => {
         {/* <h3>Selected Slots:</h3> */}
         <div  className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-8 gap-2 mx-2">
           {selectedSlots.map((slot, index) => (
-                    <div onClick={()=>dispatch(removeShedule({index}))} className="bg-green-500 rounded-md items-center flex hover:bg-red-400 flex-row justify-around cursor-pointer text-white font-bold w-full"  key={index}>
+                    <div  onClick={()=>dispatch(removeShedule({index}))} className="bg-green-500 rounded-md items-center flex hover:bg-red-400 flex-row justify-around cursor-pointer text-white font-bold w-full"  key={index}>
                         <span >
               {parseInt(slot.split(":")[0], 10) >= 12
                 ? `${

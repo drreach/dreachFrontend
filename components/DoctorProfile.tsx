@@ -366,7 +366,7 @@ const DoctorProfile = ({
                         {slots &&
                           slots.map((s, i) => {
                             return (
-                              <Tab>
+                              <Tab key={i}>
                                 {i == 0
                                   ? "Today"
                                   : i == 1
@@ -383,7 +383,7 @@ const DoctorProfile = ({
                       </TabList>
                       {slots.map((s, i) => {
                         return (
-                          <TabPanel>
+                          <TabPanel key={i}>
                             {/* <div className='grid grid-cols-10 gap-2'>
         {slots[i].availableSlots && slots[i].availableSlots.map((a,i)=>{
           return <span className='bg-red-500 rounded-md px-2 py-2'>{a}</span>
@@ -392,7 +392,7 @@ const DoctorProfile = ({
 
                             <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-8 gap-2 mx-2">
                               {s.availableSlots.map((slot: string, index) => (
-                                <div
+                                <div 
                                   onClick={() =>
                                     dispatch(
                                       setAppointmentDetails({
@@ -528,7 +528,7 @@ const DoctorProfile = ({
                             {data?.doctorProfile?.educations?.map(
                               (edu, index) => {
                                 return (
-                                  <li>
+                                  <li key={index}>
                                     <div className="experience-user">
                                       <div className="before-circle" />
                                     </div>
@@ -559,7 +559,7 @@ const DoctorProfile = ({
                             {data?.doctorProfile?.workExperiences?.map(
                               (work, index) => {
                                 return (
-                                  <li>
+                                  <li key={index}>
                                     <div className="experience-user">
                                       <div className="before-circle" />
                                     </div>
@@ -590,7 +590,7 @@ const DoctorProfile = ({
                               {data?.doctorProfile?.awards?.map(
                                 (award, index) => {
                                   return (
-                                    <li>
+                                    <li key={index}>
                                       <div className="experience-user">
                                         <div className="before-circle" />
                                       </div>
@@ -627,7 +627,7 @@ const DoctorProfile = ({
                         <ul className="clearfix">
                           {data?.doctorProfile?.specializations?.map(
                             (spec, index) => {
-                              return <li>{spec}</li>;
+                              return <li key={index}>{spec}</li>;
                             }
                           )}
                         </ul>
@@ -816,7 +816,7 @@ const DoctorProfile = ({
                               Object.keys(data.doctorProfile.schedules).map(
                                 (key, index) => {
                                   return (
-                                    <div className="listing-day border-b border-gray-200 py-2">
+                                    <div key={index} className="listing-day border-b border-gray-200 py-2">
                                       <div className="day">
                                         {key.at(0)?.toUpperCase()}
                                         {key.slice(1)}
@@ -833,7 +833,7 @@ const DoctorProfile = ({
                                                 "sat"
                                             ].map((time, index) => {
                                               return (
-                                                <span>
+                                                <span key={index}>
                                                   {time.start} - {time.end}
                                                 </span>
                                               );

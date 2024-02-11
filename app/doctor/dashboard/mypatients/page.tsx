@@ -80,7 +80,7 @@ const page = async() => {
    
    <div className='row row-grid'>
    {data.map((d:any,i:number)=>{
-    return <Mypatients data={d.user}/>
+    return <Mypatients key={i} data={d.user}/>
    })}
    </div>
    </>

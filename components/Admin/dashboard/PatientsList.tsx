@@ -62,7 +62,7 @@ const PatientsList = ({data}:{
                 <tbody>
        {
         data && data.map((d,i)=>{
-            return            <tr>
+            return            <tr key={i}>
             <td>{d.userId}</td>
             <td>
               <h2 className="table-avatar">

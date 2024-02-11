@@ -25,7 +25,7 @@ const page = () => {
     <ul className="comments-list">
 
         {Review.map((r,i)=>{
-            return <ReviewCard data={r} />
+            return <ReviewCard key={i} data={r} />
         })}
     
     </ul>

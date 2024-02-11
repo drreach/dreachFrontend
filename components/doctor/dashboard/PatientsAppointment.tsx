@@ -136,7 +136,7 @@ const PatientsAppointment = ({datas}:{datas:Data}) => {
                     </thead>
                     <tbody>
                    {datas.todayAppointMentdDetails.map((data,index)=>{
-                    return <AppointmentCard upcoming={false} data={data}/>
+                    return <AppointmentCard key={index} upcoming={false} data={data}/>
                    })}
                     </tbody>
                   </table>
@@ -165,7 +165,7 @@ const PatientsAppointment = ({datas}:{datas:Data}) => {
                     </thead>
                     <tbody>
                    {datas.upcomingAppointsMents.map((data,index)=>{
-                    return <AppointmentCard upcoming={true} data={data}/>
+                    return <AppointmentCard key={index} upcoming={true} data={data}/>
                    })}
                     </tbody>
                   </table>

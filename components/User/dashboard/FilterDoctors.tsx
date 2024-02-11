@@ -138,7 +138,7 @@ const FilterDoctors = () => {
         <div className="flex gap-2">
         <select name="" id="">
             {sheduleTime.map((d,v)=>{
-                return <option value={d}>{mapSheduleTime[d as keyof typeof mapSheduleTime]}</option>
+                return <option key={v} value={d}>{mapSheduleTime[d as keyof typeof mapSheduleTime]}</option>
             
             }
             )}
@@ -147,7 +147,7 @@ const FilterDoctors = () => {
       <span>TO</span>
         <select name="" id="">
             {sheduleTime.map((d,v)=>{
-                return <option value={d}>{mapSheduleTime[d as keyof typeof mapSheduleTime]}</option>
+                return <option key={v} value={d}>{mapSheduleTime[d as keyof typeof mapSheduleTime]}</option>
             }
             )}
         </select>

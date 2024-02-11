@@ -35,7 +35,7 @@ const FindDoctors = ({data}:{data:FindDoctorList[]}) => {
       <FilterDoctors/>
  {
 data && data.map((d,v)=>{
-    return <div className="col-md-6 col-lg-4 col-xl-3">
+    return <div key={v} className="col-md-6 col-lg-4 col-xl-3">
     <div className="profile-widget">
       <div className="doc-img">
         <a href="doctor-profile.html">

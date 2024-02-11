@@ -518,7 +518,7 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
             </h4>
             {experienceArr.map((w, i) => {
               return (
-                <div className="row form-row">
+                <div key={i} className="row form-row">
                   <div className="col-md-6">
                     <div className="form-group">
                       <label>Clinic Name</label>
@@ -753,7 +753,7 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
                 <div className="col-12 col-md-10 col-lg-11">
                   {educationArr.map((ed, i) => {
                     return (
-                      <div className="row form-row">
+                      <div  key={i} className="row form-row">
                         <div className="col-12 col-md-6 col-lg-4">
                           <div className="form-group">
                             <label>Degree</label>
@@ -888,7 +888,7 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
             <div className="awards-info">
               {awardsArr.map((a, i) => {
                 return (
-                  <div className="row form-row awards-cont">
+                  <div key={i} className="row form-row awards-cont">
                     <div className="col-12 col-md-5">
                       <div className="form-group">
                         <label>Awards</label>

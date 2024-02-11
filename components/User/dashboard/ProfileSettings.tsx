@@ -280,9 +280,10 @@ const ProfileSettings = () => {
                             {...register("bloodGroup", { required: "true" })}
                             className="form-control select"
                           >
-                            {Object.keys(bloodGroupMap).map((key) => {
+                            {Object.keys(bloodGroupMap).map((key,index) => {
                               return (
                                 <option
+                                key={index}
                                   selected={
                                     session.data.data.bloodGroup ===
                                     bloodGroupMap[

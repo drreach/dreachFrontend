@@ -54,7 +54,7 @@ const DoctorList = ({data}:{
                 <tbody>
          {
             data && data.map((d,i)=>{
-                return          <tr>
+                return          <tr key={i}>
                 <td>
                   <h2 className="table-avatar">
                     <a href="profile.html" className="avatar avatar-sm mr-2">

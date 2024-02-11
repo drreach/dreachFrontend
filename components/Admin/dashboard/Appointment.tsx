@@ -40,7 +40,7 @@ const Appointment = ({data}:{
               <tbody>
                {
                 data && data.map((d:any,i:number)=>{
-                    return  <tr>
+                    return  <tr key={i}>
                     <td>
                       <h2 className="table-avatar">
                         <a href="profile.html" className="avatar avatar-sm mr-2">
