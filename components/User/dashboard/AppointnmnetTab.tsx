@@ -47,7 +47,7 @@ const AppointnmnetTab = ({data}:{
               </thead>
               <tbody>
                 {data.map((d, i) => {
-                  return <AppointmentUserTable data={d} />;
+                  return <AppointmentUserTable key={i} data={d} />;
                 })}
               </tbody>
             </table>
