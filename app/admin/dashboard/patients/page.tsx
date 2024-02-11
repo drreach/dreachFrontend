@@ -3,7 +3,7 @@ import PatientsList from '@/components/Admin/dashboard/PatientsList';
 import React from 'react'
 
 const page = async() => {
-    const  res = await fetch("http://localhost:8000/user/getPatients",{
+    const  res = await fetch(`${process.env.SERVER_URL}/user/getPatients`,{
         method: "GET",
         headers: {
             "Content-Type": "application/json",

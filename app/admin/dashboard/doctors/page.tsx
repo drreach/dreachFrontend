@@ -3,7 +3,7 @@ import DoctorList from '@/components/Admin/dashboard/DoctorList';
 import React from 'react'
 
 const page = async() => {
-    const  res = await fetch("http://localhost:8000/user/getApprovedDoctors",{
+    const  res = await fetch(`${process.env.SERVER_URL}/user/getApprovedDoctors`,{
         method: "GET",
         headers: {
             "Content-Type": "application/json",

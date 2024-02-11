@@ -2,7 +2,7 @@ import AdminDashboard from "@/components/Admin/dashboard/AdminDashboard";
 import React from "react";
 
 const page = async () => {
-  const res = await fetch("http://localhost:8000/user/getUnverifiedDoctors", {
+  const res = await fetch(`${process.env.SERVER_URL}/user/getUnverifiedDoctors`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
