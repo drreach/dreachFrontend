@@ -20,7 +20,7 @@ export default async function Layout({
     <>
       {/* Main Wrapper */}
       <div className="main-wrapper pt-28 md:px-10 overflow-x-hidden">
-        <div className="breadcrumb-bar">
+        {/* <div className="breadcrumb-bar">
           <div className="container-fluid">
             <div className="row align-items-center">
               <div className="col-md-12 col-12">
@@ -38,7 +38,7 @@ export default async function Layout({
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         {/* /Breadcrumb */}
         {/* Page Content */}
         <div className="content">

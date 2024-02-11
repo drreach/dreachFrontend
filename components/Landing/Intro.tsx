@@ -18,7 +18,7 @@ const Intro = () => {
           </button>
         </div>
 
-        <div className="my-5">
+        <div className="md:my-5">
           <img
             src="/assets/banner_img.png"
             className="w-[950px]  pt-[20px] h-full"

@@ -25,7 +25,7 @@ const page = async() => {
 
 
   return (
-   <Shedule mode={data.doctorProfile.mode} isAvailableForDesk={data.doctorProfile.isAvailableForDesk} OnlineShedule={data.OnlineShedule} />
+   <Shedule mode={data.doctorProfile.mode} isAvailableForDesk={data.doctorProfile.isAvailableForDesk} OnlineShedule={data.doctorProfile.schedules.OnlineShedule} />
   )
 }
 

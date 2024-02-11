@@ -179,27 +179,9 @@ const DoctorProfile = ({
 
  
   return (
-    <div className="main-wrapper pt-28  w-full md:px-10 mx-auto overflow-x-hidden">
+    <div className="main-wrapper pt-24  w-full md:px-10 mx-auto overflow-x-hidden">
       {/* Breadcrumb */}
-      <div className="breadcrumb-bar">
-        <div className="container-fluid">
-          <div className="row align-items-center">
-            <div className="col-md-12 col-12">
-              <nav aria-label="breadcrumb" className="page-breadcrumb">
-                <ol className="breadcrumb">
-                  <li className="breadcrumb-item">
-                    <a href="index-2.html">Home</a>
-                  </li>
-                  <li className="breadcrumb-item active" aria-current="page">
-                    Doctor Profile
-                  </li>
-                </ol>
-              </nav>
-              <h2 className="breadcrumb-title">Doctor Profile</h2>
-            </div>
-          </div>
-        </div>
-      </div>
+   
       {/* /Breadcrumb */}
       {/* Page Content */}
       <div className="content">
@@ -332,7 +314,7 @@ const DoctorProfile = ({
                       </li>
                     </ul>
                   </div>
-                  <div className="doctor-action">
+                  {/* <div className="doctor-action">
                     <a
                       href="javascript:void(0)"
                       className="btn btn-white fav-btn"
@@ -358,7 +340,7 @@ const DoctorProfile = ({
                     >
                       <i className="fas fa-video" />
                     </a>
-                  </div>
+                  </div> */}
 
                   <div className="my-3">
                     <Tabs>

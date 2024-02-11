@@ -22,7 +22,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
      
         {/* /Header */}
         {/* Breadcrumb */}
-        <div className="breadcrumb-bar">
+        {/* <div className="breadcrumb-bar">
           <div className="container-fluid">
             <div className="row align-items-center">
               <div className="col-md-12 col-12">
@@ -40,7 +40,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         {/* /Breadcrumb */}
         {/* Page Content */}
         <div className="content ">

@@ -36,7 +36,7 @@ const AppointmentCard = ({
           <a href="patient-profile.html" className="avatar avatar-sm mr-2">
             <img
               className="avatar-img rounded-circle"
-              src={data.user.profilePic ?? "/assets/doctor-1.jpg"}
+              src={data.user.profilePic ?`https://storage.googleapis.com/kiitconnect_bucket/doctorProfile/${data.user.profilePic}`  :"/assets/doctor-1.jpg"}
               alt="User Image"
             />
           </a>
