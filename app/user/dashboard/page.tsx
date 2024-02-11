@@ -14,7 +14,7 @@ const page = async() => {
     });
 
     if(res.status!==200){
-      throw new Error("Internal Server Error");
+      throw new Error("Internal Server Error!");
     }
 
     const data = await res.json();
