@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React from 'react'
 import { BsStarFill } from 'react-icons/bs';
+import FilterDoctors from './FilterDoctors';
 
 
 interface FindDoctorList{
@@ -31,6 +32,7 @@ interface FindDoctorList{
 const FindDoctors = ({data}:{data:FindDoctorList[]}) => {
   return (
     <div className="row row-grid">
+      <FilterDoctors/>
  {
 data && data.map((d,v)=>{
     return <div className="col-md-6 col-lg-4 col-xl-3">

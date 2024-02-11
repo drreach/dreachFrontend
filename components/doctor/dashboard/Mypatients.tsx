@@ -18,23 +18,21 @@ const Mypatients = ({data}:{data:{
     profilePic:string
 }}) => {
   return (
- 
-   
       <div className="col-md-6 col-lg-4 col-xl-3">
         <div className="card widget-profile pat-widget-profile">
-          <div className="card-body">
+          <div className="card-body border  border-primary rounded-md">
             <div className="pro-widget-content">
               <div className="profile-info-widget">
                 <a href="patient-profile.html" className="booking-doc-img">
-                  <img src={data.profilePic} alt="User Image" />
+                  <img src={data.profilePic??"/assets/doctor-1.jpg"} alt="User Image" />
                 </a>
                 <div className="profile-det-info">
                   <h3>
-                    <a href="patient-profile.html">{data.Fname} {data.Lname}</a>
+                    <a href="patient-profile.html" className='font-bold no-underline'>{data.Fname} {data.Lname}</a>
                   </h3>
                   <div className="patient-details">
-                    <h5>
-                      <b>Patient ID :</b> {data.userId}
+                    <h5 className=''>
+                      <b className='text-gray-800'>Patient ID :</b> <span className='text-black no-underline'>{data.userId}</span>
                     </h5>
                     <h5 className="mb-0">
                       <i className="fas fa-map-marker-alt" /> {data.address.address} {data.address.city}
@@ -54,7 +52,10 @@ const Mypatients = ({data}:{data:{
                 <li>
                   Blood Group <span>{data.bloodGroup}</span>
                 </li>
+
+                
               </ul>
+              <button className='btn btn-success items-center'>View Profile</button>
             </div>
           </div>
         </div>

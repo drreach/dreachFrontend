@@ -13,6 +13,7 @@ declare module "next-auth"{
     dob:string,
     gender:string
     bloodGroup:string,
+    profilePic:string,
     email:string,
     contact:string,
     doctorProfile:{

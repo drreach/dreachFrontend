@@ -23,3 +23,18 @@ export function convertDateToFormat(date="2024-01-17"){
   
   }
   
+
+
+  export const generateTimeSlots = (gap:number) => {
+    const times: string[] = [];
+    for (let hour = 1; hour < 24; hour++) {
+      for (let minute = 0; minute < 60; minute += gap) {
+        const timeString = `${hour.toString().padStart(2, "0")}:${minute
+          .toString()
+          .padStart(2, "0")}`;
+        times.push(timeString);
+      }
+    }
+    return times;
+  };
+  

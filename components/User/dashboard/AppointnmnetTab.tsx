@@ -3,16 +3,20 @@ import AppointmentUserTable from '../AppointmentUserTable';
 import Link from 'next/link';
 
 const AppointnmnetTab = ({data}:{
-    data:{
-        doctorName:string,
-        doctorImage:string,
-        AppointmentDate:string,
-        BookedDate:string,
-        Amount:string,
-        status:string;
-        specialization:string
-
-    }[]
+    data:
+      {
+        doctorProfile: {
+          user: { Fname: string, Lname: string, profilePic: string|null },
+          specializations: string[],
+          fee: null|number
+        },
+        appointmentSlotDate: string,
+        appointmentSlotTime: string,
+        createdAt:string,
+        isForOthers: boolean,
+        status: string
+      }[]
+    
 }) => {
   return (
 

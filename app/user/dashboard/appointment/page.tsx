@@ -1,5 +1,7 @@
 import AppointnmnetTab from '@/components/User/dashboard/AppointnmnetTab'
 import Tab from '@/components/User/dashboard/Tab';
+import { authOption } from '@/lib/AuthOptions/authOptions';
+import { getServerSession } from 'next-auth';
 // import TestTable from '@/components/dashboard/User/dashboard/Tables/TestTable';
 import React from 'react'
 const data = [
@@ -23,11 +25,27 @@ const data = [
       specialization: "Teeth",
     },
   ];
-const page = () => {
+const page = async() => {
+  const session = await getServerSession(authOption);
+  if (!session || !session?.data?.id) return <div>Not Authorized</div>;
+  const res = await fetch(
+    `http://localhost:8000/user/getAppointments/${session.data.id}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+     cache:"no-cache"
+    }
+  );
+
+  const d = await res.json();
+  console.log(d);
+
   return (
    <>
     <Tab  title='Appointment'  />
-    <AppointnmnetTab data={data}/>
+    <AppointnmnetTab data={d}/>
    </>
   )
 }

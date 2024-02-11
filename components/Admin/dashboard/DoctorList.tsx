@@ -10,7 +10,7 @@ interface UnverifiedDoctors {
       isActive: boolean;
     };
     createdAt: string;
-    status:"ACCEPTED"|"REJECTED"|"PENDING",
+    status:"APPROVED"|"REJECTED"|"PENDING",
   }
   
 const DoctorList = ({data}:{
@@ -60,7 +60,7 @@ const DoctorList = ({data}:{
                     <a href="profile.html" className="avatar avatar-sm mr-2">
                       <img
                         className="avatar-img rounded-circle"
-                        src="assets/img/doctors/doctor-thumb-01.jpg"
+                        src="/assets/doctors/doctor-thumb-01.jpg"
                         alt="User Image"
                       />
                     </a>
@@ -73,7 +73,7 @@ const DoctorList = ({data}:{
                   {/* <small>02.59 AM</small> */}
                 </td>
                 <td>
-                <button type="button" className={`btn ${d.status==="ACCEPTED"?"btn-success":"btn-danger"} btn-sm`}>{d.status==="ACCEPTED"?"Accepted":"Rejected"}</button>
+                <button type="button" className={`btn ${d.status==="APPROVED"?"btn-success":"btn-danger"} btn-sm`}>{d.status==="APPROVED"?"Accepted":"Rejected"}</button>
 
                 </td>
                 {/* <td>

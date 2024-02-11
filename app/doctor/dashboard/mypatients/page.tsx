@@ -1,4 +1,7 @@
 import Mypatients from '@/components/doctor/dashboard/Mypatients'
+import { authOption } from '@/lib/AuthOptions/authOptions';
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
 import React from 'react'
 
 interface Data{
@@ -59,13 +62,25 @@ const data:Data[]=[
     }
 ]
 
-const page = () => {
+const page = async() => {
+    const session = await getServerSession(authOption);
+    if(!session || !session.data) return redirect("/");
+    const res = await fetch(`http://localhost:8000/doctor/getPatients/${session?.data.doctorProfile.id}`,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        
+    });
+    console.log(res);
+    const data = await res.json();
+    console.log(data);
   return (
    <>
    
    <div className='row row-grid'>
-   {data.map((d,i)=>{
-    return <Mypatients data={d}/>
+   {data.map((d:any,i:number)=>{
+    return <Mypatients data={d.user}/>
    })}
    </div>
    </>

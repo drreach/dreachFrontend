@@ -7,8 +7,9 @@ const ApplyDoctor = () => {
     const session = useSession();
     if(!session.data) return <div>Not logged in</div>
   return (
-    <div>
-        <button onClick={async()=>{
+    <div className='w-full h-auto flex justify-center my-8 flex-col'>
+      <p>Create your doctor profile by using the create button below.</p>
+        <button className='btn btn-success w-[250px]' onClick={async()=>{
             if(!session.data) return <div>Not logged in</div>
            
             const data = await createDoctorProfile();

@@ -1,8 +1,18 @@
-import React from 'react'
 
-const DashInfo = () => {
+import React from "react";
+
+
+interface DashInfo{
+  totalAppointments: number,
+  totalPendingAppointments: number,
+  totalApprovedAppointments: number,
+  totalRejectedAppointments: number,
+  totalTodayAppointments:number
+}
+const DashInfo = ({data}:{data:DashInfo}) => {
+
+
   return (
-
     <div className="row">
       <div className="col-md-12">
         <div className="card dash-card">
@@ -21,7 +31,7 @@ const DashInfo = () => {
                   </div>
                   <div className="dash-widget-info">
                     <h6>Total Patient</h6>
-                    <h3>1500</h3>
+                    <h3>{data.totalApprovedAppointments}</h3>
                     <p className="text-muted">Till Today</p>
                   </div>
                 </div>
@@ -38,8 +48,8 @@ const DashInfo = () => {
                     </div>
                   </div>
                   <div className="dash-widget-info">
-                    <h6>Today Patient</h6>
-                    <h3>160</h3>
+                    <h6>Today Appointments</h6>
+                    <h3>{data.totalTodayAppointments}</h3>
                     <p className="text-muted">06, Nov 2019</p>
                   </div>
                 </div>
@@ -56,8 +66,8 @@ const DashInfo = () => {
                     </div>
                   </div>
                   <div className="dash-widget-info">
-                    <h6>Appoinments</h6>
-                    <h3>85</h3>
+                    <h6>Total Appoinments</h6>
+                    <h3>{data.totalAppointments}</h3>
                     <p className="text-muted">06, Apr 2019</p>
                   </div>
                 </div>
@@ -67,10 +77,7 @@ const DashInfo = () => {
         </div>
       </div>
     </div>
+  );
+};
 
-
-
-  )
-}
-
-export default DashInfo
+export default DashInfo;

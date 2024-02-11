@@ -41,7 +41,7 @@ const ReviewsList = () => {
                         <a href="profile.html" className="avatar avatar-sm mr-2">
                           <img
                             className="avatar-img rounded-circle"
-                            src="assets/img/patients/patient1.jpg"
+                            src="/assets/patients/patient1.jpg"
                             alt="User Image"
                           />
                         </a>
@@ -53,7 +53,7 @@ const ReviewsList = () => {
                         <a href="profile.html" className="avatar avatar-sm mr-2">
                           <img
                             className="avatar-img rounded-circle"
-                            src="assets/img/doctors/doctor-thumb-01.jpg"
+                            src="/assets/doctors/doctor-thumb-01.jpg"
                             alt="User Image"
                           />
                         </a>

@@ -1,23 +1,57 @@
 "use client"
-import { useState } from 'react';
-import { format } from 'date-fns';
 
-import { DayPicker } from 'react-day-picker';
+import * as React from "react"
+import { format } from "date-fns"
+import { Calendar as CalendarIcon } from "lucide-react"
 import 'react-day-picker/dist/style.css';
 
-export default function DatePick() {
-  const [selected, setSelected] = useState<Date>();
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { useAppDispatch, useAppSelector } from "@/Redux/hooks/hooks";
+import { setDob } from "@/Redux/reducers/UserReducers";
 
-  let footer = <p>Please pick a day.</p>;
-  if (selected) {
-    footer = <p>You picked {format(selected, 'PP')}.</p>;
-  }
+export function DatePickerDemo() {
+  // const [date, setDate] = React.useState<Date>()
+
+  const date = useAppSelector((state)=>state.userReducer.dob);
+
+  const dispatch = useAppDispatch();
+
+
   return (
-    <DayPicker
-    //   mode="default" 
-      selected={selected}
-      onSelect={setSelected}
-      footer={footer}
-    />
-  );
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          variant={"outline"}
+          className={cn(
+            "w-[280px] justify-start text-left font-normal",
+            !date && "text-muted-foreground"
+          )}
+        >
+          <CalendarIcon className="mr-2 h-4 w-4" />
+          {date ? format(date, "PPP") : <span>Pick a date</span>}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0">
+      <Calendar
+     mode="single"
+     selected={date}
+     required={true}
+     onSelect={(d)=>{
+      console.log(d);
+      
+      dispatch(setDob(d));
+     }}
+     captionLayout="dropdown-buttons"
+     fromYear={1900}
+     toYear={2024} />
+      </PopoverContent>
+    </Popover>
+  )
 }

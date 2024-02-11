@@ -13,9 +13,9 @@ export default async function Home() {
 
   console.log(session)
 
-  if(session && session.data.role === "NORMAL"){
+  if(session && session?.data?.role === "NORMAL"){
     return redirect("/user/dashboard");
-  }else if(session && session.data.role === "DOCTOR"){
+  }else if(session && session?.data?.role === "DOCTOR"){
     return redirect("/doctor/dashboard");
   }
   return (

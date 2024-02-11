@@ -5030,14 +5030,14 @@ html.menu-opened body {
 -----------------------*/
 
 .profile-sidebar {
-    background-color: #fff;
-	border: 1px solid #f0f0f0;
-    border-radius: 4px;
+    /* background-color: #fff; */
+	/* border: 1px solid #f0f0f0; */
+    /* border-radius: 4px; */
 	margin-bottom:30px;
 	overflow: hidden;
 }
 .pro-widget-content {
-    border-bottom: 1px solid #f0f0f0;
+    /* border-bottom: 1px solid #f0f0f0; */
     padding: 20px;
     text-align: center;
 }
@@ -6168,6 +6168,7 @@ html.menu-opened body {
 	}
 	.profile-sidebar {
 		margin-bottom: 20px;
+		
 	}
 	.appointment-tab {
 		margin-bottom: 20px;
@@ -6178,6 +6179,7 @@ html.menu-opened body {
 	}
 	.doctor-slider {
 		margin-top: 25px;
+
 	}
 	.breadcrumb-bar {
 		height: auto;
@@ -10862,3 +10864,16 @@ table.table-inbox tbody tr.checked {
 		display: none;
 	}
 }
+
+
+/* .rdp [aria-hidden="true"] {
+	@apply hidden;
+  }
+  
+  .rdp-vhidden {
+	@apply hidden;
+  }
+  
+  select::-webkit-scrollbar {
+	display: none;
+  } */

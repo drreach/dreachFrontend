@@ -94,7 +94,7 @@ const AdminDashboard = ({ data,patientsNo,DoctorsNo }: { data: UnverifiedDoctors
                     <FiLayout size={39} />
                   </span>
                   <div className="dash-count">
-                    <h3>199</h3>
+                    <h3>0</h3>
                   </div>
                 </div>
                 <div className="dash-widget-info">
@@ -162,7 +162,7 @@ const AdminDashboard = ({ data,patientsNo,DoctorsNo }: { data: UnverifiedDoctors
                                  <button
                                   onClick={async()=>{
                                     dispacth(setLoading(true))
-                                    const res = await actionsOnUser("ACCEPTED",d.id);
+                                    const res = await actionsOnUser("APPROVED",d.id);
                                     dispacth(setLoading(false))
 
                                     console.log(res);
