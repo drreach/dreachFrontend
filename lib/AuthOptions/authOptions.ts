@@ -29,7 +29,7 @@ export const authOption: NextAuthOptions = {
      try {
       if (account) {
         const res = await fetch(
-          `http://localhost:8000/user/signup`,
+          `${process.env.SERVER_URL}/user/signup`,
           {
             method: "POST",
             headers: {

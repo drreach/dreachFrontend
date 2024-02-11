@@ -14,7 +14,7 @@ export const actionsOnUser = async (action: string, id: string) => {
 console.log(action,id)
   try {
     const res = await fetch(
-      `http://localhost:8000/user/actionOnUser?action=${action}&userId=${id}`,
+      `${process.env.SERVER_URL}/user/actionOnUser?action=${action}&userId=${id}`,
       {
         method: "GET",
         headers: {

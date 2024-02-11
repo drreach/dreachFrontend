@@ -9,7 +9,7 @@ const page = async() => {
   const session = await getServerSession(authOption);
   if(!session || !session?.data || !session?.data?.doctorProfile?.id) return redirect("/")
 
-  const  res = await fetch(`http://localhost:8000/doctor/getDashInfo/${session.data.doctorProfile.id}`);
+  const  res = await fetch(`${process.env.SERVER_URL}/doctor/getDashInfo/${session.data.doctorProfile.id}`);
 
   console.log(res);
 

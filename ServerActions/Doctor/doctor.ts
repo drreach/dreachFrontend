@@ -12,7 +12,7 @@ export const updateSheduleToDatabase = async (shedules:any) => {
 
     try {
         const res = await fetch(
-            `http://localhost:8000/doctor/updateShedules`,
+            `${process.env.SERVER_URL}/doctor/updateShedules`,
             {
                 method: "POST",
                 headers: {
@@ -38,7 +38,7 @@ export const updateSheduleToDatabase = async (shedules:any) => {
 export const doctorAppointment=async(doctorProfileId:string,formData:{Fname:string,Lname:string,contact:string,email:string}|null,userId:string,date:string,time:string,lat:number,long:number,isForOthers:boolean)=>{
 
     try {
-        const res = await fetch("http://localhost:8000/doctor/bookAppointment",{
+        const res = await fetch(`${process.env.SERVER_URL}/doctor/bookAppointment`,{
         method:"POST",
         headers:{
             'Content-Type':"application/json"
@@ -75,7 +75,7 @@ export const ActionOnPatientsAppointment =async (userId:string,action:string,app
     if(!session || !session.data) return;
 
     try {
-        const res = await fetch("http://localhost:8000/doctor/actionOnPatients",{
+        const res = await fetch(`${process.env.SERVER_URL}/doctor/actionOnPatients`,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"

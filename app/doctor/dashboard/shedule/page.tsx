@@ -10,7 +10,7 @@ const page = async() => {
   if(!session || !session?.data?.doctorProfile?.id) return <div>Not Authorized</div>;
 
 
-  const res = await fetch(`http://localhost:8000/doctor/getShedules/${session?.data.doctorProfile.id}`,{
+  const res = await fetch(`${process.env.SERVER_URL}/doctor/getShedules/${session?.data.doctorProfile.id}`,{
     method: "GET",
     headers: {
       "Content-Type": "application/json",

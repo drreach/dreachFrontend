@@ -5,7 +5,7 @@ import React from 'react'
 
 const page = async({ params }:{params:{username:string}}) => {
   const session = await getServerSession(authOption);
-  const  res = await fetch(`http://localhost:8000/doctor/getdoctorProfile?username=${params.username}&userId=${session?.data?.id}`,{
+  const  res = await fetch(`${process.env.SERVER_URL}/doctor/getdoctorProfile?username=${params.username}&userId=${session?.data?.id}`,{
     method: "GET",
 
     headers: {

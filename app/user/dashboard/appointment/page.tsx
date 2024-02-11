@@ -29,7 +29,7 @@ const page = async() => {
   const session = await getServerSession(authOption);
   if (!session || !session?.data?.id) return <div>Not Authorized</div>;
   const res = await fetch(
-    `http://localhost:8000/user/getAppointments/${session.data.id}`,
+    `${process.env.SERVER_URL}/user/getAppointments/${session.data.id}`,
     {
       method: "GET",
       headers: {

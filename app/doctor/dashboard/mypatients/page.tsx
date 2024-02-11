@@ -65,7 +65,7 @@ const data:Data[]=[
 const page = async() => {
     const session = await getServerSession(authOption);
     if(!session || !session.data) return redirect("/");
-    const res = await fetch(`http://localhost:8000/doctor/getPatients/${session?.data.doctorProfile.id}`,{
+    const res = await fetch(`${process.env.SERVER_URL}/doctor/getPatients/${session?.data.doctorProfile.id}`,{
         method:"GET",
         headers:{
             "Content-Type":"application/json"

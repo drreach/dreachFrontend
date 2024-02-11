@@ -4,7 +4,7 @@ import React from 'react'
 
 const page = async() => {
 
-  const  res = await fetch("http://localhost:8000/user/findDoctorList",{
+  const  res = await fetch(`${process.env.SERVER_URL}/user/findDoctorList`,{
         method: "GET",
         headers: {
             "Content-Type": "application/json",

@@ -20,7 +20,7 @@ export const changeSession = async () => {
 export const updateUser = async (data: any) => {
   console.log(data);
   try {
-    const res = await fetch("http://localhost:8000/user/updateUser", {
+    const res = await fetch(`${process.env.SERVER_URL}/user/updateUser`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +48,7 @@ export const createDoctorProfile = async () => {
     return null;
   }
   try {
-    const res = await fetch(`http://localhost:8000/user/createDoctorProfile/`, {
+    const res = await fetch(`${process.env.SERVER_URL}/user/createDoctorProfile/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -78,7 +78,7 @@ export const createDoctorProfile = async () => {
 export const updateDoctorProfile=async(data:any)=>{
   console.log(data);
   try {
-    const res = await fetch("http://localhost:8000/user/updateDoctorProfile",{
+    const res = await fetch(`${process.env.SERVER_URL}/user/updateDoctorProfile`,{
         method:"POST",
         headers: {
           "Content-Type": "application/json",
@@ -102,7 +102,7 @@ export const updateDoctorProfile=async(data:any)=>{
 
 export const UpdateProfileImage = async (formData:FormData) =>{
   try {
-    const response = await axios.post(`http://localhost:8000/doctor/uploadDoctorProfile`, formData, {
+    const response = await axios.post(`${process.env.SERVER_URL}/doctor/uploadDoctorProfile`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -127,7 +127,7 @@ export const addReview = async (data:{doctorProfileId:string,comment:string}) =>
   const session = await getServerSession(authOption);
   if(!session || !session.data) return false;
   try {
-    const res = await fetch("http://localhost:8000/user/addReview",{
+    const res = await fetch(`${process.env.SERVER_URL}/user/addReview`,{
       method:"POST",
       headers:{
         "Content-Type":"application/json"

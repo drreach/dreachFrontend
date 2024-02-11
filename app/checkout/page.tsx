@@ -22,7 +22,7 @@ const page = async(props:Props) => {
 // console.log(dateOnly); 
     
     console.log(dateOnly);
-    const res = await fetch("http://localhost:8000/doctor/checkDoctorAvailability",{
+    const res = await fetch(`${process.env.SERVER_URL}/doctor/checkDoctorAvailability`,{
         method:"POST",
         headers:{
             'Content-Type':"application/json",
