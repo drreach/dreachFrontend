@@ -13,7 +13,7 @@ const DoctorsProfileSettings = async() => {
   }
 
 
-  const res = await fetch(`http://localhost:8000/user/getDoctor/${session.data.id}`,{
+  const res = await fetch(`${process.env.SERVER_URL}/user/getDoctor/${session.data.id}`,{
     method:"GET",
     headers: {
       "Content-Type": "application/json",
