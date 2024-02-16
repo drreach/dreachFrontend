@@ -106,6 +106,8 @@ const Checkout = ({
       mode
     );
 
+    console.log(res);
+
     if (res === 201) {
       updateToast(toastId, "Appointment Booked Successfully", "success");
       return router.push(

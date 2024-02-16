@@ -283,8 +283,9 @@ const DoctorProfile = ({
                           <input
                             className="form-check-input"
                             type="radio"
+                            onChange={()=>{setShedMode(urlMode)}}
                             name="flexRadioDefault"
-                            checked
+                            checked={shedMode === urlMode} 
                           />
                           <label
                             className="form-check-label"
@@ -298,7 +299,7 @@ const DoctorProfile = ({
                           <div className="flex gap-2">
                             <div className="form-check">
                               <input
-                                onClick={() =>
+                                onChange={() =>
                                   setShedMode(data?.doctorProfile?.mode)
                                 }
                                 className="form-check-input"

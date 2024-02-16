@@ -42,8 +42,9 @@ const FindDoctors = ({ data }: { data: FindDoctorList[] }) => {
   const doctorList = useAppSelector((state) => state.userReducer.doctorList);
 
   useEffect(() => {
-    if (data && !isFindingDoctor && doctorList.length === 0) {
+    if (doctorList.length === 0) {
       dispatch(setDoctorList(data));
+      console.log("called")
     }
   }, [data]);
 

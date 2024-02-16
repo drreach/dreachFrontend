@@ -108,6 +108,7 @@ export const doctorAppointment = async (
     Lname: string;
     contact: string;
     email: string;
+    reason:string
   } | null,
   userId: string,
   date: string,
@@ -141,13 +142,16 @@ export const doctorAppointment = async (
             : null,
           othersContact: formData?.contact,
           othersEmail: formData?.email,
+          reason:formData?.reason
         }),
       }
     );
 
+    console.log(res);
+
     return res.status;
   } catch (error) {
-    console.log(error);
+    console.log("error",error);
     return 500;
   }
 };
