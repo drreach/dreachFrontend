@@ -89,7 +89,7 @@ const FindDoctorsByHome = ({
                   </h3>
 
                   <p className=" text-[12px]">{d.specializations.join(",")}</p>
-                  <div className="rating">
+                  {/* <div className="rating">
                     <BsStarFill className="text-yellow-500" size={20} />
                     <BsStarFill className="text-yellow-500" size={20} />
                     <BsStarFill className="text-yellow-500" size={20} />
@@ -97,7 +97,7 @@ const FindDoctorsByHome = ({
                     <BsStarFill className="text-yellow-500" size={20} />
 
                     <span className="d-inline-block average-rating">(17)</span>
-                  </div>
+                  </div> */}
                   <ul className="available-info mt-0">
                     <li>
                       <i className="fas fa-map-marker-alt" />
@@ -125,7 +125,7 @@ const FindDoctorsByHome = ({
                     <Link
                       href={`/doctorprofile/${d.user.username}?mode=${mode}&${url}`}
                       type="button"
-                      className="w-full btn btn-dark btn-sm"
+                      className="w-full btn btn-info btn-sm"
                     >
                       Book {d?.mode}
                     </Link>
