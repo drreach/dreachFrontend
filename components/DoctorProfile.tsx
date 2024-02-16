@@ -209,10 +209,10 @@ const DoctorProfile = ({
 
       {/* /Breadcrumb */}
       {/* Page Content */}
-      <div className="content">
-        <div className="container">
+      <div className="">
+        <div className="px-1">
           {/* Doctor Widget */}
-          <div className="card">
+          <div className="border-t border-r border-l border-gray-300 rounded-md p-2 md:p-5">
             <div className="card-body">
               <div className="doctor-widget">
                 <div className="doc-info-left">
@@ -276,7 +276,7 @@ const DoctorProfile = ({
                     </ul>
                   </div>
 
-                  <div className="my-3 border border-blue-800 gap-2 flex flex-col p-3 rounded-md">
+                  <div className="my-3 border border-blue-800 gap-2 flex flex-col p-2 md:p-3 rounded-md">
                     <div className="d-flex ">
                       {urlMode ? (
                         <div className="form-check">

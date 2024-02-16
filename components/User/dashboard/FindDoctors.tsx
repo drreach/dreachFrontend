@@ -80,7 +80,7 @@ const FindDoctors = ({ data }: { data: FindDoctorList[] }) => {
                   </h3>
 
                   <p className=" text-[12px]">{d.specializations.join(",")}</p>
-                  <div className="rating">
+                  {/* <div className="rating">
                     <BsStarFill className="text-yellow-500" size={20} />
                     <BsStarFill className="text-yellow-500" size={20} />
                     <BsStarFill className="text-yellow-500" size={20} />
@@ -88,7 +88,7 @@ const FindDoctors = ({ data }: { data: FindDoctorList[] }) => {
                     <BsStarFill className="text-yellow-500" size={20} />
 
                     <span className="d-inline-block average-rating">(17)</span>
-                  </div>
+                  </div> */}
                   <ul className="available-info mt-0">
                     <li>
                       <i className="fas fa-map-marker-alt" />
@@ -96,7 +96,7 @@ const FindDoctors = ({ data }: { data: FindDoctorList[] }) => {
                     </li>
 
                     <li>
-                      <i className="far fa-money-bill-alt" /> $300 - $1000{" "}
+                      <i className="far fa-money-bill-alt" /> Rs.200-500{" "}
                       <i
                         className="fas fa-info-circle"
                         data-toggle="tooltip"
@@ -114,7 +114,7 @@ const FindDoctors = ({ data }: { data: FindDoctorList[] }) => {
                     <Link
                       href={`/doctorprofile/${d.user.username}?single_mode=${d.mode}`}
                       type="button"
-                      className="w-full btn btn-dark btn-sm"
+                      className="w-full btn btn-info text-white font-bold btn-sm"
                     >
                       Book {d?.mode}
                     </Link>

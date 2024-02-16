@@ -10,8 +10,8 @@ const Sidebar = () => {
   const session = useSession();
   const router = usePathname();
   return (
-    <div className="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar border border-gray-700 rounded-md ">
-      <div className="profile-sidebar">
+    <div className="col-md-5  col-lg-4 col-xl-3 theiaStickySidebar  border border-gray-700 rounded-md ">
+      <div className="profile-sidebar ">
         <div className="widget-profile pro-widget-content">
           <div className="profile-info-widget">
             <a href="#" className="booking-doc-img">

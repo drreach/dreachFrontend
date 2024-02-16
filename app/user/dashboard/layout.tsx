@@ -43,14 +43,14 @@ export default async function Layout({ children }: { children: React.ReactNode }
         </div> */}
         {/* /Breadcrumb */}
         {/* Page Content */}
-        <div className="content ">
-          <div className="container-fluid">
-            <div className="row">
+        <div className="px-1 ">
+          <div className="">
+            <div className="row ">
               {/* Profile Sidebar */}
            <Sidebar/>
               {/* / Profile Sidebar */}
               <div className="col-md-7 col-lg-8 col-xl-9">
-                <div className="card">
+                <div className="px-1">
                   <div className="card-body pt-0">
                  
                     {/* Tab Content */}
