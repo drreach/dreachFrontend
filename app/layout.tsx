@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import Navbar from "@/components/Navbar";
 import { Providers } from "./provider";
 import Footer from "@/components/Footer";
+import Toaster from "@/components/Toaster";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -27,8 +28,10 @@ export default function RootLayout({
         
         {children}
 
+
         </Providers>
         <Footer/>
+        <Toaster/>
         </body>
     </html>
   );

@@ -2,10 +2,12 @@
 import { useAppDispatch, useAppSelector } from "@/Redux/hooks/hooks";
 import { setAptFor, setCurrentLocation } from "@/Redux/reducers/UserReducers";
 import { doctorAppointment } from "@/ServerActions/Doctor/doctor";
-import { convertDateToFormat } from "@/utils/utils";
+import { convertDateToFormat, loadToast, updateToast } from "@/utils/utils";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 interface Data {
   doctor: {
@@ -14,11 +16,11 @@ interface Data {
       doctorProfileId: string;
       OnlineShedule: string[];
       DeskShedule: [];
-
     };
     fee: number | null;
-    id:string
+    id: string;
     mode: string;
+    reason: string;
     user: {
       Fname: string;
       Lname: string;
@@ -39,10 +41,12 @@ const Checkout = ({
   data,
   time,
   date,
+  mode,
 }: {
   data: Data;
   time?: string;
   date?: string;
+  mode: string;
 }) => {
   const {
     register,
@@ -53,19 +57,24 @@ const Checkout = ({
 
   const session = useSession();
 
-
+  const router = useRouter();
 
   const apptFor = useAppSelector((state) => state.userReducer.apptFor);
   const dispatch = useAppDispatch();
 
-  const location = useAppSelector(state=>state.userReducer.currentLocation)
+  const location = useAppSelector((state) => state.userReducer.currentLocation);
 
   const getLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-        //   dispatch(setCurrentLocation(position.coords.latitude));
-          dispatch(setCurrentLocation({lat:position.coords.latitude,long:position.coords.longitude}));
+          //   dispatch(setCurrentLocation(position.coords.latitude));
+          dispatch(
+            setCurrentLocation({
+              lat: position.coords.latitude,
+              long: position.coords.longitude,
+            })
+          );
           console.log(position.coords);
         },
         (error) => {
@@ -77,15 +86,34 @@ const Checkout = ({
     }
   };
 
-  const submit = async(formData:any)=>{
-    console.log({...formData,...location});
-    if(!session || !session.data) return alert("session Required");
+  const submit = async (formData: any) => {
+    if (!session || !session.data)
+      return toast.error("Please Login to Book Appointment");
 
-  if(location.lat===0.00 || location.long===0) return alert("Location Required");
+    if (location.lat === 0.0 || location.long === 0)
+      return toast.error("Location is Required");
+    if (!formData.reason) return toast.error("Reason is Required");
+    const toastId = loadToast("Please wait,Booking Appointment");
+    const res = await doctorAppointment(
+      data.doctor.id,
+      formData,
+      session.data?.user.id,
+      date!,
+      time!,
+      location.lat,
+      location.long,
+      apptFor === "OTHER",
+      mode
+    );
 
-    const res = await doctorAppointment(data.doctor.id,formData,session.data?.user.id,date!,time!,location.lat,location.long,apptFor==="OTHER")
-    console.log(res);
-  }
+    if (res === 201) {
+      updateToast(toastId, "Appointment Booked Successfully", "success");
+      return router.push(
+        `/booked?h_doctorName=${data.doctor.user.Fname} ${data.doctor.user.Lname}&h_apptDate=${date}&h_slotTime=${time}`
+      );
+    }
+    return updateToast(toastId, "Failed to Book Appointment", "error");
+  };
 
   return (
     <>
@@ -146,8 +174,10 @@ const Checkout = ({
                           <div className="form-group card-label">
                             <label>First Name</label>
                             <input
-                              {...register("Fname",{required:apptFor==="OTHER"})}
-                              disabled={apptFor==="ME"}
+                              {...register("Fname", {
+                                required: apptFor === "OTHER",
+                              })}
+                              disabled={apptFor === "ME"}
                               defaultValue={
                                 apptFor === "ME"
                                   ? `${session?.data?.data?.Fname}`
@@ -156,19 +186,21 @@ const Checkout = ({
                               className="form-control"
                               type="text"
                             />
-                             {errors.Fname && (
-                            <span className="text-danger">
-                              This field is required
-                            </span>
-                          )}
+                            {errors.Fname && (
+                              <span className="text-danger">
+                                This field is required
+                              </span>
+                            )}
                           </div>
                         </div>
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
                             <label>Last Name</label>
                             <input
-                            disabled={apptFor==="ME"}
-                              {...register("Lname", { required: apptFor==="OTHER" })}
+                              disabled={apptFor === "ME"}
+                              {...register("Lname", {
+                                required: apptFor === "OTHER",
+                              })}
                               defaultValue={
                                 apptFor === "ME"
                                   ? `${session?.data?.data?.Lname}`
@@ -177,99 +209,122 @@ const Checkout = ({
                               className="form-control"
                               type="text"
                             />
-                             {errors.Lname && (
-                            <span className="text-danger">
-                              This field is required
-                            </span>
-                          )}
+                            {errors.Lname && (
+                              <span className="text-danger">
+                                This field is required
+                              </span>
+                            )}
                           </div>
                         </div>
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
                             <label>Email</label>
                             <input
-                            disabled={apptFor==="ME"}
-                              {...register("email", { required: apptFor==="OTHER" })}
+                              disabled={apptFor === "ME"}
+                              {...register("email", {
+                                required: apptFor === "OTHER",
+                              })}
                               className="form-control"
                               type="email"
-                              
                               defaultValue={
                                 apptFor === "ME"
                                   ? `${session?.data?.data?.email}`
                                   : ""
                               }
                             />
-                             {errors.email && (
-                            <span className="text-danger">
-                              This field is required
-                            </span>
-                          )}
+                            {errors.email && (
+                              <span className="text-danger">
+                                This field is required
+                              </span>
+                            )}
                           </div>
                         </div>
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
                             <label>Phone</label>
                             <input
-                              {...register("contact",{ required: apptFor==="OTHER" })}
+                              {...register("contact", {
+                                required: apptFor === "OTHER",
+                              })}
                               className="form-control"
                               type="text"
+                              defaultValue={session.data?.data.contact}
+                              disabled={apptFor === "ME"}
                             />
-                             {errors.contact && (
-                            <span className="text-danger">
-                              This field is required
-                            </span>
-                          )}
+                            {errors.contact && (
+                              <span className="text-danger">
+                                This field is required
+                              </span>
+                            )}
                           </div>
                         </div>{" "}
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
+                            <label>Appointment Reason</label>
+                            <textarea
+                              {...register("reason", {
+                                required: true,
+                              })}
+                              className="form-control"
+                            />
+                            {errors.reason && (
+                              <span className="text-danger">
+                                This field is required
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <div className="col-md-6 col-sm-12">
+                          <div className="form-group card-label">
                             <label>Latitue</label>
                             <input
-                              
                               className="form-control"
                               defaultValue={location.lat}
                               type="number"
                               disabled
                               value={location.lat}
                             />
-                             {errors.lat && (
-                            <span className="text-danger">
-                              This field is required
-                            </span>
-                          )}
+                            {errors.lat && (
+                              <span className="text-danger">
+                                This field is required
+                              </span>
+                            )}
                           </div>
                         </div>{" "}
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
                             <label>Longitude</label>
                             <input
-                            
                               className="form-control"
                               defaultValue={location.long}
                               value={location.long}
                               type="number"
                               disabled
                             />
-                             {errors.long && (
-                            <span className="text-danger">
-                              This field is required
-                            </span>
-                          )}
+                            {errors.long && (
+                              <span className="text-danger">
+                                This field is required
+                              </span>
+                            )}
                           </div>
                         </div>
                       </div>
 
                       <div className="exist-customer">
-                        
-                        <button className="btn btn-primary" type="button" onClick={() => getLocation()}>
+                        <button
+                          className="btn btn-primary"
+                          type="button"
+                          onClick={() => getLocation()}
+                        >
                           Get Current Location
                         </button>
                       </div>
                     </div>
                     {/* /Personal Information */}
 
-                    <button type="submit" className="btn btn-success">Submit</button>
-               
+                    <button type="submit" className="btn btn-success">
+                      Submit
+                    </button>
                   </form>
                   {/* /Checkout Form */}
                 </div>
@@ -300,14 +355,7 @@ const Checkout = ({
                           {data.doctor.user.Lname}
                         </a>
                       </h4>
-                      {/* <div className="rating">
-                      <i className="fas fa-star filled" />
-                      <i className="fas fa-star filled" />
-                      <i className="fas fa-star filled" />
-                      <i className="fas fa-star filled" />
-                      <i className="fas fa-star" />
-                      <span className="d-inline-block average-rating">35</span>
-                    </div> */}
+
                       <div className="clinic-details">
                         <p className="doc-location">
                           <i className="fas fa-map-marker-alt" />

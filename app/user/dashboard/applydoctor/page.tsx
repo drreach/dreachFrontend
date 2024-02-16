@@ -20,7 +20,6 @@ const page = async () => {
     }
   );
 
-  console.log(res.status);
   if (res.status === 404) {
     return (
       <div>
@@ -28,8 +27,6 @@ const page = async () => {
       </div>
     );
   }
-  const doctorProfile = await res.json();
-
   return <div>
     <DoctorsProfileSettings/>
   </div>;

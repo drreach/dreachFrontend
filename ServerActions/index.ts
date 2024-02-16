@@ -12,13 +12,13 @@ export const changeSession = async () => {
   if (session)
     // session.user.email = "ram@kiit.ac.in";
 
-    console.log(session);
+    // console.log(session);
 
-  return session;
+    return session;
 };
 
 export const updateUser = async (data: any) => {
-  console.log(data);
+  // console.log(data);
   try {
     const res = await fetch(`${process.env.SERVER_URL}/user/updateUser`, {
       method: "POST",
@@ -30,14 +30,23 @@ export const updateUser = async (data: any) => {
 
     if (res.status === 201) {
       const data = await res.json();
-
-      // console.log("Updated",session);
-      return data;
+      return {
+        status: 201,
+        message: "User Updated",
+        data,
+      };
     }
-
+    return {
+      status: res.status,
+      message: res.statusText,
+    };
     console.log(res);
   } catch (error) {
     console.log(error);
+    return {
+      status: 500,
+      message: "Internal Server Error",
+    };
   }
 };
 
@@ -48,23 +57,23 @@ export const createDoctorProfile = async () => {
     return null;
   }
   try {
-    const res = await fetch(`${process.env.SERVER_URL}/user/createDoctorProfile/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: session?.data.id,
-      }),
-
-      
-
-    });
+    const res = await fetch(
+      `${process.env.SERVER_URL}/user/createDoctorProfile/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: session?.data.id,
+        }),
+      }
+    );
 
     const data = await res.json();
 
-    revalidateTag("ApplyDoctor")
-    
+    revalidateTag("ApplyDoctor");
+
     return data;
   } catch (error) {
     return {
@@ -74,71 +83,92 @@ export const createDoctorProfile = async () => {
   }
 };
 
-
-export const updateDoctorProfile=async(data:any)=>{
-  console.log(data);
+export const updateDoctorProfile = async (data: any) => {
+  // console.log(data);
   try {
-    const res = await fetch(`${process.env.SERVER_URL}/user/updateDoctorProfile`,{
-        method:"POST",
+    const res = await fetch(
+      `${process.env.SERVER_URL}/user/updateDoctorProfile`,
+      {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body:JSON.stringify(data)
-    });
-    console.log(res);
-    revalidateTag("ApplyDoctor")
+        body: JSON.stringify(data),
+      }
+    );
+    // console.log(res);
+    revalidateTag("ApplyDoctor");
+    if (res.status === 201) {
+      return {
+        status: 201,
+        message: "Doctor Profile Updated",
+        data: await res.json(),
+      };
+    }
+
     return {
-      status:201,
-      message:"Doctor Profile Updated",
-      data:await res.json()
-    
+      status: res.status,
+      message: res.statusText,
     };
   } catch (error) {
     console.log(error);
+    return {
+      status: 500,
+      message: "Internal Server Error",
+    };
   }
+};
 
-}
-
-
-export const UpdateProfileImage = async (formData:FormData) =>{
+export const UpdateProfileImage = async (formData: FormData) => {
   try {
-    const response = await axios.post(`${process.env.SERVER_URL}/doctor/uploadDoctorProfile`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    if(response.status === 201){
-    
+    const response = await axios.post(
+      `${process.env.SERVER_URL}/doctor/uploadDoctorProfile`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    if (response.status === 201) {
       return {
-        status:201,
-        message:"Profile Image Updated",
-        profilePic:response.data
+        status: 201,
+        message: "Profile Image Updated",
+        profilePic: response.data,
       };
     }
-    return false;
+    return {
+      status: response.status,
+      message: response.statusText,
+    };
   } catch (error) {
     console.log(error);
-    return false;
+    return {
+      status: 500,
+      message: "Internal Server Error",
+    };
   }
-}
+};
 
-
-export const addReview = async (data:{doctorProfileId:string,comment:string}) =>{
+export const addReview = async (data: {
+  doctorProfileId: string;
+  comment: string;
+}) => {
   const session = await getServerSession(authOption);
-  if(!session || !session.data) return false;
+  if (!session || !session.data) return false;
   try {
-    const res = await fetch(`${process.env.SERVER_URL}/user/addReview`,{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
+    const res = await fetch(`${process.env.SERVER_URL}/user/addReview`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-      body:JSON.stringify({...data,userId:session?.data.id})
-    }); 
+      body: JSON.stringify({ ...data, userId: session?.data.id }),
+    });
 
-    if(res.status === 201){
+    if (res.status === 201) {
       return {
-        status:201,
-        message:"Review Added"
+        status: 201,
+        message: "Review Added",
       };
     }
     return false;
@@ -146,4 +176,78 @@ export const addReview = async (data:{doctorProfileId:string,comment:string}) =>
     console.log(error);
     return false;
   }
-}
+};
+
+export const filterDoctor = async (speciality: string, address: string) => {
+  try {
+    const d = await fetch(
+      `${process.env.SERVER_URL}/user/findDoctorList?address=${address}&speciality=${speciality}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          // "Authorization": "Bearer "+localStorage.getItem("token")
+        },
+        cache: "no-cache",
+      }
+    );
+
+    if (d.status !== 200) {
+      throw new Error("Internal Server Error!");
+    }
+
+    const data = await d.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Internal Server Error!");
+  }
+};
+
+export const validateRoutes = async (tags: string) => {
+  try {
+    revalidateTag(tags);
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export const addDocument = async (data: FormData) => {
+  try {
+    const response = await axios.post(
+      `${process.env.SERVER_URL}/doctor/addDocuments`,
+      data,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response.status;
+  } catch (error) {
+    console.log(error);
+    return 500;
+  }
+};
+
+export const removeDocument = async (id: string) => {
+  try {
+    const response = await fetch(
+      `${process.env.SERVER_URL}/doctor/removeDocuments`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ doctorId: id }),
+      }
+    );
+
+    return response.status;
+  } catch (error) {
+    console.log(error);
+    return 500;
+  }
+};

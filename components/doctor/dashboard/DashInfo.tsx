@@ -1,17 +1,13 @@
-
 import React from "react";
 
-
-interface DashInfo{
-  totalAppointments: number,
-  totalPendingAppointments: number,
-  totalApprovedAppointments: number,
-  totalRejectedAppointments: number,
-  totalTodayAppointments:number
+interface DashInfo {
+  totalAppointments: number;
+  totalPendingAppointments: number;
+  totalApprovedAppointments: number;
+  totalRejectedAppointments: number;
+  totalTodayAppointments: number;
 }
-const DashInfo = ({data}:{data:DashInfo}) => {
-
-
+const DashInfo = ({ data }: { data: DashInfo }) => {
   return (
     <div className="row">
       <div className="col-md-12">

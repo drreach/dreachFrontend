@@ -69,10 +69,10 @@ const Sidebar = () => {
             </li>
 
             <li>
-              <a href="doctor-profile-settings.html">
+              <Link href="/doctor/dashboard/profilesettings">
                 <i className="fas fa-user-cog" />
                 <span className="font-medium">Profile Settings</span>
-              </a>
+              </Link>
             </li>
 
             <li>

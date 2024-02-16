@@ -4,27 +4,13 @@ import {
   setActiveDotcorTab,
   setAppointmentDetails,
 } from "@/Redux/reducers/UserReducers";
-import React, { useEffect } from "react";
-import { BsStarFill } from "react-icons/bs";
-import Header from "./Header";
-
+import React, { useEffect, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import WriteDoctorReview from "./WriteDoctorReview";
-
-//get today and tomorrow
-const getTodayAndTomorrow = () => {
-  const date = new Date();
-  const today = date.getDate();
-  const tomorrow = today + 1;
-  console.log(today, tomorrow);
-  return {
-    today,
-    tomorrow,
-  };
-};
+import MapTimes from "./MapTimes";
 
 const convertDate = (date: string) => {
   const d = new Date(date);
@@ -90,6 +76,16 @@ interface SheduleData {
   sat: SheduleTime[];
 }
 
+const modeMap = (mode: string, Home?: [], Desk?: [], Video?: []) => {
+  if (mode === "CLINIC_VISIT") {
+    return Desk;
+  } else if (mode === "HOME_VISIT") {
+    return Home;
+  } else if (mode === "VIDEO_CONSULT") {
+    return Video;
+  }
+};
+
 type DoctorProfile = {
   id: string;
   username: string;
@@ -118,6 +114,8 @@ type DoctorProfile = {
   doctorProfile: {
     specializations: string[];
     schedules: SheduleData;
+    mode: string;
+    isAvailableForDesk: boolean;
 
     shedules: {};
 
@@ -130,6 +128,13 @@ type DoctorProfile = {
       clinic: string;
       duration: string;
     }[];
+    clinicInfo: {
+      clinicName: string;
+      address: string;
+      contact: string;
+      images: string[];
+    }[];
+
     awards: {
       date: string;
       title: string;
@@ -141,26 +146,38 @@ type DoctorProfile = {
     experience: number;
     description: string;
     status: string;
-    
   };
 };
 
 const DoctorProfile = ({
   data,
+  singleMode,
   slots,
   isBookedByCurrentUser,
   isDoctorAppointedEver,
   status,
+  availableSlots,
+  urlMode,
+  url,
+  h_date,
+  h_time,
 }: {
   data: DoctorProfile;
+  urlMode: string | undefined;
+  singleMode: string | undefined;
+  availableSlots?: string[];
+  url: string | undefined;
+  h_date: string | undefined;
+  h_time: string | undefined;
   slots: {
     date: string;
-    availableSlots: [];
-    
+    availableSlotsDesk: [];
+    availableSlotsVideo: [];
+    availableSlotsHome: [];
   }[];
   isBookedByCurrentUser: boolean;
   status: string;
-  isDoctorAppointedEver:boolean
+  isDoctorAppointedEver: boolean;
 }) => {
   const dispatch = useAppDispatch();
   const activeTab = useAppSelector(
@@ -176,12 +193,20 @@ const DoctorProfile = ({
   };
 
   const session = useSession();
+  const [shedMode, setShedMode] = useState(
+    singleMode ? singleMode : data.doctorProfile.mode
+  );
 
- 
+  // useEffect(() => {
+  //   // if (data.doctorProfile.mode) {
+  //   //   setShedMode(data.doctorProfile.mode);
+  //   // }
+  // }, [data.doctorProfile.mode]);
+
   return (
     <div className="main-wrapper pt-24  w-full md:px-10 mx-auto overflow-x-hidden">
       {/* Breadcrumb */}
-   
+
       {/* /Breadcrumb */}
       {/* Page Content */}
       <div className="content">
@@ -206,91 +231,26 @@ const DoctorProfile = ({
                     <h4 className="doc-name">
                       {data?.Fname} {data?.Lname}
                     </h4>
-                    <p className="doc-speciality">
+                    {/* <p className="doc-speciality">
                       {data?.doctorProfile?.specializations?.join(",")}
-                    </p>
+                    </p> */}
                     <p className="doc-department">
-                      <img
+                      {/* <img
                         src="/assets/specialities/specialities-05.png"
                         className="img-fluid"
                         alt="Speciality"
-                      />
-                      Dentist
+                      /> */}
+                      {data?.doctorProfile?.specializations?.join(",")}
                     </p>
-                    <div className="rating">
-                      {/* <i className="fas fa-star filled" />
-                    <i className="fas fa-star filled" />
-                    <i className="fas fa-star filled" />
-                    <i className="fas fa-star filled" /> */}
-                      <BsStarFill size={20} className="text-yellow-500" />
-                      <BsStarFill size={20} className="text-yellow-500" />
-                      <BsStarFill size={20} className="text-yellow-500" />
-                      <BsStarFill size={20} className="text-yellow-500" />
-                      <BsStarFill size={20} className="text-yellow-500" />
-                      <i className="fas fa-star" />
-                      <span className="d-inline-block average-rating">
-                        (35)
-                      </span>
-                    </div>
+
                     <div className="clinic-details">
                       <p className="doc-location">
                         <i className="fas fa-map-marker-alt" />{" "}
                         {data?.address?.address}, {data?.address?.city},{" "}
                         {data?.address?.state}, {data?.address?.country},{" "}
                         {data?.address?.pincode}
-                        {/* <a href="javascript:void(0);">Get Directions</a> */}
                       </p>
-                      {/* <ul className="clinic-gallery">
-                      <li>
-                        <a
-                          href="assets/img/features/feature-01.jpg"
-                          data-fancybox="gallery"
-                        >
-                          <img
-                            src="assets/img/features/feature-01.jpg"
-                            alt="Feature"
-                          />
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="assets/img/features/feature-02.jpg"
-                          data-fancybox="gallery"
-                        >
-                          <img
-                            src="assets/img/features/feature-02.jpg"
-                            alt="Feature Image"
-                          />
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="assets/img/features/feature-03.jpg"
-                          data-fancybox="gallery"
-                        >
-                          <img
-                            src="assets/img/features/feature-03.jpg"
-                            alt="Feature"
-                          />
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="assets/img/features/feature-04.jpg"
-                          data-fancybox="gallery"
-                        >
-                          <img
-                            src="assets/img/features/feature-04.jpg"
-                            alt="Feature"
-                          />
-                        </a>
-                      </li>
-                    </ul> */}
                     </div>
-                    {/* <div className="clinic-services">
-                    <span>Dental Fillings</span>
-                    <span>Teeth Whitneing</span>
-                  </div> */}
                   </div>
                 </div>
                 <div className="w-full md:w-3/4">
@@ -299,140 +259,218 @@ const DoctorProfile = ({
                       {/* <li>
                       <i className="far fa-thumbs-up" /> 99%
                     </li> */}
-                      <li>
+                      {/* <li>
                         <i className="far fa-comment" /> 35 Feedback
-                      </li>
+                      </li> */}
                       <li>
                         <i className="fas fa-map-marker-alt" /> {data?.contact}
                       </li>
                       <li>
                         <i className="far fa-money-bill-alt" /> {data?.email}
                       </li>
+
                       <li>
                         <i className="far fa-money-bill-alt" />{" "}
                         {data?.doctorProfile?.fee}
                       </li>
                     </ul>
                   </div>
-                  {/* <div className="doctor-action">
-                    <a
-                      href="javascript:void(0)"
-                      className="btn btn-white fav-btn"
-                    >
-                      <i className="far fa-bookmark" />
-                    </a>
-                    <a href="chat.html" className="btn btn-white msg-btn">
-                      <i className="far fa-comment-alt" />
-                    </a>
-                    <a
-                      href="javascript:void(0)"
-                      className="btn btn-white call-btn"
-                      data-toggle="modal"
-                      data-target="#voice_call"
-                    >
-                      <i className="fas fa-phone" />
-                    </a>
-                    <a
-                      href="javascript:void(0)"
-                      className="btn btn-white call-btn"
-                      data-toggle="modal"
-                      data-target="#video_call"
-                    >
-                      <i className="fas fa-video" />
-                    </a>
-                  </div> */}
 
-                  <div className="my-3">
-                    <Tabs>
-                      <TabList>
-                        {slots &&
-                          slots.map((s, i) => {
-                            return (
-                              <Tab key={i}>
-                                {i == 0
-                                  ? "Today"
-                                  : i == 1
-                                  ? "Tomorrow"
-                                  : `${
-                                      numberToMonthMap[
-                                        convertDate(s.date)
-                                          .month as keyof typeof numberToMonthMap
-                                      ]
-                                    } ${convertDate(s.date).day}`}
-                              </Tab>
-                            );
-                          })}
-                      </TabList>
-                      {slots.map((s, i) => {
-                        return (
-                          <TabPanel key={i}>
-                            {/* <div className='grid grid-cols-10 gap-2'>
-        {slots[i].availableSlots && slots[i].availableSlots.map((a,i)=>{
-          return <span className='bg-red-500 rounded-md px-2 py-2'>{a}</span>
-        })}
-      </div> */}
-
-                            <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-8 gap-2 mx-2">
-                              {s.availableSlots.map((slot: string, index) => (
-                                <div 
-                                  onClick={() =>
-                                    dispatch(
-                                      setAppointmentDetails({
-                                        time: slot,
-                                        date: s.date,
-                                        doctorId: data.doctorProfile.id,
-                                      })
-                                    )
-                                  }
-                                  className={`${
-                                    s.date === appointmentDetails.date &&
-                                    slot === appointmentDetails.time &&
-                                    appointmentDetails.doctorId ===
-                                      data.doctorProfile.id
-                                      ? "bg-cyan-500"
-                                      : "bg-green-500"
-                                  } rounded-md items-center flex hover:bg-red-400 flex-row justify-around cursor-pointer text-white font-bold w-full`}
-                                  key={index}
-                                >
-                                  <span>
-                                    {parseInt(slot.split(":")[0], 10) >= 12
-                                      ? `${
-                                          parseInt(slot.split(":")[0], 10) ===
-                                          12
-                                            ? 12
-                                            : parseInt(slot.split(":")[0], 10) -
-                                              12
-                                        }:${slot.split(":")[1]} PM`
-                                      : `${slot} AM`}
-                                  </span>
-                                </div>
-                              ))}
+                  <div className="my-3 border border-blue-800 gap-2 flex flex-col p-3 rounded-md">
+                    <div className="d-flex ">
+                      {urlMode ? (
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="radio"
+                            name="flexRadioDefault"
+                            checked
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="flexRadioDefault2"
+                          >
+                            HybridMode: {urlMode}
+                          </label>
+                        </div>
+                      ) : (
+                        data?.doctorProfile?.mode && (
+                          <div className="flex gap-2">
+                            <div className="form-check">
+                              <input
+                                onClick={() =>
+                                  setShedMode(data?.doctorProfile?.mode)
+                                }
+                                className="form-check-input"
+                                type="radio"
+                                name="flexRadioDefault"
+                                checked={shedMode === data?.doctorProfile?.mode}
+                              />
+                              <label
+                                className="form-check-label"
+                                htmlFor="flexRadioDefault2"
+                              >
+                                {data?.doctorProfile?.mode}
+                              </label>
                             </div>
-                          </TabPanel>
-                        );
-                      })}
-                    </Tabs>
-                  </div>
-
-                  <div className="clinic-booking">
-                    {!session?.data ?  <Link className="apt-btn no-underline" href="/auth/login">
-                        Login to Book Appointmment
-                      </Link> : isBookedByCurrentUser ? (
-                      <Link className="apt-btn no-underline" href="#">
-                        Status : {status}
-                      </Link>
-                    ) : appointmentDetails.doctorId.length > 0 ? (
-                      <Link
-                        className="apt-btn no-underline"
-                        href={`/checkout?doctorId=${appointmentDetails.doctorId}&time=${appointmentDetails.time}&date=${appointmentDetails.date}`}
-                      >
-                        Book Appointment
-                      </Link>
+                            {data.doctorProfile.isAvailableForDesk && (
+                              <div className="form-check">
+                                <input
+                                  onChange={() => setShedMode("CLINIC_VISIT")}
+                                  className="form-check-input"
+                                  type="radio"
+                                  name="flexRadioDefault"
+                                  checked={shedMode === "CLINIC_VISIT"}
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="flexRadioDefault2"
+                                >
+                                  CLINIC_VISIT
+                                </label>
+                              </div>
+                            )}
+                          </div>
+                        )
+                      )}
+                    </div>
+                    {urlMode !== "video" ? (
+                      <Tabs>
+                        <TabList>
+                          {slots &&
+                            slots.map((s, i) => {
+                              console.log(s.date, h_date);
+                              return (
+                                <Tab key={i}>
+                                  {i == 0
+                                    ? "Today"
+                                    : i == 1
+                                    ? "Tomorrow"
+                                    : `${
+                                        numberToMonthMap[
+                                          convertDate(s.date)
+                                            .month as keyof typeof numberToMonthMap
+                                        ]
+                                      } ${convertDate(s.date).day}`}
+                                </Tab>
+                              );
+                            })}
+                        </TabList>
+                        {slots.map((s, i) => {
+                          return (
+                            <TabPanel key={i}>
+                              <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-8 gap-2 mx-2">
+                                {modeMap(
+                                  shedMode,
+                                  s.availableSlotsHome,
+                                  s.availableSlotsDesk,
+                                  s.availableSlotsVideo
+                                )?.map((slot: string, index) => (
+                                  <div
+                                    onClick={() =>
+                                      dispatch(
+                                        setAppointmentDetails({
+                                          time: slot,
+                                          date: s.date,
+                                          doctorId: data.doctorProfile.id,
+                                        })
+                                      )
+                                    }
+                                    className={`${
+                                      s.date === appointmentDetails.date &&
+                                      slot === appointmentDetails.time &&
+                                      appointmentDetails.doctorId ===
+                                        data.doctorProfile.id
+                                        ? "bg-cyan-500"
+                                        : "bg-green-500"
+                                    } rounded-md items-center flex hover:bg-red-400 flex-row justify-around cursor-pointer text-white font-bold w-full`}
+                                    key={index}
+                                  >
+                                    {<MapTimes slot={slot} />}
+                                  </div>
+                                ))}
+                              </div>
+                            </TabPanel>
+                          );
+                        })}
+                      </Tabs>
                     ) : (
-                      <Link href="#" className="apt-btn no-underline">
-                        Select Appointment
-                      </Link>
+                      <div>
+                        <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-8 gap-2 mx-2">
+                          {availableSlots &&
+                            availableSlots.map((slot: string, index) => (
+                              <div
+                                onClick={() =>
+                                  dispatch(
+                                    setAppointmentDetails({
+                                      time: slot,
+                                      date: h_date,
+                                      doctorId: data.doctorProfile.id,
+                                    })
+                                  )
+                                }
+                                className={`${
+                                  h_date === appointmentDetails.date &&
+                                  slot === appointmentDetails.time &&
+                                  appointmentDetails.doctorId ===
+                                    data.doctorProfile.id
+                                    ? "bg-cyan-500"
+                                    : "bg-green-500"
+                                } rounded-md items-center flex hover:bg-red-400 flex-row justify-around cursor-pointer text-white font-bold w-full`}
+                                key={index}
+                              >
+                                {<MapTimes slot={slot} />}
+                              </div>
+                            ))}
+                        </div>
+                      </div>
                     )}
+
+                    <div className="clinic-booking">
+                      {!session?.data ? (
+                        <Link
+                          className="apt-btn no-underline"
+                          href="/auth/login"
+                        >
+                          Login to Book Appointmment
+                        </Link>
+                      ) : !session?.data?.data?.Fname ||
+                        !session?.data?.data?.Lname ||
+                        !session?.data?.data?.contact ? (
+                        <Link
+                          className="apt-btn no-underline"
+                          href="/user/dashboard/profilesettings"
+                        >
+                          Update Your Profile To Book
+                        </Link>
+                      ) : isBookedByCurrentUser ? (
+                        <Link className="apt-btn no-underline" href="#">
+                          Status : {status}
+                        </Link>
+                      ) : urlMode ? (
+                        <a
+                          className="apt-btn no-underline"
+                          href={`/user/dashboard/hybridmode?${
+                            !url
+                              ? `homeVisitDoctorId=${appointmentDetails.doctorId}&h_slotTime=${appointmentDetails.time}&h_apptDate=${appointmentDetails.date}`
+                              : `videoDoctorId=${appointmentDetails.doctorId}&v_slotTime=${appointmentDetails.time}&v_apptDate=${appointmentDetails.date}${url}`
+                          }`}
+                        >
+                          Add to Cart
+                        </a>
+                      ) : appointmentDetails.doctorId.length > 0 ? (
+                        <Link
+                          className="apt-btn no-underline"
+                          href={`/checkout?mode=${shedMode}&doctorId=${appointmentDetails.doctorId}&time=${appointmentDetails.time}&date=${appointmentDetails.date}`}
+                        >
+                          Book Appointment
+                        </Link>
+                      ) : (
+                        <Link href="#" className="apt-btn no-underline">
+                          Select Appointment
+                        </Link>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -472,7 +510,7 @@ const DoctorProfile = ({
                       Reviews
                     </a>
                   </li>
-                  <li onClick={() => handleOnClickTab(3)} className="nav-item">
+                  {/* <li onClick={() => handleOnClickTab(3)} className="nav-item">
                     <a
                       className={`nav-link  ${activeTab === 3 && "active"} `}
                       href="#doc_business_hours"
@@ -480,7 +518,7 @@ const DoctorProfile = ({
                     >
                       Business Hours
                     </a>
-                  </li>
+                  </li> */}
                 </ul>
               </nav>
               {/* /Tab Menu */}
@@ -562,7 +600,7 @@ const DoctorProfile = ({
                           </ul>
                         </div>
                       </div>
-                      {/* /Experience Details */}
+                      {/* /Experience Details
                       {/* Awards Details */}
                       {data.doctorProfile.awards.length > 0 && (
                         <div className="widget awards-widget">
@@ -631,34 +669,25 @@ const DoctorProfile = ({
                   <div className="location-list active">
                     <div className="row">
                       {/* Clinic Content */}
-                      <div className="col-md-6">
-                        <div className="clinic-content">
-                          <h4 className="clinic-name">
-                            <a href="#">Smile Cute Dental Care Center</a>
-                          </h4>
-                          <p className="doc-speciality">
-                            MDS - Periodontology and Oral Implantology, BDS
-                          </p>
-                          <div className="rating">
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star" />
-                            <span className="d-inline-block average-rating">
-                              (4)
-                            </span>
-                          </div>
-                          <div className="clinic-details mb-0">
-                            <h5 className="clinic-direction">
-                              {" "}
-                              <i className="fas fa-map-marker-alt" /> 2286
-                              Sundown Lane, Austin, Texas 78749, USA <br />
-                              <a href="javascript:void(0);">Get Directions</a>
-                            </h5>
-                          </div>
-                        </div>
-                      </div>
+                      {data?.doctorProfile?.clinicInfo?.length > 0 &&
+                        data?.doctorProfile?.clinicInfo?.map(
+                          (clinic, index) => {
+                            return (
+                              <div className="col-md-6">
+                                <div className="clinic-content">
+                                  <h4 className="clinic-name">
+                                    <a href="#">{clinic.clinicName}</a>
+                                  </h4>
+                                  <p className="doc-speciality">
+                                    {clinic.address}
+                                  </p>
+
+                                  <p>{clinic.contact}</p>
+                                </div>
+                              </div>
+                            );
+                          }
+                        )}
                       {/* /Clinic Content */}
                     </div>
                   </div>
@@ -674,6 +703,9 @@ const DoctorProfile = ({
                   }`}
                 >
                   {/* Review Listing */}
+                  <span className="my-2 text-red-500">
+                    Review is in Dev Mode
+                  </span>
                   <div className="widget review-listing">
                     <ul className="comments-list">
                       {/* Comment List */}
@@ -745,12 +777,18 @@ const DoctorProfile = ({
                   </div>
                   {/* /Review Listing */}
                   {/* Write Review */}
-                  <div className={`write-review ${!isDoctorAppointedEver && "hidden"}`}>
+                  <div
+                    className={`write-review ${
+                      !isDoctorAppointedEver && "hidden"
+                    }`}
+                  >
                     <h4>
                       Write a review for <strong>Dr. Darren Elder</strong>
                     </h4>
                     {/* Write Review Form */}
-                  <WriteDoctorReview  doctorProfileId={data.doctorProfile.id} />
+                    <WriteDoctorReview
+                      doctorProfileId={data.doctorProfile.id}
+                    />
                     {/* /Write Review Form */}
                   </div>
                   {/* /Write Review */}
@@ -798,7 +836,10 @@ const DoctorProfile = ({
                               Object.keys(data.doctorProfile.schedules).map(
                                 (key, index) => {
                                   return (
-                                    <div key={index} className="listing-day border-b border-gray-200 py-2">
+                                    <div
+                                      key={index}
+                                      className="listing-day border-b border-gray-200 py-2"
+                                    >
                                       <div className="day">
                                         {key.at(0)?.toUpperCase()}
                                         {key.slice(1)}

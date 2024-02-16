@@ -6,6 +6,33 @@ export interface SheduleInterface {
   end: string;
 }
 
+interface FindDoctorList {
+  specializations: string[];
+
+  id: string;
+  fee: number;
+  mode: string;
+  isAvailableForDesk: boolean;
+
+  user: {
+    id: string;
+
+    Fname: string;
+    Lname: string;
+    email: string;
+    profilePic: string;
+    contact: string;
+    username: string;
+    address: {
+      address: string;
+      city: string;
+      state: string;
+      country: string;
+      pincode: string;
+    };
+  };
+}
+
 export interface InitialUserInterface {
   specializatins: string[];
   dob: Date;
@@ -14,6 +41,7 @@ export interface InitialUserInterface {
   activePatientsProfileTab: number;
 
   shedules: string[];
+  availableForDeskShedule: string[];
 
   currentlySelectedSheduleIndex: {
     show: boolean;
@@ -26,12 +54,20 @@ export interface InitialUserInterface {
     time: string;
   };
 
-  apptFor:"ME"|"OTHER",
+  apptFor: "ME" | "OTHER";
 
-  currentLocation:{
-    lat:number,
-    long:number
-  },
+  currentLocation: {
+    lat: number;
+    long: number;
+  };
 
-  doctorDashTabTodayUpcoming:number
+  doctorList: FindDoctorList[];
+  HomeVisitDoctorList: FindDoctorList[];
+  VideoDoctorList: FindDoctorList[];
+
+  findingDoctor: boolean;
+
+  doctorDashTabTodayUpcoming: number;
+
+  addMedicalRecordDialog: boolean;
 }

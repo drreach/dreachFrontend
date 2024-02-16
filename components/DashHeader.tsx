@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 const DashHeader = () => {
   return (
@@ -217,8 +217,7 @@ const DashHeader = () => {
         </ul>
       </nav>
     </header>
-    
-  )
-}
+  );
+};
 
-export default DashHeader
+export default DashHeader;

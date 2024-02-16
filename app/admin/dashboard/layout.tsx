@@ -15,10 +15,9 @@ export default async function Layout({
 }) {
   const session = await getServerSession(authOption);
 
-  
-  // if(!session || session.data.role !== "DOCTOR"){
-  //     return redirect("/");
-  // }
+  if (!session || session.data.role !== "ADMIN") {
+    return redirect("/");
+  }
   return (
     <div className="main-wrapper">
       {/* Header */}
@@ -236,13 +235,11 @@ export default async function Layout({
       {/* /Header */}
       {/* Sidebar */}
 
-      <Sidebar/>
+      <Sidebar />
 
       {/* /Sidebar */}
       {/* Page Wrapper */}
-      <div className="page-wrapper">
-       {children}
-      </div>
+      <div className="page-wrapper">{children}</div>
       {/* /Page Wrapper */}
     </div>
   );

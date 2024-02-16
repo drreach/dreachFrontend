@@ -6,12 +6,11 @@ import { revalidateTag } from "next/cache";
 
 export const actionsOnUser = async (action: string, id: string) => {
   const session = await getServerSession(authOption);
-//   if (!session || session.data.role !== "ADMIN") {
-//     console.log("no session");
-//     return null;
-//   }
+  //   if (!session || session.data.role !== "ADMIN") {
+  //     console.log("no session");
+  //     return null;
+  //   }
 
-console.log(action,id)
   try {
     const res = await fetch(
       `${process.env.SERVER_URL}/user/actionOnUser?action=${action}&userId=${id}`,
@@ -23,15 +22,25 @@ console.log(action,id)
       }
     );
 
-    const data = await res.json();
-    console.log(data);
-    revalidateTag("doctor_verify");
+    if (res.status === 200) {
+      const data = await res.json();
+      revalidateTag("doctor_verify");
+      return {
+        status: 200,
+        data: data,
+        message: "Action Permoformed Successfully",
+      };
+    }
 
-    return data;
+    return {
+      status: res.status,
+      message: "Something went wrong",
+    };
   } catch (error) {
     console.log(error);
+    return {
+      status: 500,
+      message: "Internal Server Error!",
+    };
   }
 };
-
-
-

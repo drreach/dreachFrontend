@@ -10,13 +10,12 @@ import { redirect } from "next/navigation";
 
 export default async function Home() {
   const session  =await getServerSession(authOption);
-
-  console.log(session)
-
   if(session && session?.data?.role === "NORMAL"){
     return redirect("/user/dashboard");
   }else if(session && session?.data?.role === "DOCTOR"){
     return redirect("/doctor/dashboard");
+  }else if(session && session?.data?.role === "ADMIN"){
+    return redirect("/admin/dashboard");
   }
   return (
  

@@ -15,22 +15,20 @@ export const authOption: NextAuthOptions = {
       },
       httpOptions: {
         timeout: 100000,
-      }
+      },
     }),
   ],
 
   callbacks: {
-    async jwt({ token, user, session, account,trigger }) {
-      if(trigger==="update"){
+    async jwt({ token, user, session, account, trigger }) {
+      if (trigger === "update") {
         token.data = session.data;
         return token;
       }
-      console.log(token, user);
-     try {
-      if (account) {
-        const res = await fetch(
-          `${process.env.SERVER_URL}/user/signup`,
-          {
+      // console.log(token, user);
+      try {
+        if (account) {
+          const res = await fetch(`${process.env.SERVER_URL}/user/signup`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -38,16 +36,15 @@ export const authOption: NextAuthOptions = {
             body: JSON.stringify({
               email: user.email,
             }),
-          }
-        );
-        if(res.status!==201){
+          });
+          if (res.status !== 201) {
             throw new Error("something went wrong");
-        }
+          }
 
-        const data = await res.json();
+          const data = await res.json();
 
-        token.data=data;
-       
+          token.data = data;
+
           const tokens = jsonwebtoken.sign(
             {
               ...token,
@@ -60,34 +57,28 @@ export const authOption: NextAuthOptions = {
 
           token.authToken = tokens;
           return token;
-        
+        }
+      } catch (error) {
+        // console.log("fromauth", error);
+        throw error;
       }
-    
 
-     
-     } catch (error) {
-      console.log("fromauth",error);
-      throw error;
-     }
-
-        return token;
-
+      return token;
     },
 
     async session({ session, token }) {
+      // console.log(session, token);
 
-      console.log(session,token);
-
-        if (token?.data) {
-            session.user = {
-                id: token.data.id,
-                email: token.data.email,
-                name: token.data.name,
-                image: token.data.image,
-            };
-            session.authToken = token.authToken;
-            session.data=token.data;
-            }
+      if (token?.data) {
+        session.user = {
+          id: token.data.id,
+          email: token.data.email,
+          name: token.data.name,
+          image: token.data.image,
+        };
+        session.authToken = token.authToken;
+        session.data = token.data;
+      }
       return session;
     },
   },

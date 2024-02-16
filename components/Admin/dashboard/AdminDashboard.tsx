@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import DashHeader from "@/components/DashHeader";
 import { authOption } from "@/lib/AuthOptions/authOptions";
 import { getServerSession } from "next-auth";
@@ -7,25 +7,35 @@ import { redirect } from "next/navigation";
 import { FiHome, FiLayout, FiStar, FiUser, FiUserPlus } from "react-icons/fi";
 import React from "react";
 import { da } from "date-fns/locale";
-import { convertDateToFormat } from "@/utils/utils";
+import { convertDateToFormat, loadToast, updateToast } from "@/utils/utils";
 import { actionsOnUser } from "@/ServerActions/Admin/admins";
 import { useAppDispatch, useAppSelector } from "@/Redux/hooks/hooks";
 import { setLoading } from "@/Redux/reducers/UserReducers";
 
 interface UnverifiedDoctors {
   id: string;
+  document: string;
   user: {
     Fname: string;
     Lname: string;
     email: string;
     gender: string;
+    profilePic: string;
+    username: string;
   };
   createdAt: string;
 }
 
-const AdminDashboard = ({ data,patientsNo,DoctorsNo }: { data: UnverifiedDoctors[] ,patientsNo:number,DoctorsNo:number}) => {
-
-  const loading = useAppSelector((state)=>state.userReducer.loading);
+const AdminDashboard = ({
+  data,
+  patientsNo,
+  DoctorsNo,
+}: {
+  data: UnverifiedDoctors[];
+  patientsNo: number;
+  DoctorsNo: number;
+}) => {
+  const loading = useAppSelector((state) => state.userReducer.loading);
   const dispacth = useAppDispatch();
   return (
     <>
@@ -54,7 +64,7 @@ const AdminDashboard = ({ data,patientsNo,DoctorsNo }: { data: UnverifiedDoctors
                     {/* Hello */}
                   </span>
                   <div className="dash-count">
-                  <h3>{DoctorsNo}</h3>
+                    <h3>{DoctorsNo}</h3>
                   </div>
                 </div>
                 <div className="dash-widget-info">
@@ -134,59 +144,102 @@ const AdminDashboard = ({ data,patientsNo,DoctorsNo }: { data: UnverifiedDoctors
                             <tr key={i}>
                               <td>
                                 <h2 className="table-avatar">
-                                  <a
-                                    href="profile.html"
-                                    className="avatar avatar-sm mr-2"
-                                  >
+                                  <a href="#" className="avatar avatar-sm mr-2">
                                     <img
                                       className="avatar-img rounded-circle"
-                                      src="/assets/doctors/doctor-thumb-01.jpg"
+                                      src={`${
+                                        d.user.profilePic
+                                          ? `https://storage.googleapis.com/kiitconnect_bucket/doctorProfile/${d.user.profilePic}`
+                                          : "/assets/doctor-2.jpg"
+                                      } `}
                                       alt="User Image"
                                     />
                                   </a>
-                                  <a
-                                    href="profile.html"
-                                    className="no-underline"
-                                  >
+                                  <Link href={`#`} className="no-underline">
                                     {d.user.Fname} {d.user.Lname}
-                                  </a>
+                                  </Link>
                                 </h2>
                               </td>
                               <td>{d.user.gender}</td>
                               <td>{d.user.email}</td>
 
                               <td>{convertDateToFormat(d.createdAt)}</td>
+
                               <td>
                                 <div className="">
-                                 {loading ? <p>Loading...</p>: <div  className="flex gap-2">
-                                 <button
-                                  onClick={async()=>{
-                                    dispacth(setLoading(true))
-                                    const res = await actionsOnUser("APPROVED",d.id);
-                                    dispacth(setLoading(false))
+                                  {loading ? (
+                                    <p>Loading...</p>
+                                  ) : (
+                                    <div className="flex gap-2">
+                                      <a
+                                        target="_blank"
+                                        href={`https://storage.googleapis.com/kiitconnect_bucket/doctorDocuments/${d.document}`}
+                                        className="btn btn-secondary btn-sm"
+                                      >
+                                        Document
+                                      </a>
+                                      <button
+                                        onClick={async () => {
+                                          dispacth(setLoading(true));
+                                          const toastId =
+                                            loadToast("Approving Doctor,");
 
-                                    console.log(res);
-                                  }}
-                                    type="button"
-                                    className="btn btn-success btn-sm"
-                                  >
-                                    Accept
-                                  </button>
-                                  <button
-                                   onClick={async()=>{
-                                    dispacth(setLoading(true))
+                                          const res = await actionsOnUser(
+                                            "APPROVED",
+                                            d.id
+                                          );
+                                          if (res.status === 200) {
+                                            return updateToast(
+                                              toastId,
+                                              "Doctor Approved",
+                                              "success"
+                                            );
+                                          }
+                                          updateToast(
+                                            toastId,
+                                            res.message,
+                                            "error"
+                                          );
+                                          dispacth(setLoading(false));
+                                          console.log(res);
+                                        }}
+                                        type="button"
+                                        className="btn btn-success btn-sm"
+                                      >
+                                        Accept
+                                      </button>
+                                      <button
+                                        onClick={async () => {
+                                          dispacth(setLoading(true));
+                                          const toastId =
+                                            loadToast("Rejecting Doctor,");
+                                          const res = await actionsOnUser(
+                                            "REJECTED",
+                                            d.id
+                                          );
+                                          if (res.status === 200) {
+                                            return updateToast(
+                                              toastId,
+                                              "Doctor Rejected",
+                                              "success"
+                                            );
+                                          }
+                                          updateToast(
+                                            toastId,
+                                            res.message,
+                                            "error"
+                                          );
+                                          dispacth(setLoading(false));
 
-                                    const res = await actionsOnUser("REJECTED",d.id);
-                                    dispacth(setLoading(false))
-
-                                    console.log(res);
-                                  }}
-                                    type="button"
-                                    className="btn btn-danger btn-sm"
-                                  >
-                                    Reject
-                                  </button>
-                                 </div>  }
+                                          // console.log(res);
+                                        }}
+                                        type="button"
+                                        className="btn btn-danger btn-sm"
+                                      >
+                                        Reject
+                                      </button>
+                                    </div>
+                                  )}
                                 </div>
                               </td>
                             </tr>

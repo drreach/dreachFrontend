@@ -8,8 +8,11 @@ import {
 } from "@/Redux/reducers/UserReducers";
 import {
   UpdateProfileImage,
+  addDocument,
+  removeDocument,
   updateDoctorProfile,
   updateUser,
+  validateRoutes,
 } from "@/ServerActions";
 import { DatePickerDemo } from "@/components/DatePicker";
 
@@ -17,7 +20,11 @@ import TagInput from "@/components/Input/TagsInput";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+import { FileUploader } from "react-drag-drop-files";
+import { toast } from "react-toastify";
+import { loadToast, updateToast } from "@/utils/utils";
 
+const fileTypes = ["PDF"];
 type DoctorProfile = {
   specializations: string[];
   schedules: {
@@ -35,6 +42,12 @@ type DoctorProfile = {
     clinic: string;
     duration: string;
   }[];
+  clinicInfo: {
+    clinicName: string;
+    address: string;
+    contact: string;
+    images: [];
+  }[];
   awards: {
     date: string;
     title: string;
@@ -47,9 +60,10 @@ type DoctorProfile = {
   description: string;
   profilePic: string;
   status: string;
+  document: string;
 
-  mode:string
-isAvailableForDesk:boolean
+  mode: string;
+  isAvailableForDesk: boolean;
   user: {
     id: string;
     username: string;
@@ -76,21 +90,13 @@ isAvailableForDesk:boolean
 };
 
 const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
-  const [services, setServices] = useState<string[]>([]);
-
   const session = useSession();
   const [data, setData] = useState<DoctorProfile>();
-
-  const [refrsh, setRefresh] = useState(false);
   const specialization = useAppSelector(
     (state) => state.userReducer.specializatins
   );
   const dispatch = useAppDispatch();
   const dobDate = useAppSelector((state) => state.userReducer.dob);
-
-  const dob = useAppSelector((state) => state.userReducer.dob);
-
-  // const [specialization,setSpecialization] = useState<string[]>([]);
 
   useEffect(() => {
     if (datas) {
@@ -98,8 +104,6 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
       setData(datas);
       if (datas.user.dob)
         dispatch(setDob(new Date(datas?.user?.dob).toString()));
-
-      console.log(datas);
     }
   }, []);
 
@@ -115,18 +119,10 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
     defaultValues: datas,
   });
 
-  const handleOnSetServices = (service: string) => {
-    setServices([...services, service]);
-  };
-
   const [file, setFile] = React.useState<File | null>(null);
 
   const handleOnSetSpecialization = (val: string) => {
     dispatch(addSpecialization(val));
-  };
-
-  const handleOnRemoveServices = (index: number) => {
-    setServices(services.filter((val, i) => i !== index));
   };
 
   const handleOnRemoveSpecialization = (index: number) => {
@@ -160,6 +156,17 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
     control,
   });
 
+  const {
+    fields: clinicInfoArr,
+    append: appendClinicInfo,
+    remove: removeClinicInfo,
+  } = useFieldArray({
+    name: "clinicInfo",
+    control,
+  });
+
+  const [chooseMode, setChooseMode] = useState<string | null>();
+
   const submit = async (dt: DoctorProfile) => {
     if (!session.data) {
       return;
@@ -171,10 +178,14 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
     const filteredAwards = dt.awards.filter(
       (d) => d.date !== "" || d.description !== "" || d.title !== ""
     );
-    const filteredWorkExp = dt.workExperiences.filter(
+    const filterredClinicInfo = dt.clinicInfo.filter(
+      (d) => d.clinicName !== "" || d.address !== "" || d.contact !== ""
+    );
+
+    const filterWorkExperience = dt.workExperiences.filter(
       (d) => d.clinic !== "" || d.duration !== ""
     );
-    // console.log({...data,educations:filteredEducation,awards:filteredAwards,workExperiences:filteredWorkExp});
+
     if (filteredEducation.length === 0) {
       console.log("here");
       setError("educations", {
@@ -184,8 +195,8 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
       return;
     }
 
-    if (filteredWorkExp.length === 0) {
-      setError("workExperiences", {
+    if (filterredClinicInfo.length === 0) {
+      setError("clinicInfo", {
         message: "This field is required",
         type: "required",
       });
@@ -198,10 +209,11 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
       userId,
       description,
       mode,
-      isAvailableForDesk,
+
       status,
       schedules,
     } = dt;
+
     const newData = {
       Fname: user.Fname,
       Lname: user.Lname,
@@ -214,42 +226,45 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
       specializations: specialization,
       educations: filteredEducation,
       awards: filteredAwards,
-      workExperiences: filteredWorkExp,
+      workExperiences: filterWorkExperience,
+      clinicInfo: filterredClinicInfo,
       schedules,
       description,
       doctorProfileId: id,
       userId: userId,
       mode,
-      isAvailableForDesk
+      isAvailableForDesk:
+        chooseMode === "VIDEO_CONSULT" ? dt.isAvailableForDesk : false,
     };
 
-    console.log(dt.workExperiences, filteredWorkExp);
-
     const stat = "PENDING";
-
-    console.log(newData);
+    const toastId = loadToast("Please wait,submitting your profile");
     const res = await updateDoctorProfile({ ...newData, status: stat });
-
-    // console.log(res);
-
     if (res?.status === 201) {
-      const payload = {
-        Fname: res.data.user.Fname,
-        Lname: res.data.user.Lname,
-        dob: res.data.user.dob,
-        bloodGroup: res.data.user.bloodGroup,
-        contact: res.data.user.contact,
-        Address: res.data.user.address,
-        gender: res.data.user.gender,
-      };
+      // const payload = {
+      //   Fname: res.data.user.Fname,
+      //   Lname: res.data.user.Lname,
+      //   dob: res.data.user.dob,
+      //   bloodGroup: res.data.user.bloodGroup,
+      //   contact: res.data.user.contact,
+      //   Address: res.data.user.address,
+      //   gender: res.data.user.gender,
+      // };
 
       await session.update({
         ...session,
         data: res.data.user,
       });
 
+      return updateToast(toastId, "Profile Updated Successfully", "success");
+
       // setRefresh(true);
     }
+
+    if (res.status === 404) {
+      return updateToast(toastId, "Document is Missing", "error");
+    }
+    return updateToast(toastId, "Internal Server Error", "error");
   };
 
   const handleOnFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -266,6 +281,7 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
       return alert("No File Selected");
     }
 
+    const toastId = loadToast("Please wait,Updating your profile image");
     const formData = new FormData();
     formData.append("profileImage", file);
     formData.set("userId", session.data.data.id);
@@ -273,29 +289,37 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
 
     console.log(formData.get("userId"));
 
-
-    
-
     const res = await UpdateProfileImage(formData);
 
-    if (!res) {
-      return alert("Error Uploading Image");
+    if (res.status === 201) {
+      updateToast(toastId, "Profile Image Updated", "success");
+      const { profilePic, ...rest } = session.data.data;
+
+      const newData = {
+        ...rest,
+        profilePic: res.profilePic,
+      };
+
+      //update session
+      await session.update({
+        ...session,
+        data: newData,
+      });
+
+      return;
+    }
+    if (res.status === 500) {
+      return updateToast(toastId, "Internal server Error", "error");
     }
 
-    const { profilePic, ...rest } = session.data.data;
+    return updateToast(toastId, res.message, "error");
 
-    const newData = {
-      ...rest,
-      profilePic: res.profilePic,
-    };
+  };
 
-    //update session
-    await session.update({
-      ...session,
-      data: newData,
-    });
+  const [files, setFiles] = useState<File | null>(null);
 
-    // console.log(res);
+  const handleChange = (file: any) => {
+    setFiles(file);
   };
 
   return (
@@ -384,6 +408,7 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
                   <input
                     {...register("user.Fname")}
                     type="text"
+                    disabled={data?.status === "APPROVED"}
                     className="form-control"
                   />
                   {errors.user?.Fname && (
@@ -399,6 +424,7 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
                   <input
                     {...register("user.Lname")}
                     type="text"
+                    disabled={data?.status === "APPROVED"}
                     className="form-control"
                   />
                   {errors.user?.Lname && (
@@ -423,7 +449,7 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
                 <div className="form-group">
                   <label>Gender</label> <span className="text-danger">*</span>
                   <select
-                    {...register("user.gender")}
+                    {...register("user.gender", { required: true })}
                     className="form-control select"
                   >
                     <option>Male</option>
@@ -460,10 +486,11 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
             <h4 className="card-title">About Me</h4>
             <div className="form-group mb-0">
               <label>Biography</label>
+
               <textarea
                 {...register("description")}
                 className="form-control"
-                rows={5}
+                rows={10}
                 defaultValue={""}
               />
               {errors.description && (
@@ -479,34 +506,40 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
             <div className="card-title">Choose Mode for Appointment</div>
 
             <div className="col-md-6">
-                <div className="form-group">
-                  <label>Mode</label> <span className="text-danger">*</span>
-                  <select
-                    {...register("mode")}
-                    className="form-control select"
-                  >
-                    <option>ONLINE</option>
-                    <option>OFFLINE</option>
-                  </select>
-                  {errors.mode && (
-                    <span className="text-danger">This field is required</span>
-                  )}
-                </div>
+              <div className="form-group">
+                <label>Mode</label> <span className="text-danger">*</span>
+                <select
+                  {...register("mode", { required: true })}
+                  className="form-control select"
+                  onChange={(e) => {
+                    setChooseMode(e.target.value);
+                  }}
+                >
+                  <option>VIDEO_CONSULT</option>
+                  <option>HOME_VISIT</option>
+                  <option>CLINIC_VISIT</option>
+                </select>
+                {errors.mode && (
+                  <span className="text-danger">This field is required</span>
+                )}
               </div>
-
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckChecked"
-                {...register('isAvailableForDesk')}
-                defaultChecked={getValues("isAvailableForDesk")}
-              />
-              <label className="form-check-label" htmlFor="flexCheckChecked">
-                Checked checkbox
-              </label>
             </div>
+
+            {chooseMode === "VIDEO_CONSULT" && (
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  disabled={getValues("mode") === "HOME_VISIT"}
+                  id="flexCheckChecked"
+                  {...register("isAvailableForDesk")}
+                  defaultChecked={getValues("isAvailableForDesk")}
+                />
+                <label className="form-check-label" htmlFor="flexCheckChecked">
+                  Are you available for desk appointment?
+                </label>
+              </div>
+            )}
           </div>
         </div>
 
@@ -514,7 +547,7 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
         <div className="card">
           <div className="card-body">
             <h4 className="card-title">
-              Clinic Info <span className="text-danger">*</span>
+              Work Experience <span className="text-danger">*</span>
             </h4>
             {experienceArr.map((w, i) => {
               return (
@@ -531,7 +564,7 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
                   </div>
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label>Clinic Address</label>
+                      <label>Duration</label>
                       <input
                         {...register(`workExperiences.${i}.duration`)}
                         type="text"
@@ -567,6 +600,86 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
                     duration: "",
                   });
                   clearErrors("workExperiences");
+                }}
+                className="add-experience"
+              >
+                <i className="fa fa-plus-circle" /> Add More
+              </button>
+            </div>
+          </div>
+        </div>
+        {/* /Clinic Info */}
+
+        {/* Clinic Info */}
+        <div className="card">
+          <div className="card-body">
+            <h4 className="card-title">
+              Clinic Info <span className="text-danger">*</span>
+            </h4>
+            {clinicInfoArr.map((w, i) => {
+              return (
+                <div key={i} className="row form-row">
+                  <div className="col-md-6">
+                    <div className="form-group">
+                      <label>Clinic Name</label>
+                      <input
+                        {...register(`clinicInfo.${i}.clinicName`)}
+                        type="text"
+                        className="form-control"
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="form-group">
+                      <label>Address</label>
+                      <input
+                        {...register(`clinicInfo.${i}.address`)}
+                        type="text"
+                        className="form-control"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="col-md-6">
+                    <div className="form-group">
+                      <label>Contact</label>
+                      <input
+                        {...register(`clinicInfo.${i}.contact`)}
+                        type="text"
+                        className="form-control"
+                      />
+                    </div>
+                  </div>
+                  <div className="add-more my-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        removeClinicInfo(i);
+                      }}
+                      className="add-award bg-red-500 px-2 py-1 text-white rounded-md"
+                    >
+                      <i className="bg-red-500" /> Delete
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+
+            {errors?.clinicInfo && (
+              <span className="text-danger">This field is required</span>
+            )}
+
+            <div className="add-more mt-2 text-blue-600">
+              <button
+                type="button"
+                onClick={() => {
+                  appendClinicInfo({
+                    clinicName: "",
+                    address: "",
+                    contact: "",
+                    images: [],
+                  });
+                  clearErrors("clinicInfo");
                 }}
                 className="add-experience"
               >
@@ -753,7 +866,7 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
                 <div className="col-12 col-md-10 col-lg-11">
                   {educationArr.map((ed, i) => {
                     return (
-                      <div  key={i} className="row form-row">
+                      <div key={i} className="row form-row">
                         <div className="col-12 col-md-6 col-lg-4">
                           <div className="form-group">
                             <label>Degree</label>
@@ -957,7 +1070,124 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
         </div>
         {/* /Awards */}
 
-        {datas.status === "PENDING" ? (
+        <div className="my-3 flex gap-2 flex-col">
+          <label>Upload Documents for Verification</label>
+          <span className="text-red-700">
+            Note:Missing Document may result in rejection.
+          </span>
+
+          {!data?.document ? (
+            <div>
+              <FileUploader
+                handleChange={handleChange}
+                name="file"
+                types={fileTypes}
+              />
+              <p>
+                {files ? `File name: ${files.name}` : "no files uploaded yet"}
+              </p>
+
+              {data?.status === "REJECTED" ||
+                (data?.status === "INITIATED" && (
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      if (!data?.id || !files)
+                        return toast.error("Please select a file", {
+                          className: "text-white bg-black",
+                          position: "top-center",
+                          autoClose: 3000,
+                        });
+                      const toastId = loadToast("Uploading Document");
+                      const formData = new FormData();
+                      formData.append("document", files);
+                      formData.append("doctorId", data?.id);
+                      const res = await addDocument(formData);
+                      if (res === 201) {
+                        validateRoutes("ApplyDoctor");
+                        return updateToast(
+                          toastId,
+                          "Document Uploaded Successfully",
+                          "success"
+                        );
+                      } else if (res == 409) {
+                        return updateToast(
+                          toastId,
+                          "Document already exists,Please refresh the page",
+                          "error"
+                        );
+                      }
+                      return updateToast(
+                        toastId,
+                        "Failed to upload Document",
+                        "error"
+                      );
+                    }}
+                    className="w-[200px] bg-green-800 py-2 rounded-md text-white font-bold"
+                  >
+                    Upload
+                  </button>
+                ))}
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={async () => {
+                if (!data?.id)
+                  return toast.error("Session Expired,Refres the page", {
+                    className: "text-white bg-black",
+                    position: "top-center",
+                    autoClose: 3000,
+                  });
+                const toastId = loadToast("Uploading Document");
+
+                const res = await removeDocument(data.id);
+                if (res === 201) {
+                  validateRoutes("ApplyDoctor");
+                  return updateToast(
+                    toastId,
+                    "Document Removed Successfully",
+                    "success"
+                  );
+                } else if (res == 404) {
+                  return updateToast(
+                    toastId,
+                    "Document not found,Refresh the page",
+                    "error"
+                  );
+                }
+
+                return updateToast(
+                  toastId,
+                  "Failed to remove Document",
+                  "error"
+                );
+              }}
+              disabled={data.status === "PENDING" || data.status === "APPROVED"}
+              className="w-[200px] my-3 py-1 disabled:bg-gray-600  rounded-md bg-red-700 text-white"
+            >
+              {data.status === "PENDING"
+                ? "Document Attached"
+                : "Remove Document"}
+            </button>
+          )}
+        </div>
+
+        {data?.status === "REJECTED" && (
+          <div className="my-3">
+            <label className="text-red-500 font-bold">
+              Your Profile Rejected,You can request again.
+            </label>
+          </div>
+        )}
+
+        {data?.status === "APPROVED" ? (
+          <div className="submit-section submit-btn-bottom">
+            <button type="submit" className="btn btn-primary submit-btn">
+              Update Profile
+            </button>
+          </div>
+        ) : datas.status === "PENDING" ? (
           <div>
             <button
               type="button"

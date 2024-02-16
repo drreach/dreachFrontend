@@ -4,7 +4,6 @@ import { addSpecialization, removeSpecialization } from "@/Redux/reducers/UserRe
 import React, { useEffect, useState } from "react";
 
 function TagInput({handleOnSetValues,handleOnDelete}:{handleOnSetValues:(value:string)=>void,handleOnDelete:(index:number)=>void}) {
-//   const [values, setValues] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
   const dispatch = useAppDispatch();
   const values = useAppSelector(state=>state.userReducer.specializatins);
@@ -20,15 +19,6 @@ function TagInput({handleOnSetValues,handleOnDelete}:{handleOnSetValues:(value:s
         }
     }
   };
-
- 
-
-//   const handleOnDelete=(index:number)=>{
-//     console.log(index);
-//     const newValues = values.filter((v,i)=>i!==index);
-//     setValues(newValues);
-
-//   }
 
   return (
     <div className="">

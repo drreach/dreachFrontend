@@ -1,68 +1,73 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/Redux/hooks/hooks";
-import {
- 
-  addShedule,
-  setCurrentSheduleIndex,
- 
-  setShedule,
- 
-  updateShedule,
-} from "@/Redux/reducers/UserReducers";
+import { setShedule } from "@/Redux/reducers/UserReducers";
 import { updateSheduleToDatabase } from "@/ServerActions/Doctor/doctor";
 import TimeSlotSelector from "@/components/Shed";
-import React, { useEffect, useState } from "react";
-
-import { Modal } from "react-bootstrap";
-
-interface SheduleTime {
-  mode: string;
-  start: string;
-  end: string;
-}
-
-const sortData = (data: SheduleTime[]) => {
-  // console.log(p)
-
-  return data;
-};
-
-
-
-const sheduleTimeOptions = [
- "10:00",
- "10:15",
- "11:00",
- "11:15"
-
-
-];
+import { loadToast, updateToast } from "@/utils/utils";
+import React, { useEffect } from "react";
 
 const Shedule = ({
   OnlineShedule,
+  DeskShedules,
+  HomeShedules,
   isAvailableForDesk,
   mode,
 }: {
   OnlineShedule: string[];
+  DeskShedules: string[];
+  HomeShedules: string[];
   isAvailableForDesk: boolean;
   mode: string;
 }) => {
   const mData = useAppSelector((state) => state.userReducer.shedules);
-
-  const dispatch = useAppDispatch();
-  const currentShedule = useAppSelector(
-    (state) => state.userReducer.currentlySelectedSheduleIndex
+  const availableDeskData = useAppSelector(
+    (state) => state.userReducer.availableForDeskShedule
   );
 
-  const handleOnUpdateShedules = async () => {
-    const res = await updateSheduleToDatabase(mData);
-    console.log(res);
+  const dispatch = useAppDispatch();
+  const handleOnUpdateShedules = async (isAvailableForDesk: boolean) => {
+    const toastId = loadToast("Please wait,updating shedules");
+    if (!isAvailableForDesk) {
+      const res = await updateSheduleToDatabase(mData, mode);
+      if (res == 201) {
+        return updateToast(toastId, "Shedules Updated Successfully", "success");
+      }
+      return updateToast(toastId, "Failed to update Shedules", "error");
+    } else {
+      const res = await updateSheduleToDatabase(availableDeskData, "OTHER");
+      if (res == 201) {
+        return updateToast(toastId, "Shedules Updated Successfully", "success");
+      }
+      return updateToast(toastId, "Failed to update Shedules", "error");
+    }
   };
 
   useEffect(() => {
-    console.log(OnlineShedule,isAvailableForDesk,mode);
-    dispatch(setShedule(OnlineShedule));
-  }, [OnlineShedule]);
+    if (mode === "HOME_VISIT") {
+      dispatch(
+        setShedule({
+          shedules: HomeShedules,
+          mode: "VIDEO",
+        })
+      );
+    } else if (mode === "VIDEO_CONSULT") {
+      dispatch(
+        setShedule({
+          shedules: OnlineShedule,
+          mode: "VIDEO",
+        })
+      );
+    }
+
+    if (isAvailableForDesk) {
+      dispatch(
+        setShedule({
+          shedules: DeskShedules,
+          mode: "OTHER",
+        })
+      );
+    }
+  }, [OnlineShedule, DeskShedules, HomeShedules]);
   return (
     <>
       <div className="row overflow-y-auto">
@@ -89,14 +94,17 @@ const Shedule = ({
                   <div className="col-md-12">
                     <div className="card schedule-widget mb-0 flex  overflow-y-auto flex-col">
                       {/* Schedule Header */}
+                      <span className="font-bold text-[14px] p-2">
+                        Update Shedule for {mode}
+                      </span>
 
-                   <TimeSlotSelector/>
-                  
-                        
+                      <TimeSlotSelector isAvailableForDesk={false} />
 
                       <div className="submit-section my-5 text-center">
                         <button
-                          onClick={handleOnUpdateShedules}
+                          onClick={() => {
+                            handleOnUpdateShedules(false);
+                          }}
                           type="button"
                           className="btn btn-primary submit-btn"
                         >
@@ -106,112 +114,37 @@ const Shedule = ({
                     </div>
                   </div>
                 </div>
+
+                {isAvailableForDesk && (
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="card schedule-widget mb-0 flex  overflow-y-auto flex-col">
+                        {/* Schedule Header */}
+                        <span className="font-bold text-[14px] p-2">
+                          Update Shedule for Desk Appointment
+                        </span>
+                        <TimeSlotSelector isAvailableForDesk={true} />
+
+                        <div className="submit-section my-5 text-center">
+                          <button
+                            onClick={() => {
+                              handleOnUpdateShedules(true);
+                            }}
+                            type="button"
+                            className="btn btn-primary submit-btn"
+                          >
+                            Update Shedules
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
       </div>
-      {/* /Page Content */}
-
-      {/* /Footer */}
-      {/* /Main Wrapper */}
-
-      {/* Add Time Slot Modal */}
-      {/* <Modal
-        show={currentShedule.show}
-        centered
-        className="w-full"
-        id="add_time_slot"
-      >
-        <Modal.Header
-          onClick={() =>
-            dispatch(
-              setCurrentSheduleIndex({
-                day: "mon",
-                show: false,
-              })
-            )
-          }
-          closeButton
-        >
-          <Modal.Title>
-            {currentShedule.day.charAt(0).toUpperCase()}
-            {currentShedule.day.slice(1)} Shedule
-          </Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body className="modal-body">
-          <div>
-            <div className="hours-info">
-              <div className="row form-row hours-cont">
-                <div className="col-12 col-md-10">
-                  {mData &&
-                    mData.map(
-                      (item, index) => {
-                        return (
-                          <div className="row form-row">
-                            <div className="col-12 col-md-6">
-                              <div className="form-group">
-                                <label>Start Time</label>
-                                <select
-                                  defaultValue={item}
-                                  onChange={(event) =>
-                                    dispatch(
-                                      updateShedule({
-                                        index: index,
-                                        shedules: event.target.value,
-                                      })
-                                    )
-                                  }
-                                  className="form-control"
-                                >
-                                  {sheduleTimeOptions.filter((v)=>!mData.includes(v)).map((item, index) => {
-                                    return <option value={item}>{item}</option>;
-                                  })}
-                                </select>
-                              </div>
-                            </div>
-                           
-                          </div>
-                        );
-                      }
-                    )}
-                </div>
-              </div>
-            </div>
-            <div className="add-more mb-3">
-              <button
-                onClick={() => {
-                  dispatch(
-                    addShedule(
-                  "09:00"
-                    )
-                  );
-                }}
-                className="add-hours"
-              >
-                <i className="fa fa-plus-circle" /> Add More
-              </button>
-            </div>
-            <div className="submit-section text-center">
-              <button
-                onClick={() =>
-                  dispatch(
-                    setCurrentSheduleIndex({
-                      day: currentShedule.day,
-                      show: false,
-                    })
-                  )
-                }
-                type="button"
-                className="btn btn-primary submit-btn"
-              >
-                Save Changes
-              </button>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal> */}
     </>
   );
 };

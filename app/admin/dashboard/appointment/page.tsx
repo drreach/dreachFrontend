@@ -1,22 +1,21 @@
-import Appointment from '@/components/Admin/dashboard/Appointment';
-import React from 'react'
+import Appointment from "@/components/Admin/dashboard/Appointment";
+import React from "react";
 
-const page = async() => {
-    const  res = await fetch(`${process.env.SERVER_URL}/user/getAppointments`,{
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            // "Authorization": "Bearer "+localStorage.getItem("token")
-        },
-        cache: "no-cache"
-    });
+const page = async () => {
+  const res = await fetch(`${process.env.SERVER_URL}/user/getAppointments`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      // "Authorization": "Bearer "+localStorage.getItem("token")
+    },
+    cache: "no-cache",
+  });
 
-    // console.log(res);
-    const data = await res.json();
-    console.log(data)
-  return (
-    <Appointment data={data}/>
-  )
+  if(res.status!==200){
+    return <div>Failed to fetch data</div>
 }
+  const data = await res.json();
+  return <Appointment data={data} />;
+};
 
-export default page
+export default page;

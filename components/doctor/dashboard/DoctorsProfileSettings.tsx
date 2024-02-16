@@ -1,40 +1,34 @@
+import DoctorDashboard from "./DoctorDashboard";
+import { getServerSession } from "next-auth";
+import { authOption } from "@/lib/AuthOptions/authOptions";
+import { redirect } from "next/navigation";
 
-import TagInput from '@/components/Input/TagsInput'
-
-import DoctorDashboard from './DoctorDashboard'
-import { getServerSession } from 'next-auth';
-import { authOption } from '@/lib/AuthOptions/authOptions';
-import { redirect } from 'next/navigation';
-
-const DoctorsProfileSettings = async() => {
+const DoctorsProfileSettings = async () => {
   const session = await getServerSession(authOption);
-  if(!session || !session.user){
-    return redirect("/")
+  if (!session || !session.user) {
+    return redirect("/");
   }
 
-
-  const res = await fetch(`${process.env.SERVER_URL}/user/getDoctor/${session.data.id}`,{
-    method:"GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    next:{
-      tags:['ApplyDoctor']
+  const res = await fetch(
+    `${process.env.SERVER_URL}/user/getDoctor/${session.data.id}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      next: {
+        tags: ["ApplyDoctor"],
+      },
     }
-  });
+  );
+
+  if (res.status !== 200) {
+    return <p>Something went wrong!</p>;
+  }
 
   const data = await res.json();
 
-  // const d = {};
+  return <DoctorDashboard datas={data} />;
+};
 
-  console.log(data);
-
-
-
-  return (
- <DoctorDashboard datas={data}/>
-
-  )
-}
-
-export default DoctorsProfileSettings
+export default DoctorsProfileSettings;

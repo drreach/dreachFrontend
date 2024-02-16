@@ -9,7 +9,7 @@ const page = async() => {
   const session = await getServerSession(authOption);
   if(!session || !session?.data || !session?.data?.doctorProfile?.id) return redirect("/")
 
-  console.log(session.data)
+  // console.log(session.data)
 
   const  res = await fetch(`${process.env.SERVER_URL}/doctor/getDashInfo/${session.data.doctorProfile.id}`,{
     method: "GET",
@@ -18,13 +18,16 @@ const page = async() => {
         // "Authorization": "Bearer "+localStorage.getItem("token")
     },
 
-    cache: "no-cache"
+    cache: "no-cache",
+    next:{
+      tags:['doctor_dashboard']
+    }
   });
 
-  console.log(res);
-
+  if(res.status!==200){
+    throw new Error("Something went wrong!");
+}
   const data = await res.json();
-  console.log(data);
   return (
     <div className=''>
         <DashInfo data={{ totalAppointments: data.totalAppointments,

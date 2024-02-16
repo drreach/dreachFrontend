@@ -1,11 +1,15 @@
-"use client"
+"use client";
 import { addReview } from "@/ServerActions";
 import { useSession } from "next-auth/react";
 import React from "react";
 import { useForm } from "react-hook-form";
 // import { useForm } from 'react-hook-form'
 
-const WriteDoctorReview = ({doctorProfileId}:{doctorProfileId:string}) => {
+const WriteDoctorReview = ({
+  doctorProfileId,
+}: {
+  doctorProfileId: string;
+}) => {
   const {
     register,
     handleSubmit,
@@ -14,17 +18,18 @@ const WriteDoctorReview = ({doctorProfileId}:{doctorProfileId:string}) => {
     formState: { errors },
   } = useForm();
 
-
-  const onAddReview = async(data:any) => {
-    console.log(data);
+  const onAddReview = async (data: any) => {
     if (!data.comment) return;
-    const res = await addReview({doctorProfileId:doctorProfileId,comment:data.comment});
+    const res = await addReview({
+      doctorProfileId: doctorProfileId,
+      comment: data.comment,
+    });
 
-    if(!res) return alert("Review not added")
-    if(res.status === 201){
-      alert("Review Added")
+    if (!res) return alert("Review not added");
+    if (res.status === 201) {
+      alert("Review Added");
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit(onAddReview)}>
@@ -96,7 +101,6 @@ const WriteDoctorReview = ({doctorProfileId}:{doctorProfileId:string}) => {
             {errors?.comment?.message?.toString()}
           </span>
         )}
-        
       </div>
       <hr />
 

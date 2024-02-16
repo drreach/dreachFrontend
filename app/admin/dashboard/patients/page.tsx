@@ -12,9 +12,11 @@ const page = async() => {
         cache: "no-cache"
     });
 
-    // console.log(res);
+    if(res.status!==200){
+      throw new Error("Something went wrong!");
+  }
+
     const data = await res.json();
-    console.log(data)
   return (
     <PatientsList data={data}/>
   )

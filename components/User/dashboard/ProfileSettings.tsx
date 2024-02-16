@@ -3,10 +3,12 @@ import { useAppDispatch, useAppSelector } from "@/Redux/hooks/hooks";
 import { setDob } from "@/Redux/reducers/UserReducers";
 import { UpdateProfileImage, updateUser } from "@/ServerActions";
 import { DatePickerDemo } from "@/components/DatePicker";
+import { loadToast, updateToast } from "@/utils/utils";
 import { useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const bloodGroupMap = {
   "A-": "A_NEGATIVE",
@@ -25,12 +27,11 @@ const ProfileSettings = () => {
   const dobDate = useAppSelector((state) => state.userReducer.dob);
   const onSubmit = async (data: any) => {
     if (!session.data?.data.id) {
-      return alert("Auth Required");
+      return toast.error("Session Expired,Refresh the page");
     }
     const {
       Fname,
       Lname,
-
       bloodGroup,
       gender,
       contact,
@@ -58,37 +59,31 @@ const ProfileSettings = () => {
       gender,
     };
 
-    console.log(
-      Fname,
-      Lname,
-      dobDate.toString(),
-      bloodGroup,
-      contact,
-      address,
-      city,
-      state,
-      pincode,
-      country
-    );
+    const tosastId = loadToast("Updating Profile");
 
     const update = await updateUser(payload);
 
-    if (update) {
+    if (update.status === 201) {
+      updateToast(tosastId, "Profile Updated", "success");
       await session.update({
         ...session,
-        data: update,
+        data: update.data,
       });
-
-      router.push("/user/dashboard");
+      return router.push("/user/dashboard");
     }
 
-    console.log(update);
+    if (update.status === 400) {
+      updateToast(tosastId, "Error Updating Profile", "error");
+    }
+
+    if (update.status === 500) {
+      updateToast(tosastId, "Server Error", "error");
+    }
   };
 
   const [file, setFile] = React.useState<File | null>(null);
 
   useEffect(() => {
-    console.log("Run something");
     if (session.data?.data.dob)
       dispacth(setDob(new Date(session.data.data.dob) as Date));
   }, []);
@@ -122,10 +117,6 @@ const ProfileSettings = () => {
     const formData = new FormData();
     formData.append("profileImage", file);
     formData.set("userId", session.data.data.id);
-    console.log(formData);
-
-    console.log(formData.get("userId"));
-
     const res = await UpdateProfileImage(formData);
 
     if (!res) {
@@ -167,10 +158,9 @@ const ProfileSettings = () => {
                             <div className="profile-img">
                               <img
                                 src={`${
-                                  session.data.data.profilePic ?
-                                  `https://storage.googleapis.com/kiitconnect_bucket/doctorProfile/${session.data.data.profilePic}`
-                                  :
-                                  "/assets/doctor-2.jpg"
+                                  session.data.data.profilePic
+                                    ? `https://storage.googleapis.com/kiitconnect_bucket/doctorProfile/${session.data.data.profilePic}`
+                                    : "/assets/doctor-2.jpg"
                                 } `}
                                 alt="User Image"
                               />
@@ -280,10 +270,10 @@ const ProfileSettings = () => {
                             {...register("bloodGroup", { required: "true" })}
                             className="form-control select"
                           >
-                            {Object.keys(bloodGroupMap).map((key,index) => {
+                            {Object.keys(bloodGroupMap).map((key, index) => {
                               return (
                                 <option
-                                key={index}
+                                  key={index}
                                   selected={
                                     session.data.data.bloodGroup ===
                                     bloodGroupMap[
