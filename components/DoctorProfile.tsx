@@ -339,7 +339,7 @@ const DoctorProfile = ({
                         <TabList>
                           {slots &&
                             slots.map((s, i) => {
-                              console.log(s.date, h_date);
+                             
                               return (
                                 <Tab key={i}>
                                   {i == 0
@@ -366,7 +366,7 @@ const DoctorProfile = ({
                                   s.availableSlotsDesk,
                                   s.availableSlotsVideo
                                 )?.map((slot: string, index) => (
-                                  <div
+                                  <div 
                                     onClick={() =>
                                       dispatch(
                                         setAppointmentDetails({
@@ -673,7 +673,7 @@ const DoctorProfile = ({
                         data?.doctorProfile?.clinicInfo?.map(
                           (clinic, index) => {
                             return (
-                              <div className="col-md-6">
+                              <div key={index} className="col-md-6">
                                 <div className="clinic-content">
                                   <h4 className="clinic-name">
                                     <a href="#">{clinic.clinicName}</a>

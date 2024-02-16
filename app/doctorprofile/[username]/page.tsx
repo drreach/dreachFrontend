@@ -130,7 +130,7 @@ const page = async (props: Props) => {
   if (res.status !== 200) {
     return (
       <div className="pt-28 min-h-screen text-center">
-        Either Doctor Not Found or you don't have permission to view the
+        Either Doctor Not Found or you do not have permission to view the
         profile.
       </div>
     );

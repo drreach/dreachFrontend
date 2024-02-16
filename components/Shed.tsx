@@ -11,9 +11,9 @@ const TimeSlotSelector = ({
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [timeSlots, setTimeSlots] = useState<string[]>([]);
 
-  const selectedSlots = isAvailableForDesk
-    ? useAppSelector((state) => state.userReducer.availableForDeskShedule)
-    : useAppSelector((state) => state.userReducer.shedules);
+  const selectedSlots = 
+   useAppSelector((state) => isAvailableForDesk?state.userReducer.availableForDeskShedule:state.userReducer.shedules)
+    // : useAppSelector((state) => state.userReducer.shedules);
 
   const dispatch = useAppDispatch();
 
