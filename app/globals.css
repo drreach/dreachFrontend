@@ -179,8 +179,8 @@ input[type=password] {
 	min-height: 38px;
 }
 .container-fluid {
-	padding-left: 30px;
-	padding-right: 30px;
+	/* padding-left: 30px;
+	padding-right: 30px; */
 }
 .form-control::-webkit-input-placeholder {
 	color: #858585;
@@ -5903,8 +5903,8 @@ html.menu-opened body {
 		padding-right: 20px;
 	}
 	.container-fluid {
-		padding-left: 20px;
-		padding-right: 20px;
+		/* padding-left: 20px;
+		padding-right: 20px; */
 	}
 	.chat-cont-left .chat-users-list a.media .media-body > div:first-child .user-name, 
 	.chat-cont-left .chat-users-list a.media .media-body > div:first-child .user-last-chat {
@@ -6160,8 +6160,8 @@ html.menu-opened body {
 		padding: 15px 0;
 	}
 	.container-fluid {
-		padding-left: 15px;
-		padding-right: 15px;
+		/* padding-left: 15px;
+		padding-right: 15px; */
 	}	
 	.card {
 		margin-bottom: 20px;

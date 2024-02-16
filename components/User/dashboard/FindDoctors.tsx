@@ -114,7 +114,7 @@ const FindDoctors = ({ data }: { data: FindDoctorList[] }) => {
                     <Link
                       href={`/doctorprofile/${d.user.username}?single_mode=${d.mode}`}
                       type="button"
-                      className="w-full btn btn-secondary"
+                      className="w-full btn btn-dark btn-sm"
                     >
                       Book {d?.mode}
                     </Link>

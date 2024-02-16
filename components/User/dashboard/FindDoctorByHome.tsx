@@ -125,7 +125,7 @@ const FindDoctorsByHome = ({
                     <Link
                       href={`/doctorprofile/${d.user.username}?mode=${mode}&${url}`}
                       type="button"
-                      className="w-full btn btn-secondary"
+                      className="w-full btn btn-dark btn-sm"
                     >
                       Book {d?.mode}
                     </Link>
