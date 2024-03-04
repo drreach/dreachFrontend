@@ -9,16 +9,16 @@ import { redirect, useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-
+import Select from "react-select";
 const bloodGroupMap = {
-  "A-": "A_NEGATIVE",
-  "A+": "A_POSITIVE",
-  "B-": "B_NEGATIVE",
-  "B+": "B_POSITIVE",
-  "AB-": "AB_NEGATIVE",
-  "AB+": "AB_POSITIVE",
-  "O-": "O_NEGATIVE",
-  "O+": "O_POSITIVE",
+  A_POSITIVE: "A+",
+  A_NEGATIVE: "A-",
+  B_POSITIVE: "B+",
+  B_NEGATIVE: "B-",
+  AB_POSITIVE: "AB+",
+  AB_NEGATIVE: "AB-",
+  O_POSITIVE: "O+",
+  O_NEGATIVE: "O-",
 };
 
 const ProfileSettings = () => {
@@ -91,6 +91,9 @@ const ProfileSettings = () => {
     register,
     handleSubmit,
     watch,
+    setValue,
+    getFieldState,
+
     formState: { errors },
   } = useForm();
   const session = useSession();
@@ -192,7 +195,9 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-12 col-md-6">
                         <div className="form-group">
-                          <label>First Name <span className="text-red-600">*</span></label>
+                          <label>
+                            First Name <span className="text-red-600">*</span>
+                          </label>
                           <input
                             {...register("Fname", { required: true })}
                             type="text"
@@ -208,7 +213,9 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-12 col-md-6 ">
                         <div className="form-group">
-                          <label>Last Name <span className="text-red-600">*</span></label>
+                          <label>
+                            Last Name <span className="text-red-600">*</span>
+                          </label>
                           <input
                             {...register("Lname", { required: true })}
                             type="text"
@@ -224,7 +231,10 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-12 col-md-6">
                         <div className="form-group">
-                          <label>Date of Birth <span className="text-red-600">*</span></label>
+                          <label>
+                            Date of Birth{" "}
+                            <span className="text-red-600">*</span>
+                          </label>
                           <div className="cal-icon">
                             {/* <input
                               {...register("dob", { required: true })}
@@ -243,10 +253,11 @@ const ProfileSettings = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="col-md-6">
+                      {/* <div className="col-md-6">
                         <div className="form-group">
                           <label>Gender <span className="text-red-600">*</span></label>
                           <select
+                        
                             defaultValue={session.data.data.gender}
                             {...register("gender", { required: true })}
                             className="form-control select"
@@ -262,40 +273,96 @@ const ProfileSettings = () => {
                             </span>
                           )}
                         </div>
-                      </div>
-                      <div className="col-12 col-md-6">
+                      </div> */}
+                      <div className="col-md-6">
                         <div className="form-group">
-                          <label>Blood Group <span className="text-red-600">*</span></label>
-                          <select
-                            {...register("bloodGroup", { required: "true" })}
-                            className="form-control select"
-                          >
-                            {Object.keys(bloodGroupMap).map((key, index) => {
-                              return (
-                                <option
-                                  key={index}
-                                  selected={
-                                    session.data.data.bloodGroup ===
-                                    bloodGroupMap[
-                                      key as keyof typeof bloodGroupMap
-                                    ]
-                                  }
-                                  value={
-                                    bloodGroupMap[
-                                      key as keyof typeof bloodGroupMap
-                                    ]
-                                  }
-                                >
-                                  {key}
-                                </option>
-                              );
-                            })}
-                          </select>
+                          <label>
+                            Gender <span className="text-red-600">*</span>
+                          </label>
+                          <Select
+                            defaultValue={{
+                              value: session.data.data.gender,
+                              label: session.data.data.gender,
+                            }}
+                            onChange={(e) => {
+                              setValue("gender", e?.value);
+                            }}
+                            classNamePrefix="react-select"
+                            options={[
+                              { value: "Male", label: "Male" },
+                              { value: "Female", label: "Female" },
+                              { value: "Other", label: "Other" },
+                            ]}
+                          />
+
+                          {errors.gender && (
+                            <span className="text-danger">
+                              This field is required
+                            </span>
+                          )}
                         </div>
                       </div>
                       <div className="col-12 col-md-6">
                         <div className="form-group">
-                          <label>Email ID <span className="text-red-600">*</span></label>
+                          <label>
+                            Blood Group <span className="text-red-600">*</span>
+                          </label>
+
+                          <Select
+                            defaultValue={{
+                              value: session.data.data.bloodGroup,
+                              label:
+                                bloodGroupMap[
+                                  session.data.data
+                                    .bloodGroup as keyof typeof bloodGroupMap
+                                ],
+                            }}
+                            onChange={(e) => {
+                              setValue("bloodGroup", e?.value);
+                            }}
+                            classNamePrefix="react-select"
+                            options={[
+                              {
+                                label: "A-",
+                                value: "A_NEGATIVE",
+                              },
+                              {
+                                label: "A+",
+                                value: "A_POSITIVE",
+                              },
+                              {
+                                label: "B-",
+                                value: "B_NEGATIVE",
+                              },
+                              {
+                                label: "B+",
+                                value: "B_POSITIVE",
+                              },
+                              {
+                                label: "AB-",
+                                value: "AB_NEGATIVE",
+                              },
+                              {
+                                label: "AB+",
+                                value: "AB_POSITIVE",
+                              },
+                              {
+                                label: "O-",
+                                value: "O_NEGATIVE",
+                              },
+                              {
+                                label: "O+",
+                                value: "O_POSITIVE",
+                              },
+                            ]}
+                          />
+                        </div>
+                      </div>
+                      <div className="col-12 col-md-6">
+                        <div className="form-group">
+                          <label>
+                            Email ID <span className="text-red-600">*</span>
+                          </label>
                           <input
                             // {...register("email", { required: true })}
                             disabled
@@ -307,7 +374,9 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-12 col-md-6">
                         <div className="form-group">
-                          <label>Mobile <span className="text-red-600">*</span></label>
+                          <label>
+                            Mobile <span className="text-red-600">*</span>
+                          </label>
                           <input
                             {...register("contact", { required: true })}
                             type="text"
@@ -323,7 +392,9 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-12">
                         <div className="form-group">
-                          <label>Address <span className="text-red-600">*</span></label>
+                          <label>
+                            Address <span className="text-red-600">*</span>
+                          </label>
                           <input
                             {...register("address", { required: true })}
                             type="text"
@@ -341,7 +412,9 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-12 col-md-6">
                         <div className="form-group">
-                          <label>City <span className="text-red-600">*</span></label>
+                          <label>
+                            City <span className="text-red-600">*</span>
+                          </label>
                           <input
                             {...register("city", { required: true })}
                             type="text"
@@ -357,7 +430,9 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-12 col-md-6">
                         <div className="form-group">
-                          <label>State <span className="text-red-600">*</span></label>
+                          <label>
+                            State <span className="text-red-600">*</span>
+                          </label>
                           <input
                             {...register("state", { required: true })}
                             type="text"
@@ -375,7 +450,9 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-12 col-md-6">
                         <div className="form-group">
-                          <label>Zip Code <span className="text-red-600">*</span></label>
+                          <label>
+                            Zip Code <span className="text-red-600">*</span>
+                          </label>
                           <input
                             {...register("pincode", { required: true })}
                             type="text"
@@ -393,8 +470,12 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-12 col-md-6">
                         <div className="form-group">
-                          <label>Country <span className="text-red-600">*</span></label>
-                          <label>Country <span className="text-red-600">*</span></label>
+                          <label>
+                            Country <span className="text-red-600">*</span>
+                          </label>
+                          <label>
+                            Country <span className="text-red-600">*</span>
+                          </label>
                           <input
                             {...register("country", { required: true })}
                             type="text"

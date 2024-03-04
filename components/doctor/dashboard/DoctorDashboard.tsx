@@ -15,7 +15,7 @@ import {
   validateRoutes,
 } from "@/ServerActions";
 import { DatePickerDemo } from "@/components/DatePicker";
-
+import Select from "react-select";
 import TagInput from "@/components/Input/TagsInput";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
@@ -112,6 +112,7 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
     formState: { errors },
     getValues,
     setError,
+    setValue,
     clearErrors,
     control,
     handleSubmit,
@@ -313,7 +314,6 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
     }
 
     return updateToast(toastId, res.message, "error");
-
   };
 
   const [files, setFiles] = useState<File | null>(null);
@@ -450,12 +450,37 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
                   <label>Gender</label> <span className="text-danger">*</span>
                   <select
                     {...register("user.gender", { required: true })}
-                    className="form-control select"
+                    className="form-control form-select select"
                   >
                     <option>Male</option>
                     <option>Female</option>
                     <option>Other</option>
                   </select>
+                  {/* <Select
+                    defaultValue={{
+                      value: session.data?.data.gender??"Male",
+                      label: session.data?.data.gender??"Male",
+                    }}
+                    onChange={(e) => {
+                      console.log(e);
+                      setValue("user.gender", e?.value!);
+                    }}
+                    classNamePrefix="react-select"
+                    options={[
+                      {
+                        label: "Male",
+                        value: "Male",
+                      },
+                      {
+                        label: "Female",
+                        value: "Female",
+                      },
+                      {
+                        label: "Other",
+                        value: "Other",
+                      },
+                    ]}
+                  /> */}
                   {errors.user?.gender && (
                     <span className="text-danger">This field is required</span>
                   )}
@@ -510,14 +535,14 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
                 <label>Mode</label> <span className="text-danger">*</span>
                 <select
                   {...register("mode", { required: true })}
-                  className="form-control select"
+                  className="form-control form-select select"
                   onChange={(e) => {
                     setChooseMode(e.target.value);
                   }}
                 >
-                  <option>VIDEO_CONSULT</option>
-                  <option>HOME_VISIT</option>
-                  <option>CLINIC_VISIT</option>
+                  <option value="VIDEO_CONSULT">Video Consult</option>
+                  <option value="HOME_VISIT">Home Visit</option>
+                  <option value="CLINIC_VISIT"> Clinic Visit</option>
                 </select>
                 {errors.mode && (
                   <span className="text-danger">This field is required</span>

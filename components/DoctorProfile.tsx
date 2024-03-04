@@ -12,6 +12,13 @@ import { useSession } from "next-auth/react";
 import WriteDoctorReview from "./WriteDoctorReview";
 import MapTimes from "./MapTimes";
 
+
+const modeMapp={
+  "CLINIC_VISIT":"Clinic Visit",
+  "HOME_VISIT":"Home Visit",
+  "VIDEO_CONSULT":"Video Consult"
+
+}
 const convertDate = (date: string) => {
   const d = new Date(date);
   const day = d.getDate();
@@ -283,9 +290,11 @@ const DoctorProfile = ({
                           <input
                             className="form-check-input"
                             type="radio"
-                            onChange={()=>{setShedMode(urlMode)}}
+                            onChange={() => {
+                              setShedMode(urlMode);
+                            }}
                             name="flexRadioDefault"
-                            checked={shedMode === urlMode} 
+                            checked={shedMode === urlMode}
                           />
                           <label
                             className="form-check-label"
@@ -311,7 +320,7 @@ const DoctorProfile = ({
                                 className="form-check-label"
                                 htmlFor="flexRadioDefault2"
                               >
-                                {data?.doctorProfile?.mode}
+                                {modeMapp[data?.doctorProfile?.mode as keyof typeof modeMapp]}
                               </label>
                             </div>
                             {data.doctorProfile.isAvailableForDesk && (
@@ -327,7 +336,7 @@ const DoctorProfile = ({
                                   className="form-check-label"
                                   htmlFor="flexRadioDefault2"
                                 >
-                                  CLINIC_VISIT
+                                  Clinic Visit
                                 </label>
                               </div>
                             )}
@@ -340,7 +349,6 @@ const DoctorProfile = ({
                         <TabList>
                           {slots &&
                             slots.map((s, i) => {
-                             
                               return (
                                 <Tab key={i}>
                                   {i == 0
@@ -367,7 +375,7 @@ const DoctorProfile = ({
                                   s.availableSlotsDesk,
                                   s.availableSlotsVideo
                                 )?.map((slot: string, index) => (
-                                  <div 
+                                  <div
                                     onClick={() =>
                                       dispatch(
                                         setAppointmentDetails({

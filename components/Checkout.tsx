@@ -4,6 +4,7 @@ import { setAptFor, setCurrentLocation } from "@/Redux/reducers/UserReducers";
 import { doctorAppointment } from "@/ServerActions/Doctor/doctor";
 import { convertDateToFormat, loadToast, updateToast } from "@/utils/utils";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -93,6 +94,7 @@ const Checkout = ({
     if (location.lat === 0.0 || location.long === 0)
       return toast.error("Location is Required");
     if (!formData.reason) return toast.error("Reason is Required");
+    if(!location.lat || !location.long) return toast.error("Location is Required");
     const toastId = loadToast("Please wait,Booking Appointment");
     const res = await doctorAppointment(
       data.doctor.id,
@@ -102,7 +104,7 @@ const Checkout = ({
       time!,
       location.lat,
       location.long,
-      apptFor === "OTHER",
+      apptFor === ("OTHER" || "MY_FAMILY"),
       mode
     );
 
@@ -127,7 +129,7 @@ const Checkout = ({
               <nav aria-label="breadcrumb" className="page-breadcrumb">
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item">
-                    <a href="index-2.html">Home</a>
+                    <Link  href="/">Home</Link>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
                     Checkout
@@ -156,7 +158,7 @@ const Checkout = ({
                       <div className="row">
                         <div className="col-md-12 col-sm-12">
                           <div className="form-group card-label">
-                            <label>Book For</label>
+                            <label>Book For <span className="text-red-600">*</span></label>
                             <select
                               onChange={(e) => {
                                 dispatch(setAptFor(e.target.value));
@@ -167,23 +169,22 @@ const Checkout = ({
                               name=""
                               id=""
                             >
-                              <option value="ME">ME</option>
-                              <option value="OTHER">OTHER</option>
+                              <option value="ME">Me</option>
+                              <option value="MY_FAMILY">My family</option>
+                              <option value="OTHER">Other</option>
                             </select>
                           </div>
                         </div>
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
-                            <label>First Name</label>
+                            <label>First Name  <span className="text-red-600">*</span></label>
                             <input
                               {...register("Fname", {
-                                required: apptFor === "OTHER",
+                                required: apptFor === "ME"?false:true,
                               })}
                               disabled={apptFor === "ME"}
                               defaultValue={
-                                apptFor === "ME"
-                                  ? `${session?.data?.data?.Fname}`
-                                  : ""
+                                apptFor === "ME" ? `${session?.data?.data?.Fname}` : ""
                               }
                               className="form-control"
                               type="text"
@@ -197,11 +198,11 @@ const Checkout = ({
                         </div>
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
-                            <label>Last Name</label>
+                            <label>Last Name  <span className="text-red-600">*</span></label>
                             <input
                               disabled={apptFor === "ME"}
                               {...register("Lname", {
-                                required: apptFor === "OTHER",
+                                required: apptFor === "ME"?false:true,
                               })}
                               defaultValue={
                                 apptFor === "ME"
@@ -220,11 +221,11 @@ const Checkout = ({
                         </div>
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
-                            <label>Email</label>
+                            <label>Email  <span className="text-red-600">*</span></label>
                             <input
                               disabled={apptFor === "ME"}
                               {...register("email", {
-                                required: apptFor === "OTHER",
+                                required: apptFor === "ME"?false:true,
                               })}
                               className="form-control"
                               type="email"
@@ -243,10 +244,10 @@ const Checkout = ({
                         </div>
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
-                            <label>Phone</label>
+                            <label>Phone  <span className="text-red-600">*</span></label>
                             <input
                               {...register("contact", {
-                                required: apptFor === "OTHER",
+                                required: apptFor === "ME"?false:true,
                               })}
                               className="form-control"
                               type="text"
@@ -262,7 +263,7 @@ const Checkout = ({
                         </div>{" "}
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
-                            <label>Appointment Reason</label>
+                            <label>Appointment Reason  <span className="text-red-600">*</span></label>
                             <textarea
                               {...register("reason", {
                                 required: true,
@@ -276,7 +277,7 @@ const Checkout = ({
                             )}
                           </div>
                         </div>
-                        <div className="col-md-6 col-sm-12">
+                        {/* <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
                             <label>Latitue</label>
                             <input
@@ -292,15 +293,16 @@ const Checkout = ({
                               </span>
                             )}
                           </div>
-                        </div>{" "}
+                        </div>{" "} */}
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
-                            <label>Longitude</label>
+                            <label>Lat/Long  <span className="text-red-600">*</span></label>
                             <input
                               className="form-control"
-                              defaultValue={location.long}
-                              value={location.long}
-                              type="number"
+                              defaultValue={"Lat: " + location.lat + " Long: " + location.long}
+                              value={"Lat: " + location.lat + " Long: " + location.long}
+                              type="string"
+                              
                               disabled
                             />
                             {errors.long && (
