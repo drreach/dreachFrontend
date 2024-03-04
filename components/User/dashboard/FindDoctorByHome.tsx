@@ -142,7 +142,7 @@ const FindDoctorsByHome = ({
 
     { doctorList &&
      doctorList.map((d, v) => {
-       return <div className="w-full flex justify-between px-3 md:flex-row py-3 flex-col">
+       return <div key={d.id} className="w-full flex justify-between px-3 md:flex-row py-3 flex-col">
 
          <div className="flex items-center md:flex-row gap-2">
            <img className="w-[100px] h-[100px] rounded-full object-cover border border-green-700" src={`https://storage.googleapis.com/kiitconnect_bucket/doctorProfile/${d.user.profilePic}`} alt="" />
