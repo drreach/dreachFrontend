@@ -71,3 +71,12 @@ export const mapBloodGroup = {
   O_POSITIVE: "O+",
   O_NEGATIVE: "O-",
 };
+
+
+
+export const modeMap={
+  "VIDEO_CONSULT":"Video Consult",
+  "CLINIC_VISIT":"Clinic Visit",
+  "HOME_VISIT":"Home Visit"
+
+}

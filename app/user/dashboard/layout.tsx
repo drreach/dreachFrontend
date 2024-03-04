@@ -7,19 +7,22 @@ import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { redirect, usePathname } from "next/navigation";
 
-export default async function Layout({ children }: { children: React.ReactNode }) {
-
+export default async function Layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const session = await getServerSession(authOption);
-  if(!session || session.data.role !== "NORMAL"){
+  if (!session || session.data.role !== "NORMAL") {
     return redirect("/");
   }
 
-    return(
-        <>
+  return (
+    <>
       {/* Main Wrapper */}
       <div className="main-wrapper pt-28   w-full md:px-10 mx-auto overflow-x-hidden">
         {/* Header */}
-     
+
         {/* /Header */}
         {/* Breadcrumb */}
         {/* <div className="breadcrumb-bar">
@@ -47,20 +50,16 @@ export default async function Layout({ children }: { children: React.ReactNode }
           <div className="">
             <div className="row ">
               {/* Profile Sidebar */}
-           <Sidebar/>
+              <Sidebar />
               {/* / Profile Sidebar */}
               <div className="col-md-7 col-lg-8 col-xl-9">
                 <div className="px-1">
                   <div className="card-body pt-0">
-                 
                     {/* Tab Content */}
-                    
 
                     {children}
 
-                    <div className="tab-content pt-0">
-                     
-                    </div>
+                    <div className="tab-content pt-0"></div>
                     {/* Tab Content */}
                   </div>
                 </div>
@@ -70,10 +69,9 @@ export default async function Layout({ children }: { children: React.ReactNode }
         </div>
         {/* /Page Content */}
         {/* Footer */}
-    
-   
+
         {/* /Footer */}
       </div>
     </>
-    )
+  );
 }

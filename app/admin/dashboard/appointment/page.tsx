@@ -12,7 +12,7 @@ const page = async () => {
   });
 
   if(res.status!==200){
-    return <div>Failed to fetch data</div>
+    throw new Error("Something went wrong!");
 }
   const data = await res.json();
   return <Appointment data={data} />;

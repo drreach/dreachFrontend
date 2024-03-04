@@ -192,7 +192,7 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-12 col-md-6">
                         <div className="form-group">
-                          <label>First Name</label>
+                          <label>First Name <span className="text-red-600">*</span></label>
                           <input
                             {...register("Fname", { required: true })}
                             type="text"
@@ -208,7 +208,7 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-12 col-md-6 ">
                         <div className="form-group">
-                          <label>Last Name</label>
+                          <label>Last Name <span className="text-red-600">*</span></label>
                           <input
                             {...register("Lname", { required: true })}
                             type="text"
@@ -224,7 +224,7 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-12 col-md-6">
                         <div className="form-group">
-                          <label>Date of Birth</label>
+                          <label>Date of Birth <span className="text-red-600">*</span></label>
                           <div className="cal-icon">
                             {/* <input
                               {...register("dob", { required: true })}
@@ -245,7 +245,7 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-md-6">
                         <div className="form-group">
-                          <label>Gender</label>
+                          <label>Gender <span className="text-red-600">*</span></label>
                           <select
                             defaultValue={session.data.data.gender}
                             {...register("gender", { required: true })}
@@ -265,7 +265,7 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-12 col-md-6">
                         <div className="form-group">
-                          <label>Blood Group</label>
+                          <label>Blood Group <span className="text-red-600">*</span></label>
                           <select
                             {...register("bloodGroup", { required: "true" })}
                             className="form-control select"
@@ -295,7 +295,7 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-12 col-md-6">
                         <div className="form-group">
-                          <label>Email ID</label>
+                          <label>Email ID <span className="text-red-600">*</span></label>
                           <input
                             // {...register("email", { required: true })}
                             disabled
@@ -307,7 +307,7 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-12 col-md-6">
                         <div className="form-group">
-                          <label>Mobile</label>
+                          <label>Mobile <span className="text-red-600">*</span></label>
                           <input
                             {...register("contact", { required: true })}
                             type="text"
@@ -323,7 +323,7 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-12">
                         <div className="form-group">
-                          <label>Address</label>
+                          <label>Address <span className="text-red-600">*</span></label>
                           <input
                             {...register("address", { required: true })}
                             type="text"
@@ -341,7 +341,7 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-12 col-md-6">
                         <div className="form-group">
-                          <label>City</label>
+                          <label>City <span className="text-red-600">*</span></label>
                           <input
                             {...register("city", { required: true })}
                             type="text"
@@ -357,7 +357,7 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-12 col-md-6">
                         <div className="form-group">
-                          <label>State</label>
+                          <label>State <span className="text-red-600">*</span></label>
                           <input
                             {...register("state", { required: true })}
                             type="text"
@@ -375,7 +375,7 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-12 col-md-6">
                         <div className="form-group">
-                          <label>Zip Code</label>
+                          <label>Zip Code <span className="text-red-600">*</span></label>
                           <input
                             {...register("pincode", { required: true })}
                             type="text"
@@ -393,7 +393,8 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-12 col-md-6">
                         <div className="form-group">
-                          <label>Country</label>
+                          <label>Country <span className="text-red-600">*</span></label>
+                          <label>Country <span className="text-red-600">*</span></label>
                           <input
                             {...register("country", { required: true })}
                             type="text"

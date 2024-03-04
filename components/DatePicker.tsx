@@ -20,10 +20,11 @@ export function DatePickerDemo() {
 
   const date = useAppSelector((state) => state.userReducer.dob);
 
+  const [isCalendarOpen, setIsCalendarOpen] = React.useState(false);
   const dispatch = useAppDispatch();
 
   return (
-    <Popover>
+    <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
@@ -38,16 +39,17 @@ export function DatePickerDemo() {
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
         <Calendar
+        
           mode="single"
           selected={date}
           required={true}
           onSelect={(d) => {
-            console.log(d);
-
             dispatch(setDob(d));
+            setIsCalendarOpen(false);
           }}
           captionLayout="dropdown-buttons"
           fromYear={1900}
+          
           toYear={2024}
         />
       </PopoverContent>
