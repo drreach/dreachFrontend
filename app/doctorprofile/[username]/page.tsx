@@ -32,7 +32,7 @@ const page = async (props: Props) => {
     const dateOnly = h_apptDate.toString().substring(0, 10);
 
     const res = await fetch(
-      `${process.env.SERVER_URL}/doctor/getdoctorProfilebyVideo?username=${props.params.username}&userId=${session?.data?.id}&slectedDateByClient=${dateOnly}&slot=${h_slotTime}&clientCurrentTimezone=${today}&`,
+      `${process.env.SERVER_URL}/doctor/getdoctorProfilebyVideo?username=${props.params.username}&userId=${session?.data?.id}&slectedDateByClient=${dateOnly}&slot=${h_slotTime}&clientCurrentTimezone=${today.toLocaleString()}&`,
       {
         method: "GET",
 
@@ -65,7 +65,7 @@ const page = async (props: Props) => {
 
   if (mode === "homevisit") {
     const res = await fetch(
-      `${process.env.SERVER_URL}/doctor/getdoctorProfilebyHome?username=${props.params.username}&clientCurrentTimezone=${today}&userId=${session?.data?.id}`,
+      `${process.env.SERVER_URL}/doctor/getdoctorProfilebyHome?username=${props.params.username}&clientCurrentTimezone=${today.toLocaleString()}&userId=${session?.data?.id}`,
       {
         method: "GET",
  
@@ -113,7 +113,7 @@ const page = async (props: Props) => {
 
   const res = await fetch(
 
-    `${process.env.SERVER_URL}/doctor/getDoctorProfile?username=${props.params.username}&userId=${session?.data?.id}&clientCurrentTimezone=${today}`,
+    `${process.env.SERVER_URL}/doctor/getDoctorProfile?username=${props.params.username}&userId=${session?.data?.id}&clientCurrentTimezone=${today.toLocaleString()}`,
     {
       method: "GET",
 
