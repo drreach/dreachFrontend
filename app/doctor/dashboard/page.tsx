@@ -9,6 +9,10 @@ const page = async() => {
   const session = await getServerSession(authOption);
   if(!session || !session?.data || !session?.data?.doctorProfile?.id) return redirect("/")
   const today = new Date();
+console.log(today.toLocaleString("en-IN",{
+  timeZone: "Asia/Kolkata"
+
+}))
 
 
   // console.log(session.data)

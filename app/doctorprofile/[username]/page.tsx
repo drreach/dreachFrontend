@@ -2,6 +2,8 @@ import DoctorProfile from "@/components/DoctorProfile";
 import { authOption } from "@/lib/AuthOptions/authOptions";
 import { getServerSession } from "next-auth";
 import React from "react";
+const { DateTime } = require('luxon');
+
 
 type Props = {
   params: {
@@ -13,6 +15,12 @@ type Props = {
 const page = async (props: Props) => {
   const session = await getServerSession(authOption);
   const today = new Date();
+
+  const now = DateTime.now().setZone('Asia/Kolkata');
+const formattedDateString = now.toISO();
+
+
+// console.log(formattedDateString,today,new Date(today));
   const {
     homeVisitDoctorId,
     h_apptDate,
@@ -32,9 +40,7 @@ const page = async (props: Props) => {
     const dateOnly = h_apptDate.toString().substring(0, 10);
 
     const res = await fetch(
-      `${process.env.SERVER_URL}/doctor/getdoctorProfilebyVideo?username=${props.params.username}&userId=${session?.data?.id}&slectedDateByClient=${dateOnly}&slot=${h_slotTime}&clientCurrentTimezone=${today.toLocaleString("en-IN",{
-        timeZone: "Asia/Kolkata"
-      })}&`,
+      `${process.env.SERVER_URL}/doctor/getdoctorProfilebyVideo?username=${props.params.username}&userId=${session?.data?.id}&slectedDateByClient=${dateOnly}&slot=${h_slotTime}&clientCurrentTimezone=${new Date(formattedDateString)}&`,
       {
         method: "GET",
 
@@ -67,12 +73,7 @@ const page = async (props: Props) => {
 
   if (mode === "homevisit") {
     const res = await fetch(
-      `${process.env.SERVER_URL}/doctor/getdoctorProfilebyHome?username=${props.params.username}&clientCurrentTimezone=${today.toLocaleString(
-        "en-IN",
-        {
-          timeZone: "Asia/Kolkata",
-        }
-      )}&userId=${session?.data?.id}`,
+      `${process.env.SERVER_URL}/doctor/getdoctorProfilebyHome?username=${props.params.username}&clientCurrentTimezone=${new Date(formattedDateString)}&userId=${session?.data?.id}`,
       {
         method: "GET",
  
@@ -117,15 +118,13 @@ const page = async (props: Props) => {
 
  
   console.log(today);
-
+  console.log(today.toLocaleString("en-IN",{
+    timeZone: "Asia/Kolkata"
+  
+  }))
   const res = await fetch(
 
-    `${process.env.SERVER_URL}/doctor/getDoctorProfile?username=${props.params.username}&userId=${session?.data?.id}&clientCurrentTimezone=${today.toLocaleString(
-      "en-IN",
-      {
-        timeZone: "Asia/Kolkata",
-      }
-    )}`,
+    `${process.env.SERVER_URL}/doctor/getDoctorProfile?username=${props.params.username}&userId=${session?.data?.id}&clientCurrentTimezone=${new Date(formattedDateString)}`,
     {
       method: "GET",
 
