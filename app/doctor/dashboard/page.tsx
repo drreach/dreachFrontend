@@ -13,7 +13,11 @@ const page = async() => {
 
   // console.log(session.data)
 
-  const  res = await fetch(`${process.env.SERVER_URL}/doctor/getDashInfo?userId=${session.data.doctorProfile.id}&currentLocalTime=${today.toLocaleString()}`,{
+  const  res = await fetch(`${process.env.SERVER_URL}/doctor/getDashInfo?userId=${session.data.doctorProfile.id}&currentLocalTime=${today.toLocaleString(
+    "en-IN",{
+      timeZone: "Asia/Kolkata"
+    }
+  )}`,{
     method: "GET",
     headers: {
         "Content-Type": "application/json",
