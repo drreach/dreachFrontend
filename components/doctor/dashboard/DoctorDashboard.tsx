@@ -25,6 +25,31 @@ import { toast } from "react-toastify";
 import { loadToast, updateToast } from "@/utils/utils";
 
 const fileTypes = ["PDF"];
+
+
+type User={
+  id: string;
+  username: string;
+  Fname: string;
+  Lname: string;
+  email: string;
+  age: number;
+  gender: string;
+  dob: string;
+
+  bloodGroup: string;
+  contact: string;
+  role: string;
+  userId: string;
+  address: {
+    address: string;
+    city: string;
+    state: string;
+    country: string;
+    pincode: string;
+  };
+};
+
 type DoctorProfile = {
   specializations: string[];
   schedules: {
@@ -64,29 +89,7 @@ type DoctorProfile = {
 
   mode: string;
   isAvailableForDesk: boolean;
-  user: {
-    id: string;
-    username: string;
-    Fname: string;
-    Lname: string;
-    email: string;
-    age: number;
-    gender: string;
-    dob: string;
-
-    bloodGroup: string;
-    contact: string;
-    role: string;
-    userId: string;
-
-    address: {
-      address: string;
-      city: string;
-      state: string;
-      country: string;
-      pincode: string;
-    };
-  };
+  user: User
 };
 
 const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
@@ -210,62 +213,113 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
       userId,
       description,
       mode,
-
       status,
       schedules,
     } = dt;
 
-    const newData = {
-      Fname: user.Fname,
-      Lname: user.Lname,
-      age: user.age,
-      dob: dobDate,
-      bloodGroup: user.bloodGroup,
-      address: user.address,
-      contact: user.contact,
-      fee: fee,
-      specializations: specialization,
-      educations: filteredEducation,
-      awards: filteredAwards,
-      workExperiences: filterWorkExperience,
-      clinicInfo: filterredClinicInfo,
-      schedules,
-      description,
-      doctorProfileId: id,
-      userId: userId,
-      mode,
-      isAvailableForDesk:
-        chooseMode === "VIDEO_CONSULT" ? dt.isAvailableForDesk : false,
-    };
 
-    const stat = "PENDING";
-    const toastId = loadToast("Please wait,submitting your profile");
-    const res = await updateDoctorProfile({ ...newData, status: stat });
-    if (res?.status === 201) {
-      // const payload = {
-      //   Fname: res.data.user.Fname,
-      //   Lname: res.data.user.Lname,
-      //   dob: res.data.user.dob,
-      //   bloodGroup: res.data.user.bloodGroup,
-      //   contact: res.data.user.contact,
-      //   Address: res.data.user.address,
-      //   gender: res.data.user.gender,
-      // };
 
-      await session.update({
-        ...session,
-        data: res.data.user,
-      });
+    // const newDatas={};
+    const newDatas: { [key: string]: any } = {};
 
-      return updateToast(toastId, "Profile Updated Successfully", "success");
+    Object.keys(dt).forEach((key) => {
 
-      // setRefresh(true);
+      if(key==="user"){
+       const userKeys=Object.keys(dt.user);
+       if (!newDatas['user']) {
+        newDatas['user'] = {};
     }
+        userKeys.forEach((k)=>{
+          if(k==='address'){
+            const addressKeys=Object.keys(dt.user.address);
+            addressKeys.forEach((ak)=>{
+              if(dt.user.address[ak as keyof User['address']]!==datas.user.address[ak as keyof User['address']]){
+                newDatas['user']={...newDatas['user'],address:{...newDatas['user'].address,[ak]:dt.user.address[ak as keyof User['address']]}}
+              }
+            })
+          }else
+          if(dt.user[k as keyof User]!==datas.user[k as keyof User]){
+            newDatas['user'][k]=dt.user[k as keyof User];
+          }
+        })
+      }
 
-    if (res.status === 404) {
-      return updateToast(toastId, "Document is Missing", "error");
-    }
-    return updateToast(toastId, "Internal Server Error", "error");
+      else if(key==="workExperiences"){
+        if (!newDatas['workExperiences']) {
+          newDatas['workExperiences'] = [];
+      }
+        dt.workExperiences.forEach((d,i)=>{
+          if(i<=datas.workExperiences.length-1&& (d.clinic!== datas.workExperiences[i].clinic || d.duration!==datas.workExperiences[i].duration)){
+            newDatas['workExperiences']=[...newDatas['workExperiences'],dt.workExperiences[i]];
+          }else{
+            newDatas['workExperiences']=[...newDatas['workExperiences'],dt.workExperiences[i]];
+          
+          }
+        }
+        )
+      }
+      else if (datas[key as keyof DoctorProfile] !== dt[key as keyof DoctorProfile]) {
+        newDatas[key as string] = dt[key as keyof DoctorProfile];
+      }
+    });
+
+
+
+    console.log(newDatas);
+
+
+
+    // const newData = {
+    //   Fname: user.Fname,
+    //   Lname: user.Lname,
+    //   age: user.age,
+    //   dob: dobDate,
+    //   bloodGroup: user.bloodGroup,
+    //   address: user.address,
+    //   contact: user.contact,
+    //   fee: fee,
+    //   specializations: specialization,
+    //   educations: filteredEducation,
+    //   awards: filteredAwards,
+    //   workExperiences: filterWorkExperience,
+    //   clinicInfo: filterredClinicInfo,
+    //   schedules,
+    //   description,
+    //   doctorProfileId: id,
+    //   userId: userId,
+    //   mode,
+    //   isAvailableForDesk:
+    //     chooseMode === "VIDEO_CONSULT" ? dt.isAvailableForDesk : false,
+    // };
+
+    // const stat = "PENDING";
+    // const toastId = loadToast("Please wait,submitting your profile");
+    // const res = await updateDoctorProfile({ ...newData, status: stat });
+    // if (res?.status === 201) {
+    //   // const payload = {
+    //   //   Fname: res.data.user.Fname,
+    //   //   Lname: res.data.user.Lname,
+    //   //   dob: res.data.user.dob,
+    //   //   bloodGroup: res.data.user.bloodGroup,
+    //   //   contact: res.data.user.contact,
+    //   //   Address: res.data.user.address,
+    //   //   gender: res.data.user.gender,
+    //   // };
+
+    //   await session.update({
+    //     ...session,
+    //     data: res.data.user,
+    //   });
+
+    //   return updateToast(toastId, "Profile Updated Successfully", "success");
+
+    //   // setRefresh(true);
+    // }
+
+    // if (res.status === 404) {
+    //   return updateToast(toastId, "Document is Missing", "error");
+    // }
+    // return updateToast(toastId, "Internal Server Error", "error");
   };
 
   const handleOnFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -12,18 +12,17 @@ type Props = {
 
 const page = async (props: Props) => {
   const session = await getServerSession(authOption);
-  console.log(props.searchParams);
+  const today = new Date();
   const {
     homeVisitDoctorId,
     h_apptDate,
     h_slotTime,
-    videoDoctorId,
-    v_apptDate,
-    v_slotTime,
     mode,
     single_mode,
   } = props.searchParams;
+
   if (mode && mode === "video") {
+
     if (!homeVisitDoctorId || !h_apptDate || !h_slotTime)
       throw new Error("Invalid Access");
     const url =
@@ -33,7 +32,7 @@ const page = async (props: Props) => {
     const dateOnly = h_apptDate.toString().substring(0, 10);
 
     const res = await fetch(
-      `${process.env.SERVER_URL}/doctor/getdoctorProfilebyVideo?username=${props.params.username}&userId=${session?.data?.id}&date=${dateOnly}&slot=${h_slotTime}`,
+      `${process.env.SERVER_URL}/doctor/getdoctorProfilebyVideo?username=${props.params.username}&userId=${session?.data?.id}&slectedDateByClient=${dateOnly}&slot=${h_slotTime}&clientCurrentTimezone=${today}&`,
       {
         method: "GET",
 
@@ -66,10 +65,10 @@ const page = async (props: Props) => {
 
   if (mode === "homevisit") {
     const res = await fetch(
-      `${process.env.SERVER_URL}/doctor/getdoctorProfilebyHome?username=${props.params.username}&userId=${session?.data?.id}`,
+      `${process.env.SERVER_URL}/doctor/getdoctorProfilebyHome?username=${props.params.username}&clientCurrentTimezone=${today}&userId=${session?.data?.id}`,
       {
         method: "GET",
-
+ 
         headers: {
           "Content-Type": "application/json",
           // "Authorization": "Bearer "+localStorage.getItem("token")
@@ -109,8 +108,12 @@ const page = async (props: Props) => {
     );
   }
 
+ 
+  console.log(today);
+
   const res = await fetch(
-    `${process.env.SERVER_URL}/doctor/getDoctorProfile?username=${props.params.username}&userId=${session?.data?.id}`,
+
+    `${process.env.SERVER_URL}/doctor/getDoctorProfile?username=${props.params.username}&userId=${session?.data?.id}&clientCurrentTimezone=${today}`,
     {
       method: "GET",
 
@@ -122,10 +125,14 @@ const page = async (props: Props) => {
     }
   );
 
+  console.log(res);
+
   if (res.status !== 200) {
+    console.log("heehhhh",res)
     throw new Error("Something went wrong!");
   }
   const data = await res.json();
+  console.log(data);
 
   if (res.status !== 200) {
     return (

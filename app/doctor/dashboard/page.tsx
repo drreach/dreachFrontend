@@ -8,10 +8,11 @@ import React from 'react'
 const page = async() => {
   const session = await getServerSession(authOption);
   if(!session || !session?.data || !session?.data?.doctorProfile?.id) return redirect("/")
+  const today = new Date();
 
   // console.log(session.data)
 
-  const  res = await fetch(`${process.env.SERVER_URL}/doctor/getDashInfo/${session.data.doctorProfile.id}`,{
+  const  res = await fetch(`${process.env.SERVER_URL}/doctor/getDashInfo?userId=${session.data.doctorProfile.id}&currentLocalTime=${today}`,{
     method: "GET",
     headers: {
         "Content-Type": "application/json",

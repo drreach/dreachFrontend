@@ -12,13 +12,11 @@ import { useSession } from "next-auth/react";
 import WriteDoctorReview from "./WriteDoctorReview";
 import MapTimes from "./MapTimes";
 
-
-const modeMapp={
-  "CLINIC_VISIT":"Clinic Visit",
-  "HOME_VISIT":"Home Visit",
-  "VIDEO_CONSULT":"Video Consult"
-
-}
+const modeMapp = {
+  CLINIC_VISIT: "Clinic Visit",
+  HOME_VISIT: "Home Visit",
+  VIDEO_CONSULT: "Video Consult",
+};
 const convertDate = (date: string) => {
   const d = new Date(date);
   const day = d.getDate();
@@ -320,7 +318,12 @@ const DoctorProfile = ({
                                 className="form-check-label"
                                 htmlFor="flexRadioDefault2"
                               >
-                                {modeMapp[data?.doctorProfile?.mode as keyof typeof modeMapp]}
+                                {
+                                  modeMapp[
+                                    data?.doctorProfile
+                                      ?.mode as keyof typeof modeMapp
+                                  ]
+                                }
                               </label>
                             </div>
                             {data.doctorProfile.isAvailableForDesk && (
@@ -452,7 +455,7 @@ const DoctorProfile = ({
                         >
                           Update Your Profile To Book
                         </Link>
-                      ) : isBookedByCurrentUser ? (
+                      ) : isBookedByCurrentUser && (status==="APPROVED" || status=== "PENDING") ? (
                         <Link className="apt-btn no-underline" href="#">
                           Status : {status}
                         </Link>
