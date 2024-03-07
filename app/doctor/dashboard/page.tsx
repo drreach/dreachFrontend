@@ -8,20 +8,12 @@ import React from 'react'
 const page = async() => {
   const session = await getServerSession(authOption);
   if(!session || !session?.data || !session?.data?.doctorProfile?.id) return redirect("/")
-  const today = new Date();
-console.log(today.toLocaleString("en-IN",{
-  timeZone: "Asia/Kolkata"
 
-}))
 
 
   // console.log(session.data)
 
-  const  res = await fetch(`${process.env.SERVER_URL}/doctor/getDashInfo?userId=${session.data.doctorProfile.id}&currentLocalTime=${today.toLocaleString(
-    "en-IN",{
-      timeZone: "Asia/Kolkata"
-    }
-  )}`,{
+  const  res = await fetch(`${process.env.SERVER_URL}/doctor/getDashInfo?userId=${session.data.doctorProfile.id}`,{
     method: "GET",
     headers: {
         "Content-Type": "application/json",
@@ -33,6 +25,8 @@ console.log(today.toLocaleString("en-IN",{
       tags:['doctor_dashboard']
     }
   });
+
+  console.log(res)
 
   if(res.status!==200){
     throw new Error("Something went wrong!");

@@ -4,8 +4,6 @@ import { getServerSession } from "next-auth";
 import React from "react";
 // const { DateTime } = require('luxon');
 
-const { DateTime } = require('luxon');
-import moment from "moment";
 
 
 type Props = {
@@ -17,46 +15,8 @@ type Props = {
 
 const page = async (props: Props) => {
   const session = await getServerSession(authOption);
-  const today = new Date();
-
-  const nowInKolkata = DateTime.now().setZone('Asia/Kolkata');
-
-  const currentDateInServerTimeZone = new Date();
-
-  // Calculate the time difference between the server's local time zone and the Indian Standard Time zone (IST)
-  const istOffsetMilliseconds = 5.5 * 60 * 60 * 1000; // IST is 5 hours and 30 minutes ahead of UTC
-  
-  // Adjust the time to reflect the Indian Standard Time zone (IST)
-
-  const t = `${currentDateInServerTimeZone.getTime()+istOffsetMilliseconds}`;
-  const s = new Date(currentDateInServerTimeZone.getTime() + istOffsetMilliseconds);
-  
-  console.log(s); // Out
-
-// Convert Luxon DateTime object to JavaScript Date object in UTC mode
-// const t = nowInKolkata.toUTC().toJSDate();
-
-// Get the current date and time in the 'Asia/Kolkata' time zone
-const currentDateInIndia = DateTime.now().setZone('Asia/Kolkata').toJSDate();
-
-console.log(currentDateInIndia); 
-
-  
-
- 
-    console.log(new Date(moment().utcOffset("+05:30").toLocaleString())
-    );
 
 
-//   const t = now.toISO();
-//   const f =  t.split(' ')[0];
-//   const c = new Date(f);
-// const formattedDateString = c;
-
-// console.log(formattedDateString)
-
-
-// console.log(formattedDateString,today,new Date(today));
   const {
     homeVisitDoctorId,
     h_apptDate,
@@ -76,7 +36,7 @@ console.log(currentDateInIndia);
     const dateOnly = h_apptDate.toString().substring(0, 10);
 
     const res = await fetch(
-      `${process.env.SERVER_URL}/doctor/getdoctorProfilebyVideo?username=${props.params.username}&userId=${session?.data?.id}&slectedDateByClient=${dateOnly}&slot=${h_slotTime}&clientCurrentTimezone=${t}&`,
+      `${process.env.SERVER_URL}/doctor/getdoctorProfilebyVideo?username=${props.params.username}&userId=${session?.data?.id}&slectedDateByClient=${dateOnly}&slot=${h_slotTime}`,
       {
         method: "GET",
 
@@ -109,7 +69,7 @@ console.log(currentDateInIndia);
 
   if (mode === "homevisit") {
     const res = await fetch(
-      `${process.env.SERVER_URL}/doctor/getdoctorProfilebyHome?username=${props.params.username}&clientCurrentTimezone=${t}&userId=${session?.data?.id}`,
+      `${process.env.SERVER_URL}/doctor/getdoctorProfilebyHome?username=${props.params.username}&userId=${session?.data?.id}`,
       {
         method: "GET",
  
@@ -153,14 +113,10 @@ console.log(currentDateInIndia);
   }
 
  
-  console.log(today);
-  // console.log(today.toLocaleString("en-IN",{
-  //   timeZone: "Asia/Kolkata"
-  
-  // }))
+
   const res = await fetch(
 
-    `${process.env.SERVER_URL}/doctor/getDoctorProfile?username=${props.params.username}&userId=${session?.data?.id}&clientCurrentTimezone=${t}`,
+    `${process.env.SERVER_URL}/doctor/getDoctorProfile?username=${props.params.username}&userId=${session?.data?.id}`,
     {
       method: "GET",
 
