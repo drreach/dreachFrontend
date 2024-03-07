@@ -87,7 +87,7 @@ export const updateDoctorProfile = async (data: any) => {
   // console.log(data);
   try {
     const res = await fetch(
-      `${process.env.SERVER_URL}/user/updateDoctorProfile`,
+      `${process.env.SERVER_URL}/doctor/updateDoctorProfile`,
       {
         method: "POST",
         headers: {

@@ -13,7 +13,7 @@ export const actionsOnUser = async (action: string, id: string) => {
 
   try {
     const res = await fetch(
-      `${process.env.SERVER_URL}/user/actionOnUser?action=${action}&userId=${id}`,
+      `${process.env.SERVER_URL}/admin/actionOnDoctor?action=${action}&userId=${id}`,
       {
         method: "GET",
         headers: {

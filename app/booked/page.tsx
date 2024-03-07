@@ -16,14 +16,7 @@ const page = (prop: Props) => {
     v_apptDate,
     v_slotTime,
   } = prop.searchParams;
-  console.log(
-    h_doctorName,
-    h_apptDate,
-    h_slotTime,
-    v_doctorName,
-    v_apptDate,
-    v_slotTime
-  );
+
   const allData = {
     h_doctorName: h_doctorName?.toString(),
     h_apptDate: h_apptDate?.toString(),

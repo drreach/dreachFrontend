@@ -2,7 +2,7 @@ import Appointment from "@/components/Admin/dashboard/Appointment";
 import React from "react";
 
 const page = async () => {
-  const res = await fetch(`${process.env.SERVER_URL}/user/getAppointments`, {
+  const res = await fetch(`${process.env.SERVER_URL}/admin/getAppointments`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

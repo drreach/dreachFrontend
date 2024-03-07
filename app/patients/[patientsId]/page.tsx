@@ -75,10 +75,7 @@ export interface User {
 
 const page = async ({ params }: { params: { patientsId: string } }) => {
   const session = await getServerSession(authOption);
-  // if(!session || !session.data || session.data?.role!=="DOCTOR")
-
   if (!session) redirect("/");
-
   const response = await fetch(
     `${process.env.SERVER_URL}/doctor/getPatientsMedicalByDoctor?pid=${params.patientsId}&doctorId=${session?.data.doctorProfile.id}`,
     {

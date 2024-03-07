@@ -4,8 +4,6 @@ import { getServerSession } from "next-auth";
 import React from "react";
 // const { DateTime } = require('luxon');
 
-
-
 type Props = {
   params: {
     username: string;
@@ -16,23 +14,20 @@ type Props = {
 const page = async (props: Props) => {
   const session = await getServerSession(authOption);
 
-
-  const {
-    homeVisitDoctorId,
-    h_apptDate,
-    h_slotTime,
-    mode,
-    single_mode,
-  } = props.searchParams;
+  const { homeVisitDoctorId, h_apptDate, h_slotTime, mode, single_mode } =
+    props.searchParams;
 
   if (mode && mode === "video") {
-
     if (!homeVisitDoctorId || !h_apptDate || !h_slotTime)
       throw new Error("Invalid Access");
+
+
     const url =
       mode === "video"
         ? `&homeVisitDoctorId=${homeVisitDoctorId}&h_apptDate=${h_apptDate}&h_slotTime=${h_slotTime}`
         : undefined;
+
+
     const dateOnly = h_apptDate.toString().substring(0, 10);
 
     const res = await fetch(
@@ -47,9 +42,10 @@ const page = async (props: Props) => {
         cache: "no-cache",
       }
     );
-
+    if(res.status!==200){
+      throw new Error("Something went wrong!");
+  }
     const data = await res.json();
-    console.log(data);
     return (
       <DoctorProfile
         singleMode={undefined}
@@ -72,7 +68,7 @@ const page = async (props: Props) => {
       `${process.env.SERVER_URL}/doctor/getdoctorProfilebyHome?username=${props.params.username}&userId=${session?.data?.id}`,
       {
         method: "GET",
- 
+
         headers: {
           "Content-Type": "application/json",
           // "Authorization": "Bearer "+localStorage.getItem("token")
@@ -83,8 +79,6 @@ const page = async (props: Props) => {
 
     // console.log(res);
     const data = await res.json();
-    console.log(data);
-
     if (res.status !== 200) {
       return (
         <div className="pt-28 min-h-screen text-center">
@@ -93,7 +87,6 @@ const page = async (props: Props) => {
         </div>
       );
     }
-    console.log(data);
 
     return (
       // <></>
@@ -112,10 +105,7 @@ const page = async (props: Props) => {
     );
   }
 
- 
-
   const res = await fetch(
-
     `${process.env.SERVER_URL}/doctor/getDoctorProfile?username=${props.params.username}&userId=${session?.data?.id}`,
     {
       method: "GET",
@@ -128,15 +118,6 @@ const page = async (props: Props) => {
     }
   );
 
-  console.log(res);
-
-  if (res.status !== 200) {
-    console.log("heehhhh",res)
-    throw new Error("Something went wrong!");
-  }
-  const data = await res.json();
-  console.log(data);
-
   if (res.status !== 200) {
     return (
       <div className="pt-28 min-h-screen text-center">
@@ -145,7 +126,7 @@ const page = async (props: Props) => {
       </div>
     );
   }
-  console.log(data);
+  const data = await res.json();
 
   return (
     // <></>

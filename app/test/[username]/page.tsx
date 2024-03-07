@@ -10,26 +10,26 @@ type Props = {
   
 const page = async(props:Props) => {
 
-    const session = await getServerSession(authOption);
-    const today = new Date();
+  //   const session = await getServerSession(authOption);
+  //   const today = new Date();
 
 
-  const res = await fetch(
+  // const res = await fetch(
 
 
-    `${process.env.SERVER_URL}/doctor/getDoctorProfileByusername?user=${props.params.username}&userId=${session?.data?.id}&startDate=${today}`,
-    {
-      method: "GET",
+  //   `${process.env.SERVER_URL}/doctor/getDoctorProfileByusername?user=${props.params.username}&userId=${session?.data?.id}&startDate=${today}`,
+  //   {
+  //     method: "GET",
 
-      headers: {
-        "Content-Type": "application/json",
-        // "Authorization": "Bearer "+localStorage.getItem("token")
-      },
-      cache: "no-cache",
-    }
-  );
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       // "Authorization": "Bearer "+localStorage.getItem("token")
+  //     },
+  //     cache: "no-cache",
+  //   }
+  // );
 
-  console.log(res);
+  // console.log(res);
   return (
     <div>page</div>
   )

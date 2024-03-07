@@ -14,9 +14,9 @@ const page = async () => {
       headers: {
         "Content-Type": "application/json",
       },
-      next:{
-        tags:['ApplyDoctor']
-      }
+      next: {
+        tags: ["ApplyDoctor"],
+      },
     }
   );
 
@@ -27,9 +27,11 @@ const page = async () => {
       </div>
     );
   }
-  return <div>
-    <DoctorsProfileSettings/>
-  </div>;
+  return (
+    <div>
+      <DoctorsProfileSettings />
+    </div>
+  );
 };
 
 export default page;

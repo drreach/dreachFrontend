@@ -15,14 +15,6 @@ const page = async (props: Props) => {
     v_apptDate,
     v_slotTime,
   } = props.searchParams;
-  console.log(
-    homeVisitDoctorId,
-    h_apptDate,
-    h_slotTime,
-    videoDoctorId,
-    v_apptDate,
-    v_slotTime
-  );
 
   if (!homeVisitDoctorId || !h_apptDate || !h_slotTime) {
     const res = await fetch(
