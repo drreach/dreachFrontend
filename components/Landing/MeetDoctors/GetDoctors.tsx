@@ -41,7 +41,7 @@ const GetDoctors = async() => {
   return (
     <div className="w-full max-w-screen-xl mt-5  mx-auto grid gap-5  grid-flow-row lg:grid-cols-4 md:grid-cols-2">
     {data.map((d, i) => {
-      return <Link className='no-underline' href={`/doctorprofile/${d.user.username}`}> <DoctorsCard key={i} data={{
+      return <Link key={d.id} className='no-underline' href={`/doctorprofile/${d.user.username}`}> <DoctorsCard key={i} data={{
         image: d.user.profilePic!,
         name: `${d.user.Fname} ${d.user.Lname}`,
        
