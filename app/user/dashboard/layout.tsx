@@ -14,7 +14,7 @@ export default async function Layout({
 }) {
   const session = await getServerSession(authOption);
   if (!session || session.data.role !== "NORMAL") {
-    return redirect("/");
+    return redirect("/Doctorerror");
   }
 
   return (

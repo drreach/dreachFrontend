@@ -178,10 +178,10 @@ export const addReview = async (data: {
   }
 };
 
-export const filterDoctor = async (speciality: string, address: string) => {
+export const filterDoctor = async (speciality: string, address: string,mode:string) => {
   try {
     const d = await fetch(
-      `${process.env.SERVER_URL}/user/findDoctorList?address=${address}&speciality=${speciality}`,
+      `${process.env.SERVER_URL}/user/findDoctorList?address=${address}&speciality=${speciality}&mode=${mode}`,
       {
         method: "GET",
         headers: {

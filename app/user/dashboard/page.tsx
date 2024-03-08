@@ -18,7 +18,7 @@ const page = async () => {
     throw new Error("Internal Server Error!");
   }
   const data = await res.json();
-  return <FindDoctors data={data} />;
+  return <FindDoctors mode={null} data={data} />;
 };
 
 export default page;

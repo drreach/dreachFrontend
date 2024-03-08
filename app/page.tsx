@@ -1,6 +1,7 @@
-import Header from "@/components/Landing/Header";
-import MeetDoctors from "@/components/Landing/MeetDoctors/MeetDoctors";
-import { Services } from "@/components/Landing/Services/Services";
+// import Header from "@/components/Landing/Header";
+
+// import { Services } from "@/components/Landing/Services/Services";
+import MainHome from "@/components/MainHome";
 import Dashboard from "@/components/dashboard/Dashboard";
 import Login from "@/components/dashboard/Login";
 import { authOption } from "@/lib/AuthOptions/authOptions";
@@ -10,20 +11,18 @@ import { redirect } from "next/navigation";
 
 export default async function Home() {
   const session  =await getServerSession(authOption);
-  if(session && session?.data?.role === "NORMAL"){
-    return redirect("/user/dashboard");
-  }else if(session && session?.data?.role === "DOCTOR"){
-    return redirect("/doctor/dashboard");
-  }else if(session && session?.data?.role === "ADMIN"){
-    return redirect("/admin/dashboard");
-  }
+  // if(session && session?.data?.role === "NORMAL"){
+  //   return redirect("/user/dashboard");
+  // }else if(session && session?.data?.role === "DOCTOR"){
+  //   return redirect("/doctor/dashboard");
+  // }else if(session && session?.data?.role === "ADMIN"){
+  //   return redirect("/admin/dashboard");
+  // }
   return (
  
-    <>
-    <Header/>
-      <Services/>
-      <MeetDoctors/>
-    </>
+   <>
+   <MainHome/>
+   </>
 
   );
 }

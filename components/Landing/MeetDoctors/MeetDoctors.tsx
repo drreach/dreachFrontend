@@ -1,5 +1,6 @@
-import React from "react";
+import React, { Suspense } from "react";
 import DoctorsCard from "./DoctorsCard";
+import GetDoctors from "./GetDoctors";
 
 const data = [
   {
@@ -29,21 +30,22 @@ const data = [
 ];
 
 const MeetDoctors = () => {
+
+
+    
   return (
-    <div className="w-full px-1.5 my-[100px] ">
+    <div className="w-full px-1.5 my-[100px] bg-[#E9F7FB] p-[50px] ">
       <div className="w-full flex justify-center items-center">
         <h1 className="text-[#07A6FB] text-[20px] font-bold">
           | Meet Our Doctors
         </h1>
       </div>
       <div className="w-full flex justify-center items-center">
-        <h1 className="text-[#07A6FB] text-[40px] font-bold">Our Specialist</h1>
+        <h1 className="text-[#07A6FB] text-[40px] text-center font-bold">Our Popular Doctors</h1>
       </div>
-      <div className="w-full max-w-screen-xl mt-5  mx-auto grid gap-5  grid-flow-row lg:grid-cols-4 md:grid-cols-2">
-        {data.map((d, i) => {
-          return <DoctorsCard key={i} data={d} />;
-        })}
-      </div>
+     <Suspense fallback={<div>Loading...</div>}>
+      <GetDoctors/>
+      </Suspense>
     </div>
   );
 };

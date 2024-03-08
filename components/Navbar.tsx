@@ -10,6 +10,13 @@ import Link from "next/link";
 // import { Info } from "lucide-react";
 
 const Navbar = () => {
+
+  const scrollTo = (id:string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
   const session = useSession();
   const [show, setShow] = React.useState(false);
   return (
@@ -17,21 +24,23 @@ const Navbar = () => {
       <div className="w-full py-1 text-black bg-[#FFFFFF] md:px-5">
         <div className="w-full px-2 justify-between items-center  mx-auto flex">
           <div className="flex items-center gap-3">
-            <img src="/assets/logo.png" className="w-[60px] h-[60px]" alt="" />
-            <h1 className="text-[20px] font-bold text-cyan-600">Dr.Reach</h1>
+          <Link href="/" className="no-underline"> <img src="/assets/logo.png" className="w-[60px] h-[60px]" alt="" /></Link>
+            <Link href="/" className="no-underline"><h1 className="text-[20px] font-bold text-cyan-600">Dr.Reach</h1></Link>
           </div>
           <div>
             <ul className="gap-5 hidden md:flex">
               <Link href="/">
                 {" "}
-                <li className="hover:text-green-600 font-bold text-gray-600 cursor-pointer">
+                <Link href="/" className="hover:text-green-600 no-underline font-bold text-gray-600 cursor-pointer">
                   Home
-                </li>
+                </Link>
               </Link>
               <li className="hover:text-green-600 font-bold text-gray-600 cursor-pointer">
                 About
               </li>
-              <li className="hover:text-green-600 font-bold text-gray-600 cursor-pointer">
+              <li onClick={()=>{
+scrollTo("services")
+              }} className="hover:text-green-600 font-bold text-gray-600 cursor-pointer">
                 Services
               </li>
               <li className="hover:text-green-600 font-bold text-gray-600 cursor-pointer">
@@ -48,13 +57,13 @@ const Navbar = () => {
 
           <div className="hidden md:flex">
             {session.data ? (
-              <button
-                onClick={() => signOut()}
-                className="bg-blue-500 rounded-md py-2 px-3 text-white font-bold"
+              <Link 
+                href={`/${session.data.data.role==="USER"?"user":session.data.data.role==="DOCTOR"?"doctor":"admin"}/dashboard`}
+                className="bg-blue-500 no-underline rounded-md py-2 px-3 text-white font-bold"
               >
                 {/* <FaRegArrowAltCircleRight /> */}
-                Logout
-              </button>
+                Dashboard
+              </Link>
             ) : (
               <Link
                 href="/auth/login"
@@ -71,37 +80,36 @@ const Navbar = () => {
         </div>
         <div
           className={`${
-            show ? "h-[400px]" : "h-0"
+            show ? "h-[350px]" : "h-0"
           }  overflow-hidden duration-200 ease-linear`}
         >
           <ul className="gap-5  flex-col flex justify-center text-[13px] items-center">
-            <li>Home+</li>
+            <li>Home</li>
             <li>About</li>
-            <li>Services</li>
+            <li onClick={()=>scrollTo("services")}>Services</li>
             <li>Contact</li>
 
             {session.data ? (
-              <li
-                className="text-red-500"
-                onClick={() => {
-                  signOut();
-                }}
+              <Link
+              href={`/${session.data.data.role==="USER"?"user":session.data.data.role==="DOCTOR"?"doctor":"admin"}/dashboard`}
+
+                className="bg-blue-500 rounded-md py-2 px-3 text-white font-bold"
+               
               >
-                Logout
-              </li>
+                Dashboard
+              </Link>
             ) : (
               <Link
                 href="/auth/login"
-                className="text-red-500"
+                className="bg-blue-500 rounded-md py-2 px-3 text-white font-bold"
                 onClick={() => {}}
               >
                 Login
               </Link>
             )}
-            <button className="bg-blue-500 rounded-md py-2 px-3 text-white font-bold">
-              {/* <FaRegArrowAltCircleRight /> */}
+            {/* <button className="bg-blue-500 rounded-md py-2 px-3 text-white font-bold">
               Appointment
-            </button>
+            </button> */}
           </ul>
         </div>
       </div>

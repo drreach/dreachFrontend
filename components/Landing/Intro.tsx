@@ -1,6 +1,15 @@
+"use client"
 import React from "react";
 
 const Intro = () => {
+
+  const scrollTo = (id:string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <div className="w-full pt-28 md:px-5 py-4 md:py-1 text-black h-auto  md:h-screen px-4 bg-gradient-to-r from-[#DDF6FA] via-[#E4F5FF] to-[#ECF8F8]">
       <div className="w-full px-2  max-w-screen-xl flex-col justify-center items-center md:flex-row mx-auto flex">
@@ -13,8 +22,8 @@ const Intro = () => {
             It is a established fact that a reader will be distracted by the
             content of a page when looking at this layout.
           </p>
-          <button className="bg-blue-500 rounded-full hover:bg-green-600 duration-200 ease-linear mt-5 py-2 px-3 text-white font-bold">
-            Appointment
+          <button onClick={()=>scrollTo("services")} className="bg-blue-500 rounded-full hover:bg-green-600 duration-200 ease-linear mt-5 py-2 px-3 text-white font-bold">
+            Book Appointment
           </button>
         </div>
 

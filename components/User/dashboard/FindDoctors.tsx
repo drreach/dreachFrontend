@@ -35,7 +35,7 @@ interface FindDoctorList {
   };
 }
 
-const FindDoctors = ({ data }: { data: FindDoctorList[] }) => {
+const FindDoctors = ({ data,mode }: { data: FindDoctorList[], mode:null|string}) => {
   const dispatch = useAppDispatch();
   const isFindingDoctor = useAppSelector(
     (state) => state.userReducer.findingDoctor
@@ -51,7 +51,7 @@ const FindDoctors = ({ data }: { data: FindDoctorList[] }) => {
 
   return (
     <div className="grid grid-flow-cols ">
-      <FilterDoctors />
+      <FilterDoctors mode={mode} />
       {isFindingDoctor ? (
         <Loader />
       ) : (

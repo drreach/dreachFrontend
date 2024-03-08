@@ -209,7 +209,7 @@ const DoctorProfile = ({
   // }, [data.doctorProfile.mode]);
 
   return (
-    <div className="main-wrapper pt-24  w-full md:px-10 mx-auto overflow-x-hidden">
+    <div className="main-wrapper pt-24  min-h-full w-full md:px-10 mx-auto overflow-x-hidden">
       {/* Breadcrumb */}
 
       {/* /Breadcrumb */}
