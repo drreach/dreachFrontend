@@ -17,19 +17,21 @@ export const changeSession = async () => {
     return session;
 };
 
-export const updateUser = async (data: any) => {
+export const updateUser = async (formData: FormData) => {
   // console.log(data);
   try {
-    const res = await fetch(`${process.env.SERVER_URL}/user/updateUser`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const res = await axios.post(
+      `${process.env.SERVER_URL}/user/updateUser`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
 
     if (res.status === 201) {
-      const data = await res.json();
+      const data = await res.data;
       return {
         status: 201,
         message: "User Updated",

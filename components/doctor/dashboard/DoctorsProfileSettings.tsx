@@ -10,7 +10,7 @@ const DoctorsProfileSettings = async () => {
   }
 
   const res = await fetch(
-    `${process.env.SERVER_URL}/user/getDoctor/${session.data.id}`,
+    `${process.env.SERVER_URL}/doctor/getDoctor/${session.data.id}`,
     {
       method: "GET",
       headers: {

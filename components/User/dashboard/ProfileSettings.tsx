@@ -25,6 +25,7 @@ const ProfileSettings = () => {
   const router = useRouter();
   const dispacth = useAppDispatch();
   const dobDate = useAppSelector((state) => state.userReducer.dob);
+  const [file, setFile] = React.useState<File | null>(null);
   const onSubmit = async (data: any) => {
     if (!session.data?.data.id) {
       return toast.error("Session Expired,Refresh the page");
@@ -61,7 +62,25 @@ const ProfileSettings = () => {
 
     const tosastId = loadToast("Updating Profile");
 
-    const update = await updateUser(payload);
+
+
+    const formData = new FormData();
+    if (file) {
+      formData.append("profileImage", file);
+    }
+    formData.set("userId", session.data.data.id);
+    formData.set("Fname", Fname);
+    formData.set("Lname", Lname);
+    formData.set("dob", dobDate.toString());
+    formData.set("bloodGroup", bloodGroup);
+    formData.set("contact", contact);
+    formData.set('Address', JSON.stringify(Address));
+    formData.set('gender', gender)
+    // const res = await UpdateProfileImage(formData);
+
+    const update = await updateUser(formData);
+
+    console.log(update.data);
 
     if (update.status === 201) {
       updateToast(tosastId, "Profile Updated", "success");
@@ -81,7 +100,6 @@ const ProfileSettings = () => {
     }
   };
 
-  const [file, setFile] = React.useState<File | null>(null);
 
   useEffect(() => {
     if (session.data?.data.dob)
@@ -112,35 +130,35 @@ const ProfileSettings = () => {
     }
   };
 
-  const handleOnProfileChange = async () => {
-    if (!file) {
-      return alert("No File Selected");
-    }
+  // const handleOnProfileChange = async () => {
+  //   if (!file) {
+  //     return alert("No File Selected");
+  //   }
 
-    const formData = new FormData();
-    formData.append("profileImage", file);
-    formData.set("userId", session.data.data.id);
-    const res = await UpdateProfileImage(formData);
+  //   const formData = new FormData();
+  //   formData.append("profileImage", file);
+  //   formData.set("userId", session.data.data.id);
+  //   const res = await UpdateProfileImage(formData);
 
-    if (!res) {
-      return alert("Error Uploading Image");
-    }
+  //   if (!res) {
+  //     return alert("Error Uploading Image");
+  //   }
 
-    const { profilePic, ...rest } = session.data.data;
+  //   const { profilePic, ...rest } = session.data.data;
 
-    const newData = {
-      ...rest,
-      profilePic: res.profilePic,
-    };
+  //   const newData = {
+  //     ...rest,
+  //     profilePic: res.profilePic,
+  //   };
 
-    //update session
-    await session.update({
-      ...session,
-      data: newData,
-    });
+  //   //update session
+  //   await session.update({
+  //     ...session,
+  //     data: newData,
+  //   });
 
-    // console.log(res);
-  };
+  //   // console.log(res);
+  // };
 
   return (
     <>
@@ -160,11 +178,10 @@ const ProfileSettings = () => {
                           <div className="change-avatar">
                             <div className="profile-img">
                               <img
-                                src={`${
-                                  session.data.data.profilePic
+                                src={`${file?(URL.createObjectURL(file)):session.data.data.profilePic
                                     ? `https://storage.googleapis.com/kiitconnect_bucket/doctorProfile/${session.data.data.profilePic}`
                                     : "/assets/doctor-2.jpg"
-                                } `}
+                                  } `}
                                 alt="User Image"
                               />
                             </div>
@@ -179,13 +196,13 @@ const ProfileSettings = () => {
                                   className="upload"
                                 />
                               </div>
-                              <button
+                              {/* <button
                                 type="button"
                                 onClick={handleOnProfileChange}
                                 className=" w-[150px] btn btn-primary"
                               >
                                 Save{" "}
-                              </button>
+                              </button> */}
                               <small className="form-text text-muted">
                                 Allowed JPG, GIF or PNG. Max size of 2MB
                               </small>
@@ -253,14 +270,14 @@ const ProfileSettings = () => {
                           </div>
                         </div>
                       </div>
-                      {/* <div className="col-md-6">
+                      <div className="col-md-6">
                         <div className="form-group">
                           <label>Gender <span className="text-red-600">*</span></label>
                           <select
-                        
+
                             defaultValue={session.data.data.gender}
                             {...register("gender", { required: true })}
-                            className="form-control select"
+                            className="form-control form-select"
                           >
                             <option>Male</option>
                             <option>Female</option>
@@ -273,8 +290,37 @@ const ProfileSettings = () => {
                             </span>
                           )}
                         </div>
-                      </div> */}
+                      </div>
+
+
                       <div className="col-md-6">
+                        <div className="form-group">
+                          <label>Blood Group <span className="text-red-600">*</span></label>
+                          <select
+
+                            defaultValue={session.data.data.gender}
+                            {...register("bloodGroup", { required: true })}
+                            className="form-control form-select"
+                          >
+                            <option value="A_POSITIVE">A+</option>
+                            <option value="A_NEGATIVE">A-</option>
+                            <option value="B_POSITIVE">B+</option>
+                            <option value="B_NEGATIVE">B-</option>
+                            <option value="AB_POSITIVE">AB+</option>
+                            <option value="AB_NEGATIVE">AB-</option>
+                            <option value="O_POSITIVE">O+</option>
+                            <option value="O_NEGATIVE">O-</option>
+
+                          </select>
+
+                          {errors.bloodGroup && (
+                            <span className="text-danger">
+                              This field is required
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      {/* <div className="col-md-6">
                         <div className="form-group">
                           <label>
                             Gender <span className="text-red-600">*</span>
@@ -301,8 +347,8 @@ const ProfileSettings = () => {
                             </span>
                           )}
                         </div>
-                      </div>
-                      <div className="col-12 col-md-6">
+                      </div> */}
+                      {/* <div className="col-12 col-md-6">
                         <div className="form-group">
                           <label>
                             Blood Group <span className="text-red-600">*</span>
@@ -313,8 +359,8 @@ const ProfileSettings = () => {
                               value: session.data.data.bloodGroup,
                               label:
                                 bloodGroupMap[
-                                  session.data.data
-                                    .bloodGroup as keyof typeof bloodGroupMap
+                                session.data.data
+                                  .bloodGroup as keyof typeof bloodGroupMap
                                 ],
                             }}
                             onChange={(e) => {
@@ -357,7 +403,7 @@ const ProfileSettings = () => {
                             ]}
                           />
                         </div>
-                      </div>
+                      </div> */}
                       <div className="col-12 col-md-6">
                         <div className="form-group">
                           <label>
@@ -470,7 +516,7 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-12 col-md-6">
                         <div className="form-group">
-                         
+
                           <label>
                             Country <span className="text-red-600">*</span>
                           </label>
