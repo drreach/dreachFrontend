@@ -57,17 +57,26 @@ scrollTo("services")
 
           <div className="hidden md:flex">
             {session.data ? (
-              <Link 
-                href={`/${session.data.data.role==="USER"?"user":session.data.data.role==="DOCTOR"?"doctor":"admin"}/dashboard`}
-                className="bg-blue-500 no-underline rounded-md py-2 px-3 text-white font-bold"
+             <div className="flex gap-2">
+               <Link 
+                href={`/${session.data.data.role==="NORMAL"?"user":session.data.data.role==="DOCTOR"?"doctor":"admin"}/dashboard`}
+                className="bg-blue-500 no-underline  rounded-md py-2 px-3 text-white font-bold"
               >
                 {/* <FaRegArrowAltCircleRight /> */}
                 Dashboard
               </Link>
+              <button
+                onClick={() => signOut()}
+                className="bg-red-500 no-underline rounded-md py-2 px-3 text-white font-bold"
+              >
+                {/* <FaRegArrowAltCircleRight /> */}
+                Logout
+              </button>
+             </div>
             ) : (
               <Link
                 href="/auth/login"
-                className="bg-blue-500 rounded-md py-2 px-3 text-white font-bold"
+                className="bg-blue-500 rounded-md no-underline py-2 px-3 text-white font-bold"
               >
                 {/* <FaRegArrowAltCircleRight /> */}
                 Login
@@ -80,7 +89,7 @@ scrollTo("services")
         </div>
         <div
           className={`${
-            show ? "h-[350px]" : "h-0"
+            show ? "h-auto" : "h-0"
           }  overflow-hidden duration-200 ease-linear`}
         >
           <ul className="gap-5  flex-col flex justify-center text-[13px] items-center">
@@ -90,14 +99,24 @@ scrollTo("services")
             <li>Contact</li>
 
             {session.data ? (
-              <Link
+            <div className="flex flex-col gap-3">
+                <Link
               href={`/${session.data.data.role==="USER"?"user":session.data.data.role==="DOCTOR"?"doctor":"admin"}/dashboard`}
 
-                className="bg-blue-500 rounded-md py-2 px-3 text-white font-bold"
+                className="bg-blue-500 no-underline rounded-md py-2 px-3 text-white font-bold"
                
               >
                 Dashboard
               </Link>
+              <button
+                onClick={() => signOut()}
+                className="bg-red-500 rounded-md py-2 px-3 text-white font-bold"
+              >
+                Logout
+              </button>
+
+            </div>
+
             ) : (
               <Link
                 href="/auth/login"
