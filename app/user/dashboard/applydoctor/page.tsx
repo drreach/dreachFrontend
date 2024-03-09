@@ -8,7 +8,7 @@ const page = async () => {
   const session = await getServerSession(authOption);
   if (!session || !session?.data?.id) return <div>Not Authorized</div>;
   const res = await fetch(
-    `${process.env.SERVER_URL}/user/getDoctor/${session.data.id}`,
+    `${process.env.SERVER_URL}/doctor/getDoctor/${session.data.id}`,
     {
       method: "GET",
       headers: {
@@ -19,6 +19,7 @@ const page = async () => {
       },
     }
   );
+  // console.log(res);
 
   if (res.status === 404) {
     return (
