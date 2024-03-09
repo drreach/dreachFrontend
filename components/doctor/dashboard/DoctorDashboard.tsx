@@ -333,7 +333,7 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
   return (
     <>
       {/* Basic Information */}
-      <form onSubmit={handleSubmit(submit)}>
+      <form className="pb-5" onSubmit={handleSubmit(submit)}>
         <div className="card">
           <div className="card-body">
             <h4 className="card-title">Basic Information</h4>
@@ -1230,7 +1230,7 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
             </button>
           </div>
         ) : (
-          <div className="submit-section submit-btn-bottom">
+          <div className="submit-section  submit-btn-bottom">
             <button type="submit" className="btn btn-primary submit-btn">
               Submit For Verification
             </button>
