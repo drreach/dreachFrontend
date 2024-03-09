@@ -27,10 +27,10 @@ const GetDoctors = async() => {
       // "Authorization":
       //   "Bearer " + localStorage.getItem("token"),
     },
-    cache: "force-cache",
+
     next:{
         // revalidate in 60 minute
-        revalidate: 60 * 60 * 1000,
+        revalidate: 60 * 60,
     }
   });
 
