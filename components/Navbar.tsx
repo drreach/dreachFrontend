@@ -11,7 +11,7 @@ import Link from "next/link";
 
 const Navbar = () => {
 
-  const scrollTo = (id:string) => {
+  const scrollTo = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -24,7 +24,7 @@ const Navbar = () => {
       <div className="w-full py-1 text-black bg-[#FFFFFF] md:px-5">
         <div className="w-full px-2 justify-between items-center  mx-auto flex">
           <div className="flex items-center gap-3">
-          <Link href="/" className="no-underline"> <img src="/assets/logo.png" className="w-[60px] h-[60px]" alt="" /></Link>
+            <Link href="/" className="no-underline"> <img src="/assets/logo.png" className="w-[60px] h-[60px]" alt="" /></Link>
             <Link href="/" className="no-underline"><h1 className="text-[20px] font-bold text-cyan-600">Dr.Reach</h1></Link>
           </div>
           <div>
@@ -38,8 +38,8 @@ const Navbar = () => {
               <li className="hover:text-green-600 font-bold text-gray-600 cursor-pointer">
                 About
               </li>
-              <li onClick={()=>{
-scrollTo("services")
+              <li onClick={() => {
+                scrollTo("services")
               }} className="hover:text-green-600 font-bold text-gray-600 cursor-pointer">
                 Services
               </li>
@@ -57,22 +57,22 @@ scrollTo("services")
 
           <div className="hidden md:flex">
             {session.data ? (
-             <div className="flex gap-2">
-               <Link 
-                href={`/${session.data.data.role==="NORMAL"?"user":session.data.data.role==="DOCTOR"?"doctor":"admin"}/dashboard`}
-                className="bg-blue-500 no-underline  rounded-md py-2 px-3 text-white font-bold"
-              >
-                {/* <FaRegArrowAltCircleRight /> */}
-                Dashboard
-              </Link>
-              <button
-                onClick={() => signOut()}
-                className="bg-red-500 no-underline rounded-md py-2 px-3 text-white font-bold"
-              >
-                {/* <FaRegArrowAltCircleRight /> */}
-                Logout
-              </button>
-             </div>
+              <div className="flex gap-2">
+                <Link
+                  href={`/${session.data.data.role === "NORMAL" ? "user" : session.data.data.role === "DOCTOR" ? "doctor" : "admin"}/dashboard`}
+                  className="bg-blue-500 no-underline  rounded-md py-2 px-3 text-white font-bold"
+                >
+                  {/* <FaRegArrowAltCircleRight /> */}
+                  Dashboard
+                </Link>
+                <button
+                  onClick={() => signOut()}
+                  className="bg-red-500 no-underline rounded-md py-2 px-3 text-white font-bold"
+                >
+                  {/* <FaRegArrowAltCircleRight /> */}
+                  Logout
+                </button>
+              </div>
             ) : (
               <Link
                 href="/auth/login"
@@ -88,40 +88,39 @@ scrollTo("services")
           </div>
         </div>
         <div
-          className={`${
-            show ? "h-auto" : "h-0"
-          }  overflow-hidden duration-200 ease-linear`}
+          className={`${show ? "h-auto" : "h-0"
+            }  overflow-hidden duration-200 ease-linear`}
         >
           <ul className="gap-5  flex-col flex justify-center text-[13px] items-center">
             <li>Home</li>
             <li>About</li>
-            <li onClick={()=>scrollTo("services")}>Services</li>
+            <li onClick={() => scrollTo("services")}>Services</li>
             <li>Contact</li>
 
             {session.data ? (
-            <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-3">
                 <Link
-              href={`/${session.data.data.role==="USER"?"user":session.data.data.role==="DOCTOR"?"doctor":"admin"}/dashboard`}
+                  href={`/${session.data.data.role === "NORMAL" ? "user" : session.data.data.role === "DOCTOR" ? "doctor" : "admin"}/dashboard`}
 
-                className="bg-blue-500 no-underline rounded-md py-2 px-3 text-white font-bold"
-               
-              >
-                Dashboard
-              </Link>
-              <button
-                onClick={() => signOut()}
-                className="bg-red-500 rounded-md py-2 px-3 text-white font-bold"
-              >
-                Logout
-              </button>
+                  className="bg-blue-500 no-underline rounded-md py-2 px-3 text-white font-bold"
 
-            </div>
+                >
+                  Dashboard
+                </Link>
+                <button
+                  onClick={() => signOut()}
+                  className="bg-red-500 rounded-md py-2 px-3 text-white font-bold"
+                >
+                  Logout
+                </button>
+
+              </div>
 
             ) : (
               <Link
                 href="/auth/login"
                 className="bg-blue-500 rounded-md py-2 px-3 text-white font-bold"
-                onClick={() => {}}
+                onClick={() => { }}
               >
                 Login
               </Link>
