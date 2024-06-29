@@ -90,7 +90,7 @@ const AppointmentCard = ({
                   const res = await ActionOnPatientsAppointment(
                     data?.user?.id,
                     "APPROVED",
-                    data?.id
+                    data?.id,
                   );
                   if (res === 201) {
                     return updateToast(toastId, "Doctor Accepted", "success");
@@ -98,7 +98,7 @@ const AppointmentCard = ({
                   return updateToast(
                     toastId,
                     "Failed to Accept Doctor",
-                    "error"
+                    "error",
                   );
                 }}
                 className="btn btn-sm bg-success-light"
@@ -113,7 +113,7 @@ const AppointmentCard = ({
                   const res = await ActionOnPatientsAppointment(
                     data?.user?.id,
                     "REJECT",
-                    data?.id
+                    data?.id,
                   );
                   if (res === 201) {
                     return updateToast(toastId, "Doctor rejected", "success");
@@ -121,7 +121,7 @@ const AppointmentCard = ({
                   return updateToast(
                     toastId,
                     "Failed to reject Doctor",
-                    "error"
+                    "error",
                   );
                 }}
                 href="#"

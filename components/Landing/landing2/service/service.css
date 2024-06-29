@@ -1,65 +1,64 @@
-:root{
-    --bg-color1:#E8E2FF;
-    --bg-color2:#6F5ACD;
-    --bg-color3:#FF93DD;
-    --bg-color4:#468DAB;
-    --bg-color5:#2b1392;
+:root {
+  --bg-color1: #e8e2ff;
+  --bg-color2: #6f5acd;
+  --bg-color3: #ff93dd;
+  --bg-color4: #468dab;
+  --bg-color5: #2b1392;
 }
 
-section{
-    /* width: 100vw; */
-    height: 100vh;
+section {
+  /* width: 100vw; */
+  height: 100vh;
 }
-.section2{
-    background-color: var(--bg-color2);
-    padding: 30px;
-    padding-top: 90px;
-}
-
-.heading3{
-    color: var(--bg-color1);
-    font-size: 68px;
-    margin-left: 129px;
-    margin-bottom: 40px;
+.section2 {
+  background-color: var(--bg-color2);
+  padding: 30px;
+  padding-top: 90px;
 }
 
+.heading3 {
+  color: var(--bg-color1);
+  font-size: 68px;
+  margin-left: 129px;
+  margin-bottom: 40px;
+}
 
-.big-box{
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+.big-box {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
-.big-box img{
-    width: 400px;
+.big-box img {
+  width: 400px;
 }
-.block-box h1{
-    color: var(--bg-color3);
-    font-size: 41px;
-    margin-bottom: 15px;
+.block-box h1 {
+  color: var(--bg-color3);
+  font-size: 41px;
+  margin-bottom: 15px;
 }
-.block-box p{
-    color: white;
+.block-box p {
+  color: white;
 }
-.boxline1{
-    display: flex;
-    margin: 10px;
+.boxline1 {
+  display: flex;
+  margin: 10px;
 }
-.box{
-    border: 2px solid var(--bg-color5);
-    background-color: var(--bg-color5);
-    margin: 20px;
-    border-radius: 20px;
-    padding:20px;
-    width: 300px;
-    transition: .5s ease;
-    display: flex;
-    justify-content: space-around;
-    gap: 10px;
+.box {
+  border: 2px solid var(--bg-color5);
+  background-color: var(--bg-color5);
+  margin: 20px;
+  border-radius: 20px;
+  padding: 20px;
+  width: 300px;
+  transition: 0.5s ease;
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
 }
-.box:hover{
-    transform: scale(1.02);
+.box:hover {
+  transform: scale(1.02);
 }
-.box img{
-    height: 90px;
-    width: 90px;
+.box img {
+  height: 90px;
+  width: 90px;
 }

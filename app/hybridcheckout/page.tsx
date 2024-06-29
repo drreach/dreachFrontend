@@ -43,7 +43,7 @@ const page = async (props: Props) => {
         v_apptDate: v_apptDateOnly,
         v_slotTime: v_slotTime,
       }),
-    }
+    },
   );
   if (res.status !== 201) {
     throw new Error("Something went wrong!");

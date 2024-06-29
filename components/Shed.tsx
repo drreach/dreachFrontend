@@ -11,9 +11,12 @@ const TimeSlotSelector = ({
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [timeSlots, setTimeSlots] = useState<string[]>([]);
 
-  const selectedSlots = 
-   useAppSelector((state) => isAvailableForDesk?state.userReducer.availableForDeskShedule:state.userReducer.shedules)
-    // : useAppSelector((state) => state.userReducer.shedules);
+  const selectedSlots = useAppSelector((state) =>
+    isAvailableForDesk
+      ? state.userReducer.availableForDeskShedule
+      : state.userReducer.shedules,
+  );
+  // : useAppSelector((state) => state.userReducer.shedules);
 
   const dispatch = useAppDispatch();
 
@@ -29,14 +32,14 @@ const TimeSlotSelector = ({
         addShedule({
           shedules: selectedTime,
           mode: isAvailableForDesk ? "OTHER" : "VIDEO",
-        })
+        }),
       );
       setSelectedTime("");
     }
   };
 
   const availableTimeSlots = timeSlots.filter(
-    (time) => !selectedSlots.includes(time)
+    (time) => !selectedSlots.includes(time),
   );
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -77,7 +80,7 @@ const TimeSlotSelector = ({
                   removeShedule({
                     index,
                     mode: isAvailableForDesk ? "OTHER" : "VIDEO",
-                  })
+                  }),
                 )
               }
               className="bg-green-500 rounded-md items-center flex hover:bg-red-400 flex-row justify-around cursor-pointer text-white font-bold w-full"

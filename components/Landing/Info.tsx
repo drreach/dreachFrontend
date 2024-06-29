@@ -6,34 +6,31 @@ import { RiInstagramFill } from "react-icons/ri";
 
 const Info = () => {
   return (
-  
     <>
-        <div className="md:flex gap-4 md:w-full lg:w-auto md:justify-center  text-[14px] hidden lg:flex">
-          <p className="flex gap-2 items-center   text-white">
-            <BsTelephoneFill />
-            +91 (700) 230-0035
-          </p>
+      <div className="md:flex gap-4 md:w-full lg:w-auto md:justify-center  text-[14px] hidden lg:flex">
+        <p className="flex gap-2 items-center   text-white">
+          <BsTelephoneFill />
+          +91 (700) 230-0035
+        </p>
 
-          <p className="flex gap-2 items-center  text-white">
-            <MdOutlineEmail />
-            support@gmail.com
-          </p>
+        <p className="flex gap-2 items-center  text-white">
+          <MdOutlineEmail />
+          support@gmail.com
+        </p>
 
-          <p className="flex gap-2 items-center   text-white">
-            <MdOutlineLocationOn />
-            2767 Patia,Bhubnewshwar,India
-          </p>
-        </div>
+        <p className="flex gap-2 items-center   text-white">
+          <MdOutlineLocationOn />
+          2767 Patia,Bhubnewshwar,India
+        </p>
+      </div>
 
-        <div className="md:hidden gap-3 flex  items-center lg:flex">
-          <FaFacebookF className=" rounded-full text-white cursor-pointer hover:scale-110 duration-200 hover:text-yellow-800 " />
-          <FaTwitter className="rounded-full text-white cursor-pointer hover:scale-110 duration-200 hover:text-yellow-800" />
+      <div className="md:hidden gap-3 flex  items-center lg:flex">
+        <FaFacebookF className=" rounded-full text-white cursor-pointer hover:scale-110 duration-200 hover:text-yellow-800 " />
+        <FaTwitter className="rounded-full text-white cursor-pointer hover:scale-110 duration-200 hover:text-yellow-800" />
 
-          <RiInstagramFill className="rounded-full text-white cursor-pointer hover:scale-110 duration-200 hover:text-yellow-800" />
-        </div>
-      
+        <RiInstagramFill className="rounded-full text-white cursor-pointer hover:scale-110 duration-200 hover:text-yellow-800" />
+      </div>
     </>
-  
   );
 };
 

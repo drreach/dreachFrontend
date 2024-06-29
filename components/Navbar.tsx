@@ -10,11 +10,10 @@ import Link from "next/link";
 // import { Info } from "lucide-react";
 
 const Navbar = () => {
-
   const scrollTo = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
   const session = useSession();
@@ -24,23 +23,38 @@ const Navbar = () => {
       <div className="w-full py-1 text-black bg-[#FFFFFF] md:px-5">
         <div className="w-full px-2 justify-between items-center  mx-auto flex">
           <div className="flex items-center gap-3">
-            <Link href="/" className="no-underline"> <img src="/assets/logo.png" className="w-[60px] h-[60px]" alt="" /></Link>
-            <Link href="/" className="no-underline"><h1 className="text-[20px] font-bold text-cyan-600">Dr.Reach</h1></Link>
+            <Link href="/" className="no-underline">
+              {" "}
+              <img
+                src="/assets/logo.png"
+                className="w-[60px] h-[60px]"
+                alt=""
+              />
+            </Link>
+            <Link href="/" className="no-underline">
+              <h1 className="text-[20px] font-bold text-cyan-600">Dr.Reach</h1>
+            </Link>
           </div>
           <div>
             <ul className="gap-5 hidden md:flex">
               <Link href="/">
                 {" "}
-                <Link href="/" className="hover:text-green-600 no-underline font-bold text-gray-600 cursor-pointer">
+                <Link
+                  href="/"
+                  className="hover:text-green-600 no-underline font-bold text-gray-600 cursor-pointer"
+                >
                   Home
                 </Link>
               </Link>
               <li className="hover:text-green-600 font-bold text-gray-600 cursor-pointer">
                 About
               </li>
-              <li onClick={() => {
-                scrollTo("services")
-              }} className="hover:text-green-600 font-bold text-gray-600 cursor-pointer">
+              <li
+                onClick={() => {
+                  scrollTo("services");
+                }}
+                className="hover:text-green-600 font-bold text-gray-600 cursor-pointer"
+              >
                 Services
               </li>
               <li className="hover:text-green-600 font-bold text-gray-600 cursor-pointer">
@@ -88,8 +102,9 @@ const Navbar = () => {
           </div>
         </div>
         <div
-          className={`${show ? "h-auto" : "h-0"
-            }  overflow-hidden duration-200 ease-linear`}
+          className={`${
+            show ? "h-auto" : "h-0"
+          }  overflow-hidden duration-200 ease-linear`}
         >
           <ul className="gap-5  flex-col flex justify-center text-[13px] items-center">
             <li>Home</li>
@@ -101,9 +116,7 @@ const Navbar = () => {
               <div className="flex flex-col gap-3">
                 <Link
                   href={`/${session.data.data.role === "NORMAL" ? "user" : session.data.data.role === "DOCTOR" ? "doctor" : "admin"}/dashboard`}
-
                   className="bg-blue-500 no-underline rounded-md py-2 px-3 text-white font-bold"
-
                 >
                   Dashboard
                 </Link>
@@ -113,14 +126,12 @@ const Navbar = () => {
                 >
                   Logout
                 </button>
-
               </div>
-
             ) : (
               <Link
                 href="/auth/login"
                 className="bg-blue-500 rounded-md py-2 px-3 text-white font-bold"
-                onClick={() => { }}
+                onClick={() => {}}
               >
                 Login
               </Link>

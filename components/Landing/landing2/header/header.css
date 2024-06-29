@@ -1,72 +1,70 @@
-:root{
-    --bg-color1:#E8E2FF;
-    --bg-color2:#6F5ACD;
-    --bg-color3:#FF93DD;
-    --bg-color4:#468DAB;
-    --bg-color5:#2b1392;
+:root {
+  --bg-color1: #e8e2ff;
+  --bg-color2: #6f5acd;
+  --bg-color3: #ff93dd;
+  --bg-color4: #468dab;
+  --bg-color5: #2b1392;
 }
 
-section{
-    /* width: 100vw; */
-    height: 100vh;
+section {
+  /* width: 100vw; */
+  height: 100vh;
 }
 header {
-    position: fixed;
-    top: 0;
-    width: 99%;
-    height: 12px;
-    padding: 2rem 30px;
-    background: url(blur.png);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 100;
-    background-size: cover;
-    border-radius: 40px;
-    margin: 10px;
-  
-  }
-  .header .logo img{
-    height: 50px;
-    width: 50px;
-  }
-  .logo {
-    font-size: 1.5rem;
-    color: var(--bg-color4);
-    font-weight: 600;
-    cursor: default;
-    align-items: center;
-    display: flex;
-  }
-  
-  .navbar a {
-    font-size: 30px;
-    color: white;
-    margin-left: 2rem;
-    transition: .3s;
-  }
-  
-  .navbar a:hover,
-  .navbar a.active {
-    color: var(--bg-color3);
-    text-shadow: 0 0 4px 4px var(--bg-color3);
-  }
-  
-  #menu-icon {
-    font-size: 3.6rem;
-    color: var(--bg-color3);
-    display: none;
-  }
-  .btn1{
-    color: var(--bg-color3);
-    background-color:var(--bg-color5) ;
-    padding: 10px;
-    border: 2px solid var(--bg-color5);
-    border-radius: 12px;
-    font-size: 20px;
+  position: fixed;
+  top: 0;
+  width: 99%;
+  height: 12px;
+  padding: 2rem 30px;
+  background: url(blur.png);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  background-size: cover;
+  border-radius: 40px;
+  margin: 10px;
 }
-.btn1:hover{
-    cursor: pointer;
-    box-shadow: 0 0 4px 4px var(--bg-color5);
-} 
+.header .logo img {
+  height: 50px;
+  width: 50px;
+}
+.logo {
+  font-size: 1.5rem;
+  color: var(--bg-color4);
+  font-weight: 600;
+  cursor: default;
+  align-items: center;
+  display: flex;
+}
 
+.navbar a {
+  font-size: 30px;
+  color: white;
+  margin-left: 2rem;
+  transition: 0.3s;
+}
+
+.navbar a:hover,
+.navbar a.active {
+  color: var(--bg-color3);
+  text-shadow: 0 0 4px 4px var(--bg-color3);
+}
+
+#menu-icon {
+  font-size: 3.6rem;
+  color: var(--bg-color3);
+  display: none;
+}
+.btn1 {
+  color: var(--bg-color3);
+  background-color: var(--bg-color5);
+  padding: 10px;
+  border: 2px solid var(--bg-color5);
+  border-radius: 12px;
+  font-size: 20px;
+}
+.btn1:hover {
+  cursor: pointer;
+  box-shadow: 0 0 4px 4px var(--bg-color5);
+}

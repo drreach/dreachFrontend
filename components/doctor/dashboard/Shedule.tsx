@@ -21,7 +21,7 @@ const Shedule = ({
 }) => {
   const mData = useAppSelector((state) => state.userReducer.shedules);
   const availableDeskData = useAppSelector(
-    (state) => state.userReducer.availableForDeskShedule
+    (state) => state.userReducer.availableForDeskShedule,
   );
 
   const dispatch = useAppDispatch();
@@ -48,14 +48,14 @@ const Shedule = ({
         setShedule({
           shedules: HomeShedules,
           mode: "VIDEO",
-        })
+        }),
       );
     } else if (mode === "VIDEO_CONSULT") {
       dispatch(
         setShedule({
           shedules: OnlineShedule,
           mode: "VIDEO",
-        })
+        }),
       );
     }
 
@@ -64,7 +64,7 @@ const Shedule = ({
         setShedule({
           shedules: DeskShedules,
           mode: "OTHER",
-        })
+        }),
       );
     }
   }, [OnlineShedule, DeskShedules, HomeShedules]);

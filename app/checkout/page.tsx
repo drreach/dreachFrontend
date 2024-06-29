@@ -26,11 +26,11 @@ const page = async (props: Props) => {
         slot: time,
         mode: mode,
       }),
-    }
+    },
   );
-  if(res.status!==201){
+  if (res.status !== 201) {
     throw new Error("Something went wrong!");
-}
+  }
   const data = await res.json();
   if (!data.isAvailable)
     return (

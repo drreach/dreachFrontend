@@ -26,8 +26,7 @@ import { loadToast, updateToast } from "@/utils/utils";
 
 const fileTypes = ["PDF"];
 
-
-type User={
+type User = {
   id: string;
   username: string;
   Fname: string;
@@ -89,14 +88,14 @@ type DoctorProfile = {
 
   mode: string;
   isAvailableForDesk: boolean;
-  user: User
+  user: User;
 };
 
 const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
   const session = useSession();
   const [data, setData] = useState<DoctorProfile>();
   const specialization = useAppSelector(
-    (state) => state.userReducer.specializatins
+    (state) => state.userReducer.specializatins,
   );
   const dispatch = useAppDispatch();
   const dobDate = useAppSelector((state) => state.userReducer.dob);
@@ -177,17 +176,17 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
     }
 
     const filteredEducation = dt.educations.filter(
-      (d) => d.degree !== "" || d.duration !== "" || d.university !== ""
+      (d) => d.degree !== "" || d.duration !== "" || d.university !== "",
     );
     const filteredAwards = dt.awards.filter(
-      (d) => d.date !== "" || d.description !== "" || d.title !== ""
+      (d) => d.date !== "" || d.description !== "" || d.title !== "",
     );
     const filterredClinicInfo = dt.clinicInfo.filter(
-      (d) => d.clinicName !== "" || d.address !== "" || d.contact !== ""
+      (d) => d.clinicName !== "" || d.address !== "" || d.contact !== "",
     );
 
     const filterWorkExperience = dt.workExperiences.filter(
-      (d) => d.clinic !== "" || d.duration !== ""
+      (d) => d.clinic !== "" || d.duration !== "",
     );
 
     if (filteredEducation.length === 0) {
@@ -206,22 +205,7 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
       });
       return;
     }
-    const {
-      fee,
-      id,
-      user,
-      userId,
-      description,
-      mode,
-      status,
-      schedules,
-    } = dt;
-
-
-
-   
-
-
+    const { fee, id, user, userId, description, mode, status, schedules } = dt;
 
     const newData = {
       Fname: user.Fname,
@@ -343,10 +327,12 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
                   <div className="change-avatar">
                     <div className="profile-img">
                       <img
-                        src={`${file?URL.createObjectURL(file):
-                          session?.data?.data.profilePic
-                            ? `https://storage.googleapis.com/kiitconnect_bucket/doctorProfile/${session.data.data.profilePic}`
-                            : "/assets/doctor-2.jpg"
+                        src={`${
+                          file
+                            ? URL.createObjectURL(file)
+                            : session?.data?.data.profilePic
+                              ? `https://storage.googleapis.com/kiitconnect_bucket/doctorProfile/${session.data.data.profilePic}`
+                              : "/assets/doctor-2.jpg"
                         } `}
                         alt="User Image"
                       />
@@ -1141,19 +1127,19 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
                         return updateToast(
                           toastId,
                           "Document Uploaded Successfully",
-                          "success"
+                          "success",
                         );
                       } else if (res == 409) {
                         return updateToast(
                           toastId,
                           "Document already exists,Please refresh the page",
-                          "error"
+                          "error",
                         );
                       }
                       return updateToast(
                         toastId,
                         "Failed to upload Document",
-                        "error"
+                        "error",
                       );
                     }}
                     className="w-[200px] bg-green-800 py-2 rounded-md text-white font-bold"
@@ -1180,20 +1166,20 @@ const DoctorDashboard = ({ datas }: { datas: DoctorProfile }) => {
                   return updateToast(
                     toastId,
                     "Document Removed Successfully",
-                    "success"
+                    "success",
                   );
                 } else if (res == 404) {
                   return updateToast(
                     toastId,
                     "Document not found,Refresh the page",
-                    "error"
+                    "error",
                   );
                 }
 
                 return updateToast(
                   toastId,
                   "Failed to remove Document",
-                  "error"
+                  "error",
                 );
               }}
               disabled={data.status === "PENDING" || data.status === "APPROVED"}

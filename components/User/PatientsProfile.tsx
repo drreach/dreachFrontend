@@ -5,7 +5,7 @@ import React from "react";
 
 const PatientsProfile = () => {
   const activeTab = useAppSelector(
-    (state) => state.userReducer.activePatientsProfileTab
+    (state) => state.userReducer.activePatientsProfileTab,
   );
   const disatch = useAppDispatch();
   return (

@@ -17,7 +17,6 @@ import { useAppDispatch, useAppSelector } from "@/Redux/hooks/hooks";
 import { setDob } from "@/Redux/reducers/UserReducers";
 
 export function DatePickerDemo() {
-
   const date = useAppSelector((state) => state.userReducer.dob);
 
   const [isCalendarOpen, setIsCalendarOpen] = React.useState(false);
@@ -30,7 +29,7 @@ export function DatePickerDemo() {
           variant={"outline"}
           className={cn(
             "md:w-[280px] w-full justify-start text-left font-normal",
-            !date && "text-muted-foreground"
+            !date && "text-muted-foreground",
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
@@ -39,7 +38,6 @@ export function DatePickerDemo() {
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
         <Calendar
-        
           mode="single"
           selected={date}
           required={true}
@@ -49,7 +47,6 @@ export function DatePickerDemo() {
           }}
           captionLayout="dropdown-buttons"
           fromYear={1900}
-          
           toYear={2024}
         />
       </PopoverContent>

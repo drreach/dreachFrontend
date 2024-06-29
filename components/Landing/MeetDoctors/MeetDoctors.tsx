@@ -30,9 +30,6 @@ const data = [
 ];
 
 const MeetDoctors = () => {
-
-
-    
   return (
     <div className="w-full px-1.5 my-[100px] bg-[#E9F7FB] p-[50px] ">
       <div className="w-full flex justify-center items-center">
@@ -41,10 +38,12 @@ const MeetDoctors = () => {
         </h1>
       </div>
       <div className="w-full flex justify-center items-center">
-        <h1 className="text-[#07A6FB] text-[40px] text-center font-bold">Our Popular Doctors</h1>
+        <h1 className="text-[#07A6FB] text-[40px] text-center font-bold">
+          Our Popular Doctors
+        </h1>
       </div>
-     <Suspense fallback={<div>Loading...</div>}>
-      <GetDoctors/>
+      <Suspense fallback={<div>Loading...</div>}>
+        <GetDoctors />
       </Suspense>
     </div>
   );

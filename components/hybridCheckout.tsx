@@ -80,13 +80,13 @@ const HybridCheckout = ({
             setCurrentLocation({
               lat: position.coords.latitude,
               long: position.coords.longitude,
-            })
+            }),
           );
           console.log(position.coords);
         },
         (error) => {
           console.error("Error getting location:", error.message);
-        }
+        },
       );
     } else {
       console.error("Geolocation is not supported by this browser.");
@@ -115,12 +115,12 @@ const HybridCheckout = ({
       v_time!,
       location.lat,
       location.long,
-      apptFor === ("OTHER"|| "MY_FAMILY")
+      apptFor === ("OTHER" || "MY_FAMILY"),
     );
     if (res === 201) {
       updateToast(toastId, "Appointment Booked Successfully", "success");
       return router.push(
-        `/booked?h_doctorName=${data.homeDoctor.user.Fname} ${data.homeDoctor.user.Lname}&h_apptDate=${h_date}&h_slotTime=${h_time}&v_doctorName=${data.videoDoctor.user.Fname} ${data.videoDoctor.user.Lname}&v_apptDate=${v_date}&v_slotTime=${v_time}`
+        `/booked?h_doctorName=${data.homeDoctor.user.Fname} ${data.homeDoctor.user.Lname}&h_apptDate=${h_date}&h_slotTime=${h_time}&v_doctorName=${data.videoDoctor.user.Fname} ${data.videoDoctor.user.Lname}&v_apptDate=${v_date}&v_slotTime=${v_time}`,
       );
     }
     updateToast(toastId, "Failed to Book Appointment", "error");
@@ -136,7 +136,9 @@ const HybridCheckout = ({
               <nav aria-label="breadcrumb" className="page-breadcrumb">
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item">
-                    <Link className="no-underline" href="/">Home</Link>
+                    <Link className="no-underline" href="/">
+                      Home
+                    </Link>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
                     Checkout
@@ -165,7 +167,9 @@ const HybridCheckout = ({
                       <div className="row">
                         <div className="col-md-12 col-sm-12">
                           <div className="form-group card-label">
-                            <label>Book For  <span className="text-red-600">*</span></label>
+                            <label>
+                              Book For <span className="text-red-600">*</span>
+                            </label>
                             <select
                               onChange={(e) => {
                                 dispatch(setAptFor(e.target.value));
@@ -187,7 +191,7 @@ const HybridCheckout = ({
                             <label>First Name</label>
                             <input
                               {...register("Fname", {
-                                required: apptFor === "ME"?false:true,
+                                required: apptFor === "ME" ? false : true,
                               })}
                               disabled={apptFor === "ME"}
                               defaultValue={
@@ -207,11 +211,13 @@ const HybridCheckout = ({
                         </div>
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
-                            <label>Last Name <span className="text-red-600">*</span></label>
+                            <label>
+                              Last Name <span className="text-red-600">*</span>
+                            </label>
                             <input
                               disabled={apptFor === "ME"}
                               {...register("Lname", {
-                                required: apptFor === "ME"?false:true,
+                                required: apptFor === "ME" ? false : true,
                               })}
                               defaultValue={
                                 apptFor === "ME"
@@ -230,11 +236,13 @@ const HybridCheckout = ({
                         </div>
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
-                            <label>Email <span className="text-red-600">*</span></label>
+                            <label>
+                              Email <span className="text-red-600">*</span>
+                            </label>
                             <input
                               disabled={apptFor === "ME"}
                               {...register("email", {
-                                required: apptFor === "ME"?false:true,
+                                required: apptFor === "ME" ? false : true,
                               })}
                               className="form-control"
                               type="email"
@@ -253,10 +261,12 @@ const HybridCheckout = ({
                         </div>
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
-                            <label>Phone <span className="text-red-600">*</span></label>
+                            <label>
+                              Phone <span className="text-red-600">*</span>
+                            </label>
                             <input
                               {...register("contact", {
-                                required: apptFor === "ME"?false:true,
+                                required: apptFor === "ME" ? false : true,
                               })}
                               className="form-control"
                               type="text"
@@ -270,7 +280,10 @@ const HybridCheckout = ({
                         </div>{" "}
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
-                            <label>Appointment Reason <span className="text-red-600">*</span></label>
+                            <label>
+                              Appointment Reason{" "}
+                              <span className="text-red-600">*</span>
+                            </label>
                             <textarea
                               {...register("reason", {
                                 required: true,
@@ -284,10 +297,11 @@ const HybridCheckout = ({
                             )}
                           </div>
                         </div>
-                       
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
-                            <label>Lat/long <span className="text-red-600">*</span></label>
+                            <label>
+                              Lat/long <span className="text-red-600">*</span>
+                            </label>
                             <input
                               className="form-control"
                               defaultValue={`Lat:${location.lat} Long:${location.long}`}

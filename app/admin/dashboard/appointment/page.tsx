@@ -11,9 +11,9 @@ const page = async () => {
     cache: "no-cache",
   });
 
-  if(res.status!==200){
+  if (res.status !== 200) {
     throw new Error("Something went wrong!");
-}
+  }
   const data = await res.json();
   return <Appointment data={data} />;
 };

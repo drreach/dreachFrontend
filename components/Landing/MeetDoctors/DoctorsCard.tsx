@@ -15,7 +15,7 @@ const DoctorsCard = ({
     <div className="w-full border border-gray-200 md:hover:scale-105 ease-linear duration-200 relative p-2 flex  rounded-md flex-col h-auto">
       <span className="absolute w-full duration-300 ease-linear h-full hover:bg-teal-500/20"></span>
       <img
-        src={`${data.image?`https://storage.googleapis.com/kiitconnect_bucket/doctorProfile/${data.image}`:"/assets/doctor-2.jpg"}`}
+        src={`${data.image ? `https://storage.googleapis.com/kiitconnect_bucket/doctorProfile/${data.image}` : "/assets/doctor-2.jpg"}`}
         className="h-[200px] object-contain rounded-md "
         alt=""
       />

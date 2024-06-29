@@ -27,7 +27,7 @@ export const updateUser = async (formData: FormData) => {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      }
+      },
     );
 
     if (res.status === 201) {
@@ -69,7 +69,7 @@ export const createDoctorProfile = async () => {
         body: JSON.stringify({
           userId: session?.data.id,
         }),
-      }
+      },
     );
 
     const data = await res.json();
@@ -96,7 +96,7 @@ export const updateDoctorProfile = async (data: any) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      }
+      },
     );
     // console.log(res);
     revalidateTag("ApplyDoctor");
@@ -130,7 +130,7 @@ export const UpdateProfileImage = async (formData: FormData) => {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      }
+      },
     );
     if (response.status === 201) {
       return {
@@ -180,7 +180,11 @@ export const addReview = async (data: {
   }
 };
 
-export const filterDoctor = async (speciality: string, address: string,mode:string) => {
+export const filterDoctor = async (
+  speciality: string,
+  address: string,
+  mode: string,
+) => {
   try {
     const d = await fetch(
       `${process.env.SERVER_URL}/user/findDoctorList?address=${address}&speciality=${speciality}&mode=${mode}`,
@@ -191,7 +195,7 @@ export const filterDoctor = async (speciality: string, address: string,mode:stri
           // "Authorization": "Bearer "+localStorage.getItem("token")
         },
         cache: "no-cache",
-      }
+      },
     );
 
     if (d.status !== 200) {
@@ -225,7 +229,7 @@ export const addDocument = async (data: FormData) => {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      }
+      },
     );
     return response.status;
   } catch (error) {
@@ -244,7 +248,7 @@ export const removeDocument = async (id: string) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ doctorId: id }),
-      }
+      },
     );
 
     return response.status;

@@ -25,14 +25,14 @@ export const updateSheduleToDatabase = async (shedules: any, mode: string) => {
               shedule: { OnlineShedule: shedules },
             })
           : mode === "HOME_VISIT"
-          ? JSON.stringify({
-              doctorProfileId: session.data.doctorProfile.id,
-              shedule: { HomeShedule: shedules },
-            })
-          : JSON.stringify({
-              doctorProfileId: session.data.doctorProfile.id,
-              shedule: { DeskShedule: shedules },
-            }),
+            ? JSON.stringify({
+                doctorProfileId: session.data.doctorProfile.id,
+                shedule: { HomeShedule: shedules },
+              })
+            : JSON.stringify({
+                doctorProfileId: session.data.doctorProfile.id,
+                shedule: { DeskShedule: shedules },
+              }),
     });
 
     const data = await res.json();
@@ -61,7 +61,7 @@ export const hybridDoctorAppointment = async (
   v_slot: string,
   lat: number,
   long: number,
-  isForOthers: boolean
+  isForOthers: boolean,
 ) => {
   try {
     const res = await fetch(
@@ -91,7 +91,7 @@ export const hybridDoctorAppointment = async (
           othersEmail: formData?.email,
           reason: formData?.reason,
         }),
-      }
+      },
     );
 
     return res.status;
@@ -108,7 +108,7 @@ export const doctorAppointment = async (
     Lname: string;
     contact: string;
     email: string;
-    reason:string
+    reason: string;
   } | null,
   userId: string,
   date: string,
@@ -116,7 +116,7 @@ export const doctorAppointment = async (
   lat: number,
   long: number,
   isForOthers: boolean,
-  mode: string
+  mode: string,
 ) => {
   try {
     const res = await fetch(
@@ -142,16 +142,16 @@ export const doctorAppointment = async (
             : null,
           othersContact: formData?.contact,
           othersEmail: formData?.email,
-          reason:formData?.reason
+          reason: formData?.reason,
         }),
-      }
+      },
     );
 
     console.log(res);
 
     return res.status;
   } catch (error) {
-    console.log("error",error);
+    console.log("error", error);
     return 500;
   }
 };
@@ -159,7 +159,7 @@ export const doctorAppointment = async (
 export const ActionOnPatientsAppointment = async (
   userId: string,
   action: string,
-  apptId: string
+  apptId: string,
 ) => {
   const session = await getServerSession(authOption);
   if (!session || !session.data) return;
@@ -178,7 +178,7 @@ export const ActionOnPatientsAppointment = async (
           doctorProfileId: session.data.doctorProfile.id,
           apptId: apptId,
         }),
-      }
+      },
     );
 
     const data = await res.json();
@@ -203,7 +203,7 @@ export const addMedicalRecord = async (formData: FormData) => {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      }
+      },
     );
 
     // console.log(res);

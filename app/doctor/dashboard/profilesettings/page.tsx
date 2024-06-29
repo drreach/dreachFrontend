@@ -1,10 +1,8 @@
-import DoctorsProfileSettings from '@/components/doctor/dashboard/DoctorsProfileSettings'
-import React from 'react'
+import DoctorsProfileSettings from "@/components/doctor/dashboard/DoctorsProfileSettings";
+import React from "react";
 
 const page = () => {
-  return (
-    <DoctorsProfileSettings/>
-  )
-}
+  return <DoctorsProfileSettings />;
+};
 
-export default page
+export default page;

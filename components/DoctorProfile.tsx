@@ -186,11 +186,11 @@ const DoctorProfile = ({
 }) => {
   const dispatch = useAppDispatch();
   const activeTab = useAppSelector(
-    (state) => state.userReducer.activeDoctorTab
+    (state) => state.userReducer.activeDoctorTab,
   );
 
   const appointmentDetails = useAppSelector(
-    (state) => state.userReducer.appointMentDetails
+    (state) => state.userReducer.appointMentDetails,
   );
 
   const handleOnClickTab = (index: number) => {
@@ -199,7 +199,7 @@ const DoctorProfile = ({
 
   const session = useSession();
   const [shedMode, setShedMode] = useState(
-    singleMode ? singleMode : data.doctorProfile.mode
+    singleMode ? singleMode : data.doctorProfile.mode,
   );
 
   // useEffect(() => {
@@ -357,13 +357,13 @@ const DoctorProfile = ({
                                   {i == 0
                                     ? "Today"
                                     : i == 1
-                                    ? "Tomorrow"
-                                    : `${
-                                        numberToMonthMap[
-                                          convertDate(s.date)
-                                            .month as keyof typeof numberToMonthMap
-                                        ]
-                                      } ${convertDate(s.date).day}`}
+                                      ? "Tomorrow"
+                                      : `${
+                                          numberToMonthMap[
+                                            convertDate(s.date)
+                                              .month as keyof typeof numberToMonthMap
+                                          ]
+                                        } ${convertDate(s.date).day}`}
                                 </Tab>
                               );
                             })}
@@ -376,7 +376,7 @@ const DoctorProfile = ({
                                   shedMode,
                                   s.availableSlotsHome,
                                   s.availableSlotsDesk,
-                                  s.availableSlotsVideo
+                                  s.availableSlotsVideo,
                                 )?.map((slot: string, index) => (
                                   <div
                                     onClick={() =>
@@ -385,7 +385,7 @@ const DoctorProfile = ({
                                           time: slot,
                                           date: s.date,
                                           doctorId: data.doctorProfile.id,
-                                        })
+                                        }),
                                       )
                                     }
                                     className={`${
@@ -418,7 +418,7 @@ const DoctorProfile = ({
                                       time: slot,
                                       date: h_date,
                                       doctorId: data.doctorProfile.id,
-                                    })
+                                    }),
                                   )
                                 }
                                 className={`${
@@ -455,7 +455,8 @@ const DoctorProfile = ({
                         >
                           Update Your Profile To Book
                         </Link>
-                      ) : isBookedByCurrentUser && (status==="APPROVED" || status=== "PENDING") ? (
+                      ) : isBookedByCurrentUser &&
+                        (status === "APPROVED" || status === "PENDING") ? (
                         <Link className="apt-btn no-underline" href="#">
                           Status : {status}
                         </Link>
@@ -577,7 +578,7 @@ const DoctorProfile = ({
                                     </div>
                                   </li>
                                 );
-                              }
+                              },
                             )}
                           </ul>
                         </div>
@@ -607,7 +608,7 @@ const DoctorProfile = ({
                                     </div>
                                   </li>
                                 );
-                              }
+                              },
                             )}
                           </ul>
                         </div>
@@ -643,7 +644,7 @@ const DoctorProfile = ({
                                       </div>
                                     </li>
                                   );
-                                }
+                                },
                               )}
                             </ul>
                           </div>
@@ -660,7 +661,7 @@ const DoctorProfile = ({
                           {data?.doctorProfile?.specializations?.map(
                             (spec, index) => {
                               return <li key={index}>{spec}</li>;
-                            }
+                            },
                           )}
                         </ul>
                       </div>
@@ -698,7 +699,7 @@ const DoctorProfile = ({
                                 </div>
                               </div>
                             );
-                          }
+                          },
                         )}
                       {/* /Clinic Content */}
                     </div>
@@ -878,7 +879,7 @@ const DoctorProfile = ({
                                       </span>
                                     </div>
                                   );
-                                }
+                                },
                               )}
                           </div>
                         </div>

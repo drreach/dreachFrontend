@@ -51,7 +51,7 @@ interface Data {
 
 const PatientsAppointment = ({ datas }: { datas: Data }) => {
   const tab = useAppSelector(
-    (state) => state.userReducer.doctorDashTabTodayUpcoming
+    (state) => state.userReducer.doctorDashTabTodayUpcoming,
   );
   const dispacth = useAppDispatch();
   return (

@@ -17,7 +17,7 @@ const page = async () => {
         "Content-Type": "application/json",
       },
       cache: "no-cache",
-    }
+    },
   );
 
   if (res.status !== 200) {

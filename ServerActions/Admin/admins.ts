@@ -19,7 +19,7 @@ export const actionsOnUser = async (action: string, id: string) => {
         headers: {
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     if (res.status === 200) {

@@ -12,7 +12,7 @@ const AddMedicalRecord = ({ patientsId }: { patientsId: string }) => {
   const session = useSession();
 
   const medicalRecordDialog = useAppSelector(
-    (state) => state.userReducer.addMedicalRecordDialog
+    (state) => state.userReducer.addMedicalRecordDialog,
   );
   const dispatch = useAppDispatch();
   const sty = {
@@ -43,7 +43,7 @@ const AddMedicalRecord = ({ patientsId }: { patientsId: string }) => {
       return updateToast(
         toastId,
         "Medical Record Added Successfully",
-        "success"
+        "success",
       );
     }
     return updateToast(toastId, "Failed to add Medical Record", "error");

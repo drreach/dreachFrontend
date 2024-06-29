@@ -1,10 +1,8 @@
-import ReviewsList from '@/components/Admin/dashboard/ReviewsList'
-import React from 'react'
+import ReviewsList from "@/components/Admin/dashboard/ReviewsList";
+import React from "react";
 
 const page = () => {
-  return (
-    <ReviewsList/>
-  )
-}
+  return <ReviewsList />;
+};
 
-export default page
+export default page;

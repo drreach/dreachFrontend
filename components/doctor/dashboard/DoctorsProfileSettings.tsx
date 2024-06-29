@@ -19,7 +19,7 @@ const DoctorsProfileSettings = async () => {
       next: {
         tags: ["ApplyDoctor"],
       },
-    }
+    },
   );
 
   if (res.status !== 200) {

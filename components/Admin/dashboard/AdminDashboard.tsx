@@ -186,19 +186,19 @@ const AdminDashboard = ({
 
                                           const res = await actionsOnUser(
                                             "APPROVED",
-                                            d.id
+                                            d.id,
                                           );
                                           if (res.status === 200) {
                                             return updateToast(
                                               toastId,
                                               "Doctor Approved",
-                                              "success"
+                                              "success",
                                             );
                                           }
                                           updateToast(
                                             toastId,
                                             res.message,
-                                            "error"
+                                            "error",
                                           );
                                           dispacth(setLoading(false));
                                           console.log(res);
@@ -215,19 +215,19 @@ const AdminDashboard = ({
                                             loadToast("Rejecting Doctor,");
                                           const res = await actionsOnUser(
                                             "REJECTED",
-                                            d.id
+                                            d.id,
                                           );
                                           if (res.status === 200) {
                                             return updateToast(
                                               toastId,
                                               "Doctor Rejected",
-                                              "success"
+                                              "success",
                                             );
                                           }
                                           updateToast(
                                             toastId,
                                             res.message,
-                                            "error"
+                                            "error",
                                           );
                                           dispacth(setLoading(false));
 

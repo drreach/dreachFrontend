@@ -10,7 +10,7 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
-  const session  =await getServerSession(authOption);
+  const session = await getServerSession(authOption);
   // if(session && session?.data?.role === "NORMAL"){
   //   return redirect("/user/dashboard");
   // }else if(session && session?.data?.role === "DOCTOR"){
@@ -19,10 +19,8 @@ export default async function Home() {
   //   return redirect("/admin/dashboard");
   // }
   return (
- 
-   <>
-   <MainHome/>
-   </>
-
+    <>
+      <MainHome />
+    </>
   );
 }

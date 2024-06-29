@@ -25,7 +25,7 @@ const page = async (props: Props) => {
           "Content-Type": "application/json",
         },
         cache: "no-cache",
-      }
+      },
     );
     if (res.status !== 200) {
       throw new Error("Something went wrong!");
@@ -57,7 +57,7 @@ const page = async (props: Props) => {
           // "Authorization": "Bearer "+localStorage.getItem("token")
         },
         cache: "no-cache",
-      }
+      },
     );
     const data = await res.json();
     return (
@@ -87,7 +87,7 @@ const page = async (props: Props) => {
   }
 
   return redirect(
-    `/hybridcheckout?homeVisitDoctorId=${homeVisitDoctorId}&h_apptDate=${h_apptDate}&h_slotTime=${h_slotTime}&videoDoctorId=${videoDoctorId}&v_apptDate=${v_apptDate}&v_slotTime=${v_slotTime}`
+    `/hybridcheckout?homeVisitDoctorId=${homeVisitDoctorId}&h_apptDate=${h_apptDate}&h_slotTime=${h_slotTime}&videoDoctorId=${videoDoctorId}&v_apptDate=${v_apptDate}&v_slotTime=${v_slotTime}`,
   );
 };
 

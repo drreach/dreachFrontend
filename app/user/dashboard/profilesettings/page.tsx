@@ -1,10 +1,8 @@
-import ProfileSettings from '@/components/User/dashboard/ProfileSettings'
-import React from 'react'
+import ProfileSettings from "@/components/User/dashboard/ProfileSettings";
+import React from "react";
 
 const page = () => {
-  return (
-   <ProfileSettings/>
-  )
-}
+  return <ProfileSettings />;
+};
 
-export default page
+export default page;

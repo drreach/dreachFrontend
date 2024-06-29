@@ -62,8 +62,6 @@ const ProfileSettings = () => {
 
     const tosastId = loadToast("Updating Profile");
 
-
-
     const formData = new FormData();
     if (file) {
       formData.append("profileImage", file);
@@ -74,8 +72,8 @@ const ProfileSettings = () => {
     formData.set("dob", dobDate.toString());
     formData.set("bloodGroup", bloodGroup);
     formData.set("contact", contact);
-    formData.set('Address', JSON.stringify(Address));
-    formData.set('gender', gender)
+    formData.set("Address", JSON.stringify(Address));
+    formData.set("gender", gender);
     // const res = await UpdateProfileImage(formData);
 
     const update = await updateUser(formData);
@@ -99,7 +97,6 @@ const ProfileSettings = () => {
       updateToast(tosastId, "Server Error", "error");
     }
   };
-
 
   useEffect(() => {
     if (session.data?.data.dob)
@@ -178,10 +175,13 @@ const ProfileSettings = () => {
                           <div className="change-avatar">
                             <div className="profile-img">
                               <img
-                                src={`${file?(URL.createObjectURL(file)):session.data.data.profilePic
-                                    ? `https://storage.googleapis.com/kiitconnect_bucket/doctorProfile/${session.data.data.profilePic}`
-                                    : "/assets/doctor-2.jpg"
-                                  } `}
+                                src={`${
+                                  file
+                                    ? URL.createObjectURL(file)
+                                    : session.data.data.profilePic
+                                      ? `https://storage.googleapis.com/kiitconnect_bucket/doctorProfile/${session.data.data.profilePic}`
+                                      : "/assets/doctor-2.jpg"
+                                } `}
                                 alt="User Image"
                               />
                             </div>
@@ -272,9 +272,10 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-md-6">
                         <div className="form-group">
-                          <label>Gender <span className="text-red-600">*</span></label>
+                          <label>
+                            Gender <span className="text-red-600">*</span>
+                          </label>
                           <select
-
                             defaultValue={session.data.data.gender}
                             {...register("gender", { required: true })}
                             className="form-control form-select"
@@ -292,12 +293,12 @@ const ProfileSettings = () => {
                         </div>
                       </div>
 
-
                       <div className="col-md-6">
                         <div className="form-group">
-                          <label>Blood Group <span className="text-red-600">*</span></label>
+                          <label>
+                            Blood Group <span className="text-red-600">*</span>
+                          </label>
                           <select
-
                             defaultValue={session.data.data.gender}
                             {...register("bloodGroup", { required: true })}
                             className="form-control form-select"
@@ -310,7 +311,6 @@ const ProfileSettings = () => {
                             <option value="AB_NEGATIVE">AB-</option>
                             <option value="O_POSITIVE">O+</option>
                             <option value="O_NEGATIVE">O-</option>
-
                           </select>
 
                           {errors.bloodGroup && (
@@ -516,7 +516,6 @@ const ProfileSettings = () => {
                       </div>
                       <div className="col-12 col-md-6">
                         <div className="form-group">
-
                           <label>
                             Country <span className="text-red-600">*</span>
                           </label>

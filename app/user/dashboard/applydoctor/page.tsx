@@ -17,7 +17,7 @@ const page = async () => {
       next: {
         tags: ["ApplyDoctor"],
       },
-    }
+    },
   );
   // console.log(res);
 

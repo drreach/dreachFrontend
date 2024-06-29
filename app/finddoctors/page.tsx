@@ -6,9 +6,9 @@ type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-const page = async (props:Props) => {
-  const {mode} = props.searchParams;
-  if(!mode) throw new Error("Invalid Requests");
+const page = async (props: Props) => {
+  const { mode } = props.searchParams;
+  if (!mode) throw new Error("Invalid Requests");
   const res = await fetch(
     `${process.env.SERVER_URL}/user/findDoctorList?address=NONE&speciality=NONE&mode=${mode}`,
     {
@@ -18,19 +18,20 @@ const page = async (props:Props) => {
         // "Authorization": "Bearer "+localStorage.getItem("token")
       },
       cache: "no-cache",
-    }
+    },
   );
 
   if (res.status !== 200) {
     throw new Error("Internal Server Error!");
   }
   const data = await res.json();
-  return <div className="w-full flex justify-center pt-28 min-h-screen">
-    <div className="max-w-screen-lg w-full">
-
-     <FindDoctors  mode={mode.toString()} data={data} />;
+  return (
+    <div className="w-full flex justify-center pt-28 min-h-screen">
+      <div className="max-w-screen-lg w-full">
+        <FindDoctors mode={mode.toString()} data={data} />;
+      </div>
     </div>
-  </div>
+  );
 };
 
 export default page;

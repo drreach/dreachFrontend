@@ -11,7 +11,7 @@ const page = async () => {
         // "Authorization": "Bearer "+localStorage.getItem("token")
       },
       cache: "no-cache",
-    }
+    },
   );
 
   if (res.status !== 200) {

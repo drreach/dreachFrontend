@@ -21,12 +21,10 @@ const page = async (props: Props) => {
     if (!homeVisitDoctorId || !h_apptDate || !h_slotTime)
       throw new Error("Invalid Access");
 
-
     const url =
       mode === "video"
         ? `&homeVisitDoctorId=${homeVisitDoctorId}&h_apptDate=${h_apptDate}&h_slotTime=${h_slotTime}`
         : undefined;
-
 
     const dateOnly = h_apptDate.toString().substring(0, 10);
 
@@ -40,11 +38,11 @@ const page = async (props: Props) => {
           // "Authorization": "Bearer "+localStorage.getItem("token")
         },
         cache: "no-cache",
-      }
+      },
     );
-    if(res.status!==200){
+    if (res.status !== 200) {
       throw new Error("Something went wrong!");
-  }
+    }
     const data = await res.json();
     return (
       <DoctorProfile
@@ -74,7 +72,7 @@ const page = async (props: Props) => {
           // "Authorization": "Bearer "+localStorage.getItem("token")
         },
         cache: "no-cache",
-      }
+      },
     );
 
     // console.log(res);
@@ -115,7 +113,7 @@ const page = async (props: Props) => {
         // "Authorization": "Bearer "+localStorage.getItem("token")
       },
       cache: "no-cache",
-    }
+    },
   );
 
   if (res.status !== 200) {

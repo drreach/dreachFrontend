@@ -24,7 +24,7 @@ const page = async () => {
       next: {
         tags: ["doctor_dashboard"],
       },
-    }
+    },
   );
 
   if (res.status !== 200) {

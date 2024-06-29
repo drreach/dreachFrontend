@@ -74,13 +74,13 @@ const Checkout = ({
             setCurrentLocation({
               lat: position.coords.latitude,
               long: position.coords.longitude,
-            })
+            }),
           );
           console.log(position.coords);
         },
         (error) => {
           console.error("Error getting location:", error.message);
-        }
+        },
       );
     } else {
       console.error("Geolocation is not supported by this browser.");
@@ -94,7 +94,8 @@ const Checkout = ({
     if (location.lat === 0.0 || location.long === 0)
       return toast.error("Location is Required");
     if (!formData.reason) return toast.error("Reason is Required");
-    if(!location.lat || !location.long) return toast.error("Location is Required");
+    if (!location.lat || !location.long)
+      return toast.error("Location is Required");
     const toastId = loadToast("Please wait,Booking Appointment");
     const res = await doctorAppointment(
       data.doctor.id,
@@ -105,7 +106,7 @@ const Checkout = ({
       location.lat,
       location.long,
       apptFor === ("OTHER" || "MY_FAMILY"),
-      mode
+      mode,
     );
 
     console.log(res);
@@ -113,7 +114,7 @@ const Checkout = ({
     if (res === 201) {
       updateToast(toastId, "Appointment Booked Successfully", "success");
       return router.push(
-        `/booked?h_doctorName=${data.doctor.user.Fname} ${data.doctor.user.Lname}&h_apptDate=${date}&h_slotTime=${time}`
+        `/booked?h_doctorName=${data.doctor.user.Fname} ${data.doctor.user.Lname}&h_apptDate=${date}&h_slotTime=${time}`,
       );
     }
     return updateToast(toastId, "Failed to Book Appointment", "error");
@@ -129,7 +130,7 @@ const Checkout = ({
               <nav aria-label="breadcrumb" className="page-breadcrumb">
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item">
-                    <Link  href="/">Home</Link>
+                    <Link href="/">Home</Link>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
                     Checkout
@@ -158,7 +159,9 @@ const Checkout = ({
                       <div className="row">
                         <div className="col-md-12 col-sm-12">
                           <div className="form-group card-label">
-                            <label>Book For <span className="text-red-600">*</span></label>
+                            <label>
+                              Book For <span className="text-red-600">*</span>
+                            </label>
                             <select
                               onChange={(e) => {
                                 dispatch(setAptFor(e.target.value));
@@ -177,14 +180,18 @@ const Checkout = ({
                         </div>
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
-                            <label>First Name  <span className="text-red-600">*</span></label>
+                            <label>
+                              First Name <span className="text-red-600">*</span>
+                            </label>
                             <input
                               {...register("Fname", {
-                                required: apptFor === "ME"?false:true,
+                                required: apptFor === "ME" ? false : true,
                               })}
                               disabled={apptFor === "ME"}
                               defaultValue={
-                                apptFor === "ME" ? `${session?.data?.data?.Fname}` : ""
+                                apptFor === "ME"
+                                  ? `${session?.data?.data?.Fname}`
+                                  : ""
                               }
                               className="form-control"
                               type="text"
@@ -198,11 +205,13 @@ const Checkout = ({
                         </div>
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
-                            <label>Last Name  <span className="text-red-600">*</span></label>
+                            <label>
+                              Last Name <span className="text-red-600">*</span>
+                            </label>
                             <input
                               disabled={apptFor === "ME"}
                               {...register("Lname", {
-                                required: apptFor === "ME"?false:true,
+                                required: apptFor === "ME" ? false : true,
                               })}
                               defaultValue={
                                 apptFor === "ME"
@@ -221,11 +230,13 @@ const Checkout = ({
                         </div>
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
-                            <label>Email  <span className="text-red-600">*</span></label>
+                            <label>
+                              Email <span className="text-red-600">*</span>
+                            </label>
                             <input
                               disabled={apptFor === "ME"}
                               {...register("email", {
-                                required: apptFor === "ME"?false:true,
+                                required: apptFor === "ME" ? false : true,
                               })}
                               className="form-control"
                               type="email"
@@ -244,10 +255,12 @@ const Checkout = ({
                         </div>
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
-                            <label>Phone  <span className="text-red-600">*</span></label>
+                            <label>
+                              Phone <span className="text-red-600">*</span>
+                            </label>
                             <input
                               {...register("contact", {
-                                required: apptFor === "ME"?false:true,
+                                required: apptFor === "ME" ? false : true,
                               })}
                               className="form-control"
                               type="text"
@@ -263,7 +276,10 @@ const Checkout = ({
                         </div>{" "}
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
-                            <label>Appointment Reason  <span className="text-red-600">*</span></label>
+                            <label>
+                              Appointment Reason{" "}
+                              <span className="text-red-600">*</span>
+                            </label>
                             <textarea
                               {...register("reason", {
                                 required: true,
@@ -296,13 +312,24 @@ const Checkout = ({
                         </div>{" "} */}
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
-                            <label>Lat/Long  <span className="text-red-600">*</span></label>
+                            <label>
+                              Lat/Long <span className="text-red-600">*</span>
+                            </label>
                             <input
                               className="form-control"
-                              defaultValue={"Lat: " + location.lat + " Long: " + location.long}
-                              value={"Lat: " + location.lat + " Long: " + location.long}
+                              defaultValue={
+                                "Lat: " +
+                                location.lat +
+                                " Long: " +
+                                location.long
+                              }
+                              value={
+                                "Lat: " +
+                                location.lat +
+                                " Long: " +
+                                location.long
+                              }
                               type="string"
-                              
                               disabled
                             />
                             {errors.long && (

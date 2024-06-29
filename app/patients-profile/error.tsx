@@ -1,15 +1,12 @@
-'use client'
-import FailedToFetch from "@/components/FailedToFetch"
+"use client";
+import FailedToFetch from "@/components/FailedToFetch";
 
- 
 export default function Error({
   error,
   reset,
 }: {
-  error: Error
-  reset: () => void
+  error: Error;
+  reset: () => void;
 }) {
-  return (
-    <FailedToFetch message={error.message} />
-  )
+  return <FailedToFetch message={error.message} />;
 }

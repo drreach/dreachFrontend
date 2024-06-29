@@ -1,25 +1,23 @@
-import React from 'react'
-import DoctorsCard from './DoctorsCard'
-import Link from 'next/link'
+import React from "react";
+import DoctorsCard from "./DoctorsCard";
+import Link from "next/link";
 
-
-export type Root = Root2[]
+export type Root = Root2[];
 
 export interface Root2 {
-  id: string
-  specializations: string[]
-  user: User
+  id: string;
+  specializations: string[];
+  user: User;
 }
 
 export interface User {
-  Fname: string
-  Lname: string
-  profilePic?: string
-  username: string
+  Fname: string;
+  Lname: string;
+  profilePic?: string;
+  username: string;
 }
 
-const GetDoctors = async() => {
-
+const GetDoctors = async () => {
   const res = await fetch(`${process.env.SERVER_URL}/user/getPopularDoctors`, {
     method: "GET",
     headers: {
@@ -28,29 +26,40 @@ const GetDoctors = async() => {
       //   "Bearer " + localStorage.getItem("token"),
     },
 
-    next:{
-        // revalidate in 60 minute
-        revalidate: 60 * 60,
-    }
+    next: {
+      // revalidate in 60 minute
+      revalidate: 60 * 60,
+    },
   });
 
   console.log(res);
-  const data:Root = await res.json();
+  const data: Root = await res.json();
   console.log(data);
 
   return (
     <div className="w-full max-w-screen-xl mt-5  mx-auto grid gap-5  grid-flow-row lg:grid-cols-4 md:grid-cols-2">
-    {data.map((d, i) => {
-      return <Link key={d.id} className='no-underline' href={`/doctorprofile/${d.user.username}`}> <DoctorsCard key={i} data={{
-        image: d.user.profilePic!,
-        name: `${d.user.Fname} ${d.user.Lname}`,
-       
-        speciality: d.specializations.join(", "),
+      {data.map((d, i) => {
+        return (
+          <Link
+            key={d.id}
+            className="no-underline"
+            href={`/doctorprofile/${d.user.username}`}
+          >
+            {" "}
+            <DoctorsCard
+              key={i}
+              data={{
+                image: d.user.profilePic!,
+                name: `${d.user.Fname} ${d.user.Lname}`,
 
-      }} /></Link>;
-    })}
-  </div>
-  )
-}
+                speciality: d.specializations.join(", "),
+              }}
+            />
+          </Link>
+        );
+      })}
+    </div>
+  );
+};
 
-export default GetDoctors
+export default GetDoctors;

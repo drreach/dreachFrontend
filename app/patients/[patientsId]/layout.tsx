@@ -98,31 +98,29 @@ const medidata = [
   },
 ];
 
-
 export interface Data {
-  Fname: string
-  Lname: string
-  address: Address
-  bloodGroup: any
-  contact: string
-  dob: string
-  email: string
-  profilePic: any
-  userId: string
+  Fname: string;
+  Lname: string;
+  address: Address;
+  bloodGroup: any;
+  contact: string;
+  dob: string;
+  email: string;
+  profilePic: any;
+  userId: string;
 }
 
 export interface Address {
-  address: string
-  city: string
-  state: string
-  country: string
-  pincode: string
+  address: string;
+  city: string;
+  state: string;
+  country: string;
+  pincode: string;
 }
-
 
 export default async function Layout({
   children,
-  params
+  params,
 }: {
   children: React.ReactNode;
   params: { patientsId: string };
@@ -132,16 +130,19 @@ export default async function Layout({
   //     return redirect("/");
   //   }
 
-  const response = await fetch(`${process.env.SERVER_URL}/doctor/getPatientsInfo?pid=${params.patientsId}`,{
-    method: "GET",
-    headers: {
+  const response = await fetch(
+    `${process.env.SERVER_URL}/doctor/getPatientsInfo?pid=${params.patientsId}`,
+    {
+      method: "GET",
+      headers: {
         "Content-Type": "application/json",
         //
+      },
+      cache: "no-cache",
     },
-    cache: "no-cache"
-});
+  );
 
-const data:Data = await response.json();
+  const data: Data = await response.json();
 
   return (
     <div className=" main-wrapper pt-28 md:px-10 overflow-x-hidden">
@@ -156,22 +157,25 @@ const data:Data = await response.json();
                     <div className="profile-info-widget">
                       <a href="#" className="booking-doc-img">
                         <img
-                         src={`${
-                          data?.profilePic
-                            ? `https://storage.googleapis.com/kiitconnect_bucket/doctorProfile/${data.profilePic}`
-                            : "/assets/doctors/doctor-thumb-02.jpg"
-                        }`}
+                          src={`${
+                            data?.profilePic
+                              ? `https://storage.googleapis.com/kiitconnect_bucket/doctorProfile/${data.profilePic}`
+                              : "/assets/doctors/doctor-thumb-02.jpg"
+                          }`}
                           alt="User Image"
                         />
                       </a>
                       <div className="profile-det-info">
-                        <h3>{data?.Fname} {data?.Lname}</h3>
+                        <h3>
+                          {data?.Fname} {data?.Lname}
+                        </h3>
                         <div className="patient-details">
                           <h5>
                             <b>Patient ID :</b> {data?.userId}
                           </h5>
                           <h5 className="mb-0">
-                            <i className="fas fa-map-marker-alt" /> {data?.address?.address} {data?.address?.city}
+                            <i className="fas fa-map-marker-alt" />{" "}
+                            {data?.address?.address} {data?.address?.city}
                           </h5>
                         </div>
                       </div>
@@ -186,14 +190,20 @@ const data:Data = await response.json();
                         Age <span>{calculateAge(data?.dob)} Years</span>
                       </li>
                       <li>
-                        Blood Group <span>{mapBloodGroup[data?.bloodGroup as keyof typeof mapBloodGroup]}</span>
+                        Blood Group{" "}
+                        <span>
+                          {
+                            mapBloodGroup[
+                              data?.bloodGroup as keyof typeof mapBloodGroup
+                            ]
+                          }
+                        </span>
                       </li>
                     </ul>
                   </div>
                 </div>
               </div>
               {/* /Profile Widget */}
-        
             </div>
             <div className="col-md-7 col-lg-8 col-xl-9 dct-appoinment">
               <div className="card">

@@ -51,12 +51,12 @@ const page = async () => {
       next: {
         tags: ["doctor_medical_tab"],
       },
-    }
+    },
   );
 
-  if(response.status!==200){
+  if (response.status !== 200) {
     throw new Error("Something went wrong!");
-}
+  }
   const data: Root = await response.json();
   return <MedicalTab data={data} />;
 };

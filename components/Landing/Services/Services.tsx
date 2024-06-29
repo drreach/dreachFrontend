@@ -48,7 +48,7 @@ const data = [
 
 export function Services() {
   const plugin = React.useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: true })
+    Autoplay({ delay: 2000, stopOnInteraction: true }),
   );
   return (
     <div className="w-full mt-[100px] py-5 flex justify-center flex-col items-center">
