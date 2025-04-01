@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import { FiHome, FiLayout, FiStar, FiUser, FiUserPlus } from "react-icons/fi";
 import React from "react";
 import Sidebar from "@/components/Admin/dashboard/Sidebar";
+import Image from "next/image";
 
 export default async function Layout({
   children,
@@ -25,10 +26,10 @@ export default async function Layout({
         {/* Logo */}
         <div className="header-left">
           <a href="index.html" className="logo">
-            <img src="/assets/logo.png" alt="Logo" />
+            <Image src="/assets/logo.png" alt="Logo" width={40} height={40} />
           </a>
           <a href="index.html" className="logo logo-small">
-            <img
+            <Image
               src="/assets/logo-small.png"
               alt="Logo"
               width={30}
@@ -83,10 +84,12 @@ export default async function Layout({
                     <a href="#">
                       <div className="media">
                         <span className="avatar avatar-sm">
-                          <img
+                          <Image
                             className="avatar-img rounded-circle"
                             alt="User Image"
                             src="/assets/doctor-3.jpg"
+                            width={250}
+                            height={250}
                           />
                         </span>
                         <div className="media-body">
@@ -108,10 +111,12 @@ export default async function Layout({
                     <a href="#">
                       <div className="media">
                         <span className="avatar avatar-sm">
-                          <img
+                          <Image
                             className="avatar-img rounded-circle"
                             alt="User Image"
                             src="/assets/patients/patient1.jpg"
+                            width={150}
+                            height={150}
                           />
                         </span>
                         <div className="media-body">
@@ -133,10 +138,12 @@ export default async function Layout({
                     <a href="#">
                       <div className="media">
                         <span className="avatar avatar-sm">
-                          <img
+                          <Image
                             className="avatar-img rounded-circle"
                             alt="User Image"
                             src="assets/img/patients/patient2.jpg"
+                            width={150}
+                            height={150}
                           />
                         </span>
                         <div className="media-body">
@@ -158,10 +165,12 @@ export default async function Layout({
                     <a href="#">
                       <div className="media">
                         <span className="avatar avatar-sm">
-                          <img
+                          <Image
                             className="avatar-img rounded-circle"
                             alt="User Image"
                             src="assets/img/patients/patient3.jpg"
+                            width={150}
+                            height={150}
                           />
                         </span>
                         <div className="media-body">
@@ -195,10 +204,11 @@ export default async function Layout({
               data-toggle="dropdown"
             >
               <span className="user-img">
-                <img
+                <Image
                   className="rounded-circle"
                   src="/assets/profiles/avatar-01.jpg"
                   width={31}
+                  height={31}
                   alt="Ryan Taylor"
                 />
               </span>
@@ -206,10 +216,12 @@ export default async function Layout({
             <div className="dropdown-menu">
               <div className="user-header">
                 <div className="avatar avatar-sm">
-                  <img
+                  <Image
                     src="assets/profiles/avatar-01.jpg"
                     alt="User Image"
                     className="avatar-img rounded-circle"
+                    width={50}
+                    height={50}
                   />
                 </div>
                 <div className="user-text">

@@ -10,26 +10,26 @@ import Toaster from "@/components/Toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "Dreach.in",
-	description:
-		"Dreach.in is a platform for doctors and patients to connect and communicate.",
+  title: "Dreach.in",
+  description:
+    "Dreach.in is a platform for doctors and patients to connect and communicate.",
 };
 
 export default function RootLayout({
-	children,
+  children,
 }: Readonly<{
-	children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-	return (
-		<html lang="en">
-			<body className="">
-				<Providers>
-					<Navbar />
-					{children}
-				</Providers>
-				<Footer />
-				<Toaster />
-			</body>
-		</html>
-	);
+  return (
+    <html lang="en">
+      <body className="">
+        <Providers>
+          <Navbar />
+          {children}
+        </Providers>
+        <Footer />
+        <Toaster />
+      </body>
+    </html>
+  );
 }

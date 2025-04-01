@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 const Appointment = ({ data }: { data: any }) => {
@@ -46,10 +47,12 @@ const Appointment = ({ data }: { data: any }) => {
                                   href="profile.html"
                                   className="avatar avatar-sm mr-2"
                                 >
-                                  <img
+                                  <Image
                                     className="avatar-img rounded-circle"
                                     src="assets/img/doctors/doctor-thumb-01.jpg"
                                     alt="User Image"
+                                    width={50}
+                                    height={50}
                                   />
                                 </a>
                                 <a href="profile.html">Dr. Ruby Perrin</a>
@@ -62,7 +65,7 @@ const Appointment = ({ data }: { data: any }) => {
                                   href="profile.html"
                                   className="avatar avatar-sm mr-2"
                                 >
-                                  <img
+                                  <Image
                                     className="avatar-img rounded-circle"
                                     src="assets/img/patients/patient1.jpg"
                                     alt="User Image"

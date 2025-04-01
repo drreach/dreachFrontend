@@ -11,6 +11,7 @@ import { convertDateToFormat, loadToast, updateToast } from "@/utils/utils";
 import { actionsOnUser } from "@/ServerActions/Admin/admins";
 import { useAppDispatch, useAppSelector } from "@/Redux/hooks/hooks";
 import { setLoading } from "@/Redux/reducers/UserReducers";
+import Image from "next/image";
 
 interface UnverifiedDoctors {
   id: string;
@@ -145,7 +146,7 @@ const AdminDashboard = ({
                               <td>
                                 <h2 className="table-avatar">
                                   <a href="#" className="avatar avatar-sm mr-2">
-                                    <img
+                                    <Image
                                       className="avatar-img rounded-circle"
                                       src={`${
                                         d.user.profilePic
@@ -153,6 +154,8 @@ const AdminDashboard = ({
                                           : "/assets/doctor-2.jpg"
                                       } `}
                                       alt="User Image"
+                                      width={50}
+                                      height={50}
                                     />
                                   </a>
                                   <Link href={`#`} className="no-underline">

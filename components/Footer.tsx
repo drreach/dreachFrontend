@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { BsTelephoneFill } from "react-icons/bs";
@@ -10,10 +11,12 @@ const Footer = () => {
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
             <Link href="/" className="flex items-center no-underline">
-              <img
+              <Image
                 src="/assets/logo.png"
                 className="h-8 me-3"
                 alt="FlowBite Logo"
+                width={100}
+                height={100}
               />
               <span className="self-center text-2xl font-bold whitespace-nowrap text-white">
                 Dreach

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 const DashHeader = () => {
@@ -13,13 +14,25 @@ const DashHeader = () => {
             </span>
           </a>
           <a href="index-2.html" className="navbar-brand logo">
-            <img src="assets/img/logo.png" className="img-fluid" alt="Logo" />
+            <Image
+              src="assets/img/logo.png"
+              className="img-fluid"
+              alt="Logo"
+              width={50}
+              height={50}
+            />
           </a>
         </div>
         <div className="main-menu-wrapper">
           <div className="menu-header">
             <a href="index-2.html" className="menu-logo">
-              <img src="assets/img/logo.png" className="img-fluid" alt="Logo" />
+              <Image
+                src="assets/img/logo.png"
+                className="img-fluid"
+                alt="Logo"
+                width={50}
+                height={50}
+              />
             </a>
             <a
               id="menu_close"
@@ -180,10 +193,11 @@ const DashHeader = () => {
               data-toggle="dropdown"
             >
               <span className="user-img">
-                <img
+                <Image
                   className="rounded-circle"
                   src="assets/img/doctors/doctor-thumb-02.jpg"
                   width={31}
+                  height={31}
                   alt="Darren Elder"
                 />
               </span>
@@ -191,9 +205,11 @@ const DashHeader = () => {
             <div className="dropdown-menu dropdown-menu-right">
               <div className="user-header">
                 <div className="avatar avatar-sm">
-                  <img
+                  <Image
                     src="assets/img/doctors/doctor-thumb-02.jpg"
                     alt="User Image"
+                    width={50}
+                    height={50}
                     className="avatar-img rounded-circle"
                   />
                 </div>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 interface PatientsList {
@@ -67,7 +68,7 @@ const PatientsList = ({ data }: { data: PatientsList[] }) => {
                                     href="profile.html"
                                     className="avatar avatar-sm mr-2"
                                   >
-                                    <img
+                                    <Image
                                       className="avatar-img rounded-circle"
                                       src={`${
                                         d.profilePic
@@ -75,6 +76,8 @@ const PatientsList = ({ data }: { data: PatientsList[] }) => {
                                           : "/assets/doctors/doctor-thumb-02.jpg"
                                       }`}
                                       alt="User Image"
+                                      width={50}
+                                      height={50}
                                     />
                                   </a>
                                   <a

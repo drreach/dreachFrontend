@@ -1,5 +1,5 @@
 import React from "react";
-
+import Image from "next/image";
 import "./header.css";
 
 const Header = () => {
@@ -42,7 +42,7 @@ const Header = () => {
     <div>
       <header className="header">
         <a href="#" className="logo">
-          <img src={"/"} alt="" />
+          <Image src={"/"} alt="" width={40} height={40} />
           Dr. Reach
         </a>
 

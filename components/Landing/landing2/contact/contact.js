@@ -1,5 +1,6 @@
 import React from "react";
 import "./contact.css";
+import Image from "next/image";
 
 import contact_img from "./contact_img.png";
 const Contact = () => {
@@ -8,7 +9,7 @@ const Contact = () => {
       <section class="section4">
         <h1 class="head7">We want to help.</h1>
         <div class="block1">
-          <img src={contact_img} alt="" />
+          <Image src={contact_img} alt="" width={150} height={150} />
           <div class="text">
             <h2>Follow us on social media</h2>
             <div class="link1">

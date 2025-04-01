@@ -1,5 +1,6 @@
 "use client";
 import { convertDateToFormat } from "@/utils/utils";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 interface UnverifiedDoctors {
@@ -64,7 +65,7 @@ const DoctorList = ({ data }: { data: UnverifiedDoctors[] }) => {
                                   href="profile.html"
                                   className="avatar avatar-sm mr-2"
                                 >
-                                  <img
+                                  <Image
                                     className="avatar-img rounded-circle"
                                     src={`${
                                       d.user.profilePic
@@ -72,6 +73,8 @@ const DoctorList = ({ data }: { data: UnverifiedDoctors[] }) => {
                                         : "/assets/doctor-2.jpg"
                                     } `}
                                     alt="User Image"
+                                    width={50}
+                                    height={50}
                                   />
                                 </a>
                                 <Link

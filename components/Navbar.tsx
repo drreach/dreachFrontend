@@ -6,6 +6,7 @@ import Info from "./Landing/Info";
 import { FaRegArrowAltCircleRight } from "react-icons/fa";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import Image from "next/image";
 
 // import { Info } from "lucide-react";
 
@@ -25,10 +26,12 @@ const Navbar = () => {
           <div className="flex items-center gap-3">
             <Link href="/" className="no-underline">
               {" "}
-              <img
+              <Image
                 src="/assets/logo.png"
                 className="w-[60px] h-[60px]"
                 alt=""
+                width={150}
+                height={150}
               />
             </Link>
             <Link href="/" className="no-underline">
@@ -73,7 +76,13 @@ const Navbar = () => {
             {session.data ? (
               <div className="flex gap-2">
                 <Link
-                  href={`/${session.data.data.role === "NORMAL" ? "user" : session.data.data.role === "DOCTOR" ? "doctor" : "admin"}/dashboard`}
+                  href={`/${
+                    session.data.data.role === "NORMAL"
+                      ? "user"
+                      : session.data.data.role === "DOCTOR"
+                        ? "doctor"
+                        : "admin"
+                  }/dashboard`}
                   className="bg-blue-500 no-underline  rounded-md py-2 px-3 text-white font-bold"
                 >
                   {/* <FaRegArrowAltCircleRight /> */}
@@ -115,7 +124,13 @@ const Navbar = () => {
             {session.data ? (
               <div className="flex flex-col gap-3">
                 <Link
-                  href={`/${session.data.data.role === "NORMAL" ? "user" : session.data.data.role === "DOCTOR" ? "doctor" : "admin"}/dashboard`}
+                  href={`/${
+                    session.data.data.role === "NORMAL"
+                      ? "user"
+                      : session.data.data.role === "DOCTOR"
+                        ? "doctor"
+                        : "admin"
+                  }/dashboard`}
                   className="bg-blue-500 no-underline rounded-md py-2 px-3 text-white font-bold"
                 >
                   Dashboard

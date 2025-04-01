@@ -1,4 +1,5 @@
 import { convertDateToFormat } from "@/utils/utils";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -38,7 +39,7 @@ const MedicalTable = ({ data }: { data: MedicalRecord }) => {
       <td>
         <h2 className="table-avatar">
           <a href="doctor-profile.html" className="avatar avatar-sm mr-2">
-            <img
+            <Image
               className="avatar-img rounded-circle"
               // src={`${data.doctorProfile.user.profilePic.image}`}
               src={`${
@@ -47,6 +48,8 @@ const MedicalTable = ({ data }: { data: MedicalRecord }) => {
                   : "/assets/doctors/doctor-thumb-02.jpg"
               }`}
               alt="User Image"
+              width={150}
+              height={150}
             />
           </a>
           <a href="doctor-profile.html">

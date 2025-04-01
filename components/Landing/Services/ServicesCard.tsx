@@ -15,10 +15,12 @@ const ServiceCard = ({
   return (
     <div className="h-auto  p-3 rounded-md">
       <div className="my-6 flex justify-center">
-        <img
+        <Image
           alt={`review-image-user`}
           src={`${data.image}`}
           className="w-full max-h-[300px]  shadow-lg dark:shadow-black/30"
+          width={150}
+          height={150}
         />
       </div>
 

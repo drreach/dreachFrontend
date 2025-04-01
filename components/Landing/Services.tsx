@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -17,10 +18,12 @@ const Services = () => {
                 href={`/finddoctors?mode=VIDEO_CONSULT`}
               >
                 <div className="flex cursor-pointer hover:scale-105 duration-500 bg-blue-500 rounded-md h-[130px] items-center flex-col w-full justify-center px-4">
-                  <img
+                  <Image
                     className="w-[100px] max-h-[80px]"
                     src="/onlinemode.png"
                     alt=""
+                    width={150}
+                    height={150}
                   />
                   <h1 className="text-[28px] text-white font-bold">
                     Online Mode
@@ -34,10 +37,12 @@ const Services = () => {
               >
                 {" "}
                 <div className="flex cursor-pointer hover:scale-105 duration-500 bg-blue-500 rounded-md h-[130px] items-center flex-col w-full justify-center px-4">
-                  <img
+                  <Image
                     className="w-[100px] max-h-[80px]"
                     src="/offlinemode.png"
                     alt=""
+                    width={150}
+                    height={150}
                   />
                   <h1 className="text-[28px] text-white font-bold">
                     Offline Mode
@@ -51,10 +56,12 @@ const Services = () => {
               >
                 {" "}
                 <div className="flex hover:scale-105 cursor-pointer duration-500 bg-blue-500 rounded-md h-[130px] items-center flex-col w-full justify-center px-4">
-                  <img
+                  <Image
                     className="w-[150px] max-h-[80px] h-auto"
                     src="/homevisit.png"
                     alt=""
+                    width={150}
+                    height={150}
                   />
                   <h1 className="text-[28px] text-white font-bold">
                     Home Mode
@@ -68,10 +75,12 @@ const Services = () => {
                 href={`/findhybriddoctors`}
               >
                 <div className="flex hover:scale-105 cursor-pointer duration-500 bg-blue-500 rounded-md h-[130px] items-center flex-col w-full justify-center px-4">
-                  <img
+                  <Image
                     className="w-[100px] h-auto"
                     src="/videocall.png"
                     alt=""
+                    width={150}
+                    height={150}
                   />
                   <h1 className="text-[28px] text-white font-bold">
                     Hybrid Mode

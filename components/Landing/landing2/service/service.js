@@ -5,6 +5,7 @@ import onlinemode from "./onlinemode.png";
 import offlinemode from "./offlinemode.png";
 import video from "./videocall.png";
 import home from "./homevisit.png";
+import Image from "next/image";
 
 const Service = () => {
   return (
@@ -16,14 +17,14 @@ const Service = () => {
             <div class="boxline1">
               <a href="#">
                 <div class="box">
-                  <img src={onlinemode} alt="" />
+                  <Image src={onlinemode} alt="" width={150} height={150} />
                   <h1>Online Mode</h1>
                 </div>
               </a>
 
               <a href="#">
                 <div class="box">
-                  <img src={offlinemode} alt="" />
+                  <Image src={offlinemode} alt="" width={150} height={150} />
                   <h1>Offline Mode</h1>
                 </div>
               </a>
@@ -32,20 +33,20 @@ const Service = () => {
             <div class="boxline1">
               <a href="#">
                 <div class="box">
-                  <img src={home} alt="" />
+                  <Image src={home} alt="" width={150} height={150} />
                   <h1>Home Visit</h1>
                 </div>
               </a>
               <a href="#">
                 {" "}
                 <div class="box">
-                  <img src={video} alt="" />
+                  <Image src={video} alt="" width={150} height={150} />
                   <h1>Video Call</h1>
                 </div>
               </a>
             </div>
           </div>
-          <img src={hc} alt="" />
+          <Image src={hc} alt="" width={150} height={150} />
         </div>
       </section>
     </div>

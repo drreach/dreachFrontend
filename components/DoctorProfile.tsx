@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import WriteDoctorReview from "./WriteDoctorReview";
 import MapTimes from "./MapTimes";
+import Image from "next/image";
 
 const modeMapp = {
   CLINIC_VISIT: "Clinic Visit",
@@ -222,7 +223,7 @@ const DoctorProfile = ({
               <div className="doctor-widget">
                 <div className="doc-info-left">
                   <div className="doctor-img">
-                    <img
+                    <Image
                       src={`${
                         data.profilePic
                           ? `https://storage.googleapis.com/kiitconnect_bucket/doctorProfile/${data.profilePic}`
@@ -230,6 +231,8 @@ const DoctorProfile = ({
                       } `}
                       className="img-fluid"
                       alt="User Image"
+                      width={150}
+                      height={150}
                     />
                   </div>
                   <div className="doc-info-cont">
@@ -724,7 +727,7 @@ const DoctorProfile = ({
                       {/* Comment List */}
                       <li>
                         <div className="comment">
-                          <img
+                          <Image
                             className="avatar avatar-sm rounded-circle"
                             alt="User Image"
                             src={`${
@@ -732,6 +735,8 @@ const DoctorProfile = ({
                                 ? `https://storage.googleapis.com/kiitconnect_bucket/doctorProfile/${data.profilePic}`
                                 : "/assets/doctor-2.jpg"
                             } `}
+                            width={150}
+                            height={150}
                           />
 
                           <div className="comment-body">

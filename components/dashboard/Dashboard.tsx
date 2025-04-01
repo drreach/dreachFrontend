@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 const Dashboard = () => {
@@ -17,20 +18,24 @@ const Dashboard = () => {
                 </span>
               </a>
               <a href="index-2.html" className="navbar-brand logo">
-                <img
+                <Image
                   src="assets/img/logo.png"
                   className="img-fluid"
                   alt="Logo"
+                  width={150}
+                  height={150}
                 />
               </a>
             </div>
             <div className="main-menu-wrapper">
               <div className="menu-header">
                 <a href="index-2.html" className="menu-logo">
-                  <img
+                  <Image
                     src="assets/img/logo.png"
                     className="img-fluid"
                     alt="Logo"
+                    width={150}
+                    height={150}
                   />
                 </a>
                 <a
@@ -194,10 +199,11 @@ const Dashboard = () => {
                   data-toggle="dropdown"
                 >
                   <span className="user-img">
-                    <img
+                    <Image
                       className="rounded-circle"
                       src="assets/img/doctors/doctor-thumb-02.jpg"
                       width={31}
+                      height={31}
                       alt="Darren Elder"
                     />
                   </span>
@@ -205,10 +211,12 @@ const Dashboard = () => {
                 <div className="dropdown-menu dropdown-menu-right">
                   <div className="user-header">
                     <div className="avatar avatar-sm">
-                      <img
+                      <Image
                         src="assets/img/doctors/doctor-thumb-02.jpg"
                         alt="User Image"
                         className="avatar-img rounded-circle"
+                        width={150}
+                        height={150}
                       />
                     </div>
                     <div className="user-text">
@@ -266,9 +274,11 @@ const Dashboard = () => {
                   <div className="widget-profile pro-widget-content">
                     <div className="profile-info-widget">
                       <a href="#" className="booking-doc-img">
-                        <img
+                        <Image
                           src="assets/img/doctors/doctor-thumb-02.jpg"
                           alt="User Image"
+                          width={150}
+                          height={150}
                         />
                       </a>
                       <div className="profile-det-info">
@@ -370,10 +380,12 @@ const Dashboard = () => {
                                   className="circle-graph1"
                                   data-percent={75}
                                 >
-                                  <img
+                                  <Image
                                     src="assets/img/icon-01.png"
                                     className="img-fluid"
                                     alt="patient"
+                                    width={150}
+                                    height={150}
                                   />
                                 </div>
                               </div>
@@ -391,10 +403,12 @@ const Dashboard = () => {
                                   className="circle-graph2"
                                   data-percent={65}
                                 >
-                                  <img
+                                  <Image
                                     src="assets/img/icon-02.png"
                                     className="img-fluid"
                                     alt="Patient"
+                                    width={150}
+                                    height={150}
                                   />
                                 </div>
                               </div>
@@ -412,10 +426,12 @@ const Dashboard = () => {
                                   className="circle-graph3"
                                   data-percent={50}
                                 >
-                                  <img
+                                  <Image
                                     src="assets/img/icon-03.png"
                                     className="img-fluid"
                                     alt="Patient"
+                                    width={150}
+                                    height={150}
                                   />
                                 </div>
                               </div>
@@ -487,10 +503,12 @@ const Dashboard = () => {
                                             href="patient-profile.html"
                                             className="avatar avatar-sm mr-2"
                                           >
-                                            <img
+                                            <Image
                                               className="avatar-img rounded-circle"
                                               src="assets/img/patients/patient.jpg"
                                               alt="User Image"
+                                              width={150}
+                                              height={150}
                                             />
                                           </a>
                                           <a href="patient-profile.html">
@@ -539,10 +557,12 @@ const Dashboard = () => {
                                             href="patient-profile.html"
                                             className="avatar avatar-sm mr-2"
                                           >
-                                            <img
+                                            <Image
                                               className="avatar-img rounded-circle"
                                               src="assets/img/patients/patient1.jpg"
                                               alt="User Image"
+                                              width={150}
+                                              height={150}
                                             />
                                           </a>
                                           <a href="patient-profile.html">
@@ -591,10 +611,12 @@ const Dashboard = () => {
                                             href="patient-profile.html"
                                             className="avatar avatar-sm mr-2"
                                           >
-                                            <img
+                                            <Image
                                               className="avatar-img rounded-circle"
                                               src="assets/img/patients/patient2.jpg"
                                               alt="User Image"
+                                              width={150}
+                                              height={150}
                                             />
                                           </a>
                                           <a href="patient-profile.html">
@@ -643,10 +665,12 @@ const Dashboard = () => {
                                             href="patient-profile.html"
                                             className="avatar avatar-sm mr-2"
                                           >
-                                            <img
+                                            <Image
                                               className="avatar-img rounded-circle"
                                               src="assets/img/patients/patient3.jpg"
                                               alt="User Image"
+                                              width={150}
+                                              height={150}
                                             />
                                           </a>
                                           <a href="patient-profile.html">
@@ -695,10 +719,12 @@ const Dashboard = () => {
                                             href="patient-profile.html"
                                             className="avatar avatar-sm mr-2"
                                           >
-                                            <img
+                                            <Image
                                               className="avatar-img rounded-circle"
                                               src="assets/img/patients/patient4.jpg"
                                               alt="User Image"
+                                              width={150}
+                                              height={150}
                                             />
                                           </a>
                                           <a href="patient-profile.html">
@@ -748,10 +774,12 @@ const Dashboard = () => {
                                             href="patient-profile.html"
                                             className="avatar avatar-sm mr-2"
                                           >
-                                            <img
+                                            <Image
                                               className="avatar-img rounded-circle"
                                               src="assets/img/patients/patient5.jpg"
                                               alt="User Image"
+                                              width={150}
+                                              height={150}
                                             />
                                           </a>
                                           <a href="patient-profile.html">
@@ -826,10 +854,12 @@ const Dashboard = () => {
                                             href="patient-profile.html"
                                             className="avatar avatar-sm mr-2"
                                           >
-                                            <img
+                                            <Image
                                               className="avatar-img rounded-circle"
                                               src="assets/img/patients/patient6.jpg"
                                               alt="User Image"
+                                              width={150}
+                                              height={150}
                                             />
                                           </a>
                                           <a href="patient-profile.html">
@@ -878,10 +908,12 @@ const Dashboard = () => {
                                             href="patient-profile.html"
                                             className="avatar avatar-sm mr-2"
                                           >
-                                            <img
+                                            <Image
                                               className="avatar-img rounded-circle"
                                               src="assets/img/patients/patient7.jpg"
                                               alt="User Image"
+                                              width={150}
+                                              height={150}
                                             />
                                           </a>
                                           <a href="patient-profile.html">
@@ -930,10 +962,12 @@ const Dashboard = () => {
                                             href="patient-profile.html"
                                             className="avatar avatar-sm mr-2"
                                           >
-                                            <img
+                                            <Image
                                               className="avatar-img rounded-circle"
                                               src="assets/img/patients/patient8.jpg"
                                               alt="User Image"
+                                              width={150}
+                                              height={150}
                                             />
                                           </a>
                                           <a href="patient-profile.html">
@@ -982,10 +1016,12 @@ const Dashboard = () => {
                                             href="patient-profile.html"
                                             className="avatar avatar-sm mr-2"
                                           >
-                                            <img
+                                            <Image
                                               className="avatar-img rounded-circle"
                                               src="assets/img/patients/patient9.jpg"
                                               alt="User Image"
+                                              width={150}
+                                              height={150}
                                             />
                                           </a>
                                           <a href="patient-profile.html">
@@ -1034,10 +1070,12 @@ const Dashboard = () => {
                                             href="patient-profile.html"
                                             className="avatar avatar-sm mr-2"
                                           >
-                                            <img
+                                            <Image
                                               className="avatar-img rounded-circle"
                                               src="assets/img/patients/patient10.jpg"
                                               alt="User Image"
+                                              width={150}
+                                              height={150}
                                             />
                                           </a>
                                           <a href="patient-profile.html">
@@ -1086,10 +1124,12 @@ const Dashboard = () => {
                                             href="patient-profile.html"
                                             className="avatar avatar-sm mr-2"
                                           >
-                                            <img
+                                            <Image
                                               className="avatar-img rounded-circle"
                                               src="assets/img/patients/patient11.jpg"
                                               alt="User Image"
+                                              width={150}
+                                              height={150}
                                             />
                                           </a>
                                           <a href="patient-profile.html">
@@ -1157,7 +1197,12 @@ const Dashboard = () => {
                   {/* Footer Widget */}
                   <div className="footer-widget footer-about">
                     <div className="footer-logo">
-                      <img src="assets/img/footer-logo.png" alt="logo" />
+                      <Image
+                        src="assets/img/footer-logo.png"
+                        alt="logo"
+                        width={150}
+                        height={150}
+                      />
                     </div>
                     <div className="footer-about-content">
                       <p>

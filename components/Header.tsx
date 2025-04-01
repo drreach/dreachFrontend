@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 const Header = () => {
@@ -13,17 +14,25 @@ const Header = () => {
             </span>
           </a>
           <a href="index-2.html" className="navbar-brand logo">
-            <img
+            <Image
               src="/assets/logo.png"
               className="img-fluid w-[50px] h-[50px]"
               alt="Logo"
+              width={50}
+              height={50}
             />
           </a>
         </div>
         <div className="main-menu-wrapper">
           <div className="menu-header">
             <a href="index-2.html" className="menu-logo">
-              <img src="/assets/logo.png" className="img-fluid" alt="Logo" />
+              <Image
+                src="/assets/logo.png"
+                className="img-fluid"
+                alt="Logo"
+                width={50}
+                height={50}
+              />
             </a>
             <a
               id="menu_close"
@@ -184,10 +193,11 @@ const Header = () => {
               data-toggle="dropdown"
             >
               <span className="user-img">
-                <img
+                <Image
                   className="rounded-circle"
                   src="/assets/patients/patient.jpg"
                   width={31}
+                  height={31}
                   alt="Ryan Taylor"
                 />
               </span>
@@ -195,9 +205,11 @@ const Header = () => {
             <div className="dropdown-menu dropdown-menu-right active">
               <div className="user-header">
                 <div className="avatar avatar-sm">
-                  <img
+                  <Image
                     src="assets/img/patients/patient.jpg"
                     alt="User Image"
+                    width={50}
+                    height={50}
                     className="avatar-img rounded-circle"
                   />
                 </div>

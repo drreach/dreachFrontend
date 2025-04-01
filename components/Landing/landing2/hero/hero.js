@@ -1,6 +1,7 @@
 import React from "react";
 import "./hero.css";
 import banner_img from "./banner_img.png";
+import Image from "next/image";
 
 const Hero = () => {
   return (
@@ -20,7 +21,7 @@ const Hero = () => {
           </div>
 
           <div class="hero-img">
-            <img src={banner_img} alt="" />
+            <Image src={banner_img} alt="" width={150} height={150} />
           </div>
         </div>
       </section>

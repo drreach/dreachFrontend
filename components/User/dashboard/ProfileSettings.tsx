@@ -10,6 +10,7 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Select from "react-select";
+import Image from "next/image";
 const bloodGroupMap = {
   A_POSITIVE: "A+",
   A_NEGATIVE: "A-",
@@ -174,7 +175,7 @@ const ProfileSettings = () => {
                         <div className="form-group">
                           <div className="change-avatar">
                             <div className="profile-img">
-                              <img
+                              <Image
                                 src={`${
                                   file
                                     ? URL.createObjectURL(file)
@@ -183,6 +184,8 @@ const ProfileSettings = () => {
                                       : "/assets/doctor-2.jpg"
                                 } `}
                                 alt="User Image"
+                                width={150}
+                                height={150}
                               />
                             </div>
                             <div className="upload-img  flex flex-col">

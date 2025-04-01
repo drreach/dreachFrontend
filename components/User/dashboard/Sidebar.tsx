@@ -2,6 +2,7 @@
 import Logout from "@/components/Logout";
 import { convertDateToFormat } from "@/utils/utils";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -15,13 +16,15 @@ const Sidebar = () => {
         <div className="widget-profile pro-widget-content">
           <div className="profile-info-widget">
             <a href="#" className="booking-doc-img">
-              <img
+              <Image
                 src={`${
                   session.data?.data.profilePic
                     ? `https://storage.googleapis.com/kiitconnect_bucket/doctorProfile/${session.data.data.profilePic}`
                     : "/assets/doctors/doctor-thumb-02.jpg"
                 }`}
                 alt="User Image"
+                width={150}
+                height={150}
               />
             </a>
             <div className="profile-det-info">

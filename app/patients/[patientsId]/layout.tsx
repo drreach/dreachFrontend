@@ -9,6 +9,7 @@ import { authOption } from "@/lib/AuthOptions/authOptions";
 import { calculateAge, mapBloodGroup } from "@/utils/utils";
 import { getServerSession } from "next-auth";
 import { signOut } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -156,13 +157,15 @@ export default async function Layout({
                   <div className="pro-widget-content">
                     <div className="profile-info-widget">
                       <a href="#" className="booking-doc-img">
-                        <img
+                        <Image
                           src={`${
                             data?.profilePic
                               ? `https://storage.googleapis.com/kiitconnect_bucket/doctorProfile/${data.profilePic}`
                               : "/assets/doctors/doctor-thumb-02.jpg"
                           }`}
                           alt="User Image"
+                          width={50}
+                          height={50}
                         />
                       </a>
                       <div className="profile-det-info">

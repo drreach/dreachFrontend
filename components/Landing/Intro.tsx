@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import React from "react";
 
 const Intro = () => {
@@ -30,10 +31,12 @@ const Intro = () => {
         </div>
 
         <div className="md:my-5">
-          <img
+          <Image
             src="/assets/banner_img.png"
             className="w-[950px]  pt-[20px] h-full"
             alt=""
+            width={900}
+            height={900}
           />
         </div>
       </div>

@@ -2,6 +2,7 @@
 import { useAppDispatch, useAppSelector } from "@/Redux/hooks/hooks";
 import { setActivePatientsProfileTab } from "@/Redux/reducers/UserReducers";
 import React from "react";
+import Image from "next/image";
 
 const PatientsProfile = () => {
   const activeTab = useAppSelector(
@@ -41,9 +42,11 @@ const PatientsProfile = () => {
                   <div className="pro-widget-content">
                     <div className="profile-info-widget">
                       <a href="#" className="booking-doc-img">
-                        <img
+                        <Image
                           src="/assets/patients/patient.jpg"
                           alt="User Image"
+                          width={150}
+                          height={150}
                         />
                       </a>
                       <div className="profile-det-info">
@@ -85,10 +88,12 @@ const PatientsProfile = () => {
                   <li className="list-group-item">
                     <div className="media align-items-center">
                       <div className="mr-3">
-                        <img
+                        <Image
                           alt="Image placeholder"
                           src="assets/img/doctors/doctor-thumb-02.jpg"
                           className="avatar  rounded-circle"
+                          width={150}
+                          height={150}
                         />
                       </div>
                       <div className="media-body">
@@ -105,10 +110,12 @@ const PatientsProfile = () => {
                   <li className="list-group-item">
                     <div className="media align-items-center">
                       <div className="mr-3">
-                        <img
+                        <Image
                           alt="Image placeholder"
                           src="assets/img/doctors/doctor-thumb-02.jpg"
                           className="avatar  rounded-circle"
+                          width={150}
+                          height={150}
                         />
                       </div>
                       <div className="media-body">
@@ -201,10 +208,12 @@ const PatientsProfile = () => {
                                         href="doctor-profile.html"
                                         className="avatar avatar-sm mr-2"
                                       >
-                                        <img
+                                        <Image
                                           className="avatar-img rounded-circle"
                                           src="/assets/doctors/doctor-thumb-02.jpg"
                                           alt="User Image"
+                                          width={150}
+                                          height={150}
                                         />
                                       </a>
                                       <a href="doctor-profile.html">
@@ -291,10 +300,12 @@ const PatientsProfile = () => {
                                         href="doctor-profile.html"
                                         className="avatar avatar-sm mr-2"
                                       >
-                                        <img
+                                        <Image
                                           className="avatar-img rounded-circle"
                                           src="/assets/doctors/doctor-thumb-01.jpg"
                                           alt="User Image"
+                                          width={150}
+                                          height={150}
                                         />
                                       </a>
                                       <a href="doctor-profile.html">

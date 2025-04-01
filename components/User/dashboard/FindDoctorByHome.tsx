@@ -9,6 +9,7 @@ import {
   setHomeVisitDoctorList,
 } from "@/Redux/reducers/UserReducers";
 import { modeMap } from "@/utils/utils";
+import Image from "next/image";
 
 interface FindDoctorList {
   specializations: string[];
@@ -55,7 +56,7 @@ const FindDoctorsByHome = ({
     if (data && doctorList.length === 0) {
       dispatch(setHomeVisitDoctorList(data));
     }
-  }, [data]);
+  }, [data, dispatch, doctorList.length]);
 
   return (
     // <div className="row row-grid">
@@ -147,10 +148,12 @@ const FindDoctorsByHome = ({
               className="w-full flex justify-between px-3 md:flex-row py-3 flex-col"
             >
               <div className="flex items-center md:flex-row gap-2">
-                <img
+                <Image
                   className="w-[100px] h-[100px] rounded-full object-cover border border-green-700"
                   src={`https://storage.googleapis.com/kiitconnect_bucket/doctorProfile/${d.user.profilePic}`}
                   alt=""
+                  width={150}
+                  height={150}
                 />
                 <div className="flex flex-col">
                   <Link

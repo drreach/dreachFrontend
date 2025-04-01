@@ -4,6 +4,7 @@ import { setAptFor, setCurrentLocation } from "@/Redux/reducers/UserReducers";
 import { doctorAppointment } from "@/ServerActions/Doctor/doctor";
 import { convertDateToFormat, loadToast, updateToast } from "@/utils/utils";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -371,12 +372,15 @@ const Checkout = ({
                   {/* Booking Doctor Info */}
                   <div className="booking-doc-info">
                     <a href="doctor-profile.html" className="booking-doc-img">
-                      <img
+                      <Image
                         src={`${
                           data.doctor.user.profilePic
                             ? `https://storage.googleapis.com/kiitconnect_bucket/doctorProfile/${data.doctor.user.profilePic}`
                             : "/assets/doctor-2.jpg"
                         } `}
+                        alt="User Image"
+                        width={50}
+                        height={50}
                       />
                     </a>
                     <div className="booking-info">

@@ -1,6 +1,7 @@
 import React from "react";
 import "./doctor.css";
 import doctor from "./dr.jpg";
+import Image from "next/image";
 
 const Doctor = () => {
   return (
@@ -11,7 +12,7 @@ const Doctor = () => {
 
         <div class="card-box">
           <div class="card">
-            <img src={doctor} alt="" />
+            <Image src={doctor} alt="" width={150} height={150} />
             <h1 class="head6">Dr. Shyam Barua</h1>
             <h3 class="head6">Cardiology</h3>
             <h5 class="head6">(MBBS)</h5>
@@ -19,28 +20,28 @@ const Doctor = () => {
           </div>
 
           <div class="card">
-            <img src={doctor} alt="" />
+            <Image src={doctor} alt="" width={150} height={150} />
             <h1 class="head6">Dr. Shyam Barua</h1>
             <h3 class="head6">Cardiology</h3>
             <h5 class="head6">(MBBS)</h5>
             <button class="btn3">Book Now</button>
           </div>
           <div class="card">
-            <img src={doctor} alt="" />
+            <Image src={doctor} alt="" width={150} height={150} />
             <h1 class="head6">Dr. Shyam Barua</h1>
             <h3 class="head6">Cardiology</h3>
             <h5 class="head6">(MBBS)</h5>
             <button class="btn3">Book Now</button>
           </div>
           <div class="card">
-            <img src={doctor} alt="" />
+            <Image src={doctor} alt="" width={150} height={150} />
             <h1 class="head6">Dr. Shyam Barua</h1>
             <h3 class="head6">Cardiology</h3>
             <h5 class="head6">(MBBS)</h5>
             <button class="btn3">Book Now</button>
           </div>
           <div class="card">
-            <img src={doctor} alt="" />
+            <Image src={doctor} alt="" width={150} height={150} />
             <h1 class="head6">Dr. Shyam Barua</h1>
             <h3 class="head6">Cardiology</h3>
             <h5 class="head6">(MBBS)</h5>

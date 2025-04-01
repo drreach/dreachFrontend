@@ -2,6 +2,7 @@ import { convertDateToFormat } from "@/utils/utils";
 import React from "react";
 import MapTimes from "../MapTimes";
 import Link from "next/link";
+import Image from "next/image";
 
 const status = {
   PENDING: "badge-warning",
@@ -39,7 +40,7 @@ const AppointmentUserTable = ({
             href={`/doctorprofile/${data.doctorProfile.user.username}`}
             className="avatar avatar-sm mr-2"
           >
-            <img
+            <Image
               className="avatar-img rounded-circle"
               src={`${
                 data.doctorProfile.user.profilePic
@@ -47,6 +48,8 @@ const AppointmentUserTable = ({
                   : "/assets/doctors/doctor-thumb-02.jpg"
               }`}
               alt="User Image"
+              width={150}
+              height={150}
             />
           </Link>
           <Link
