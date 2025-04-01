@@ -135,13 +135,13 @@ export default async function Layout({
                     </a>
                   </li>
                   <li className="notification-message">
-                    <a href="#">
+                    <a href="/admin/dashboard">
                       <div className="media">
                         <span className="avatar avatar-sm">
                           <Image
                             className="avatar-img rounded-circle"
                             alt="User Image"
-                            src="assets/img/patients/patient2.jpg"
+                            src="/assets/patients/patient2.jpg"
                             width={150}
                             height={150}
                           />
@@ -168,7 +168,7 @@ export default async function Layout({
                           <Image
                             className="avatar-img rounded-circle"
                             alt="User Image"
-                            src="assets/img/patients/patient3.jpg"
+                            src="/assets/patients/patient3.jpg"
                             width={150}
                             height={150}
                           />
@@ -217,7 +217,7 @@ export default async function Layout({
               <div className="user-header">
                 <div className="avatar avatar-sm">
                   <Image
-                    src="assets/profiles/avatar-01.jpg"
+                    src="/assets/profiles/avatar-01.jpg"
                     alt="User Image"
                     className="avatar-img rounded-circle"
                     width={50}
