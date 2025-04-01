@@ -40,15 +40,12 @@ const Navbar = () => {
           </div>
           <div>
             <ul className="gap-5 hidden md:flex">
-              <Link href="/">
-                {" "}
                 <Link
                   href="/"
                   className="hover:text-green-600 no-underline font-bold text-gray-600 cursor-pointer"
                 >
                   Home
                 </Link>
-              </Link>
               <li className="hover:text-green-600 font-bold text-gray-600 cursor-pointer">
                 About
               </li>
