@@ -17,7 +17,7 @@ export default async function Layout({
   const session = await getServerSession(authOption);
 
   if (!session || session.data.role !== "ADMIN") {
-    return redirect("/");
+    // return redirect("/");
   }
   return (
     <div className="main-wrapper">
