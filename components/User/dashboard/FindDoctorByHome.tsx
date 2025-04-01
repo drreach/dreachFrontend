@@ -56,7 +56,7 @@ const FindDoctorsByHome = ({
     if (data && doctorList.length === 0) {
       dispatch(setHomeVisitDoctorList(data));
     }
-  }, [data, dispatch, doctorList.length]);
+  }, [data]);
 
   return (
     // <div className="row row-grid">
